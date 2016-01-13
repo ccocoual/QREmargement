@@ -1,0 +1,28 @@
+<!doctype html>
+<html ng-app="QRApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>QREmargement</title>
+
+  <!-- AngularJS -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+
+
+  <!-- App -->
+  <script src="app/app.module.js"></script>
+  <script src="app/app.routes.js"></script>
+
+  <!-- Made JS files -->
+  <script src="app/components/home/home.ctrl.js"></script>
+
+</head>
+
+<body>
+  <h1> Hello</h1>
+  <button ui-sref="home">link1</button>
+  <div ui-view></div>
+</body>
+</html>
