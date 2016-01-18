@@ -2,5 +2,5 @@
 
 var qrApp = angular.module("QRApp", [
     "ui.router"
-
+    
   ]);
