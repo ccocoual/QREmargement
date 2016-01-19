@@ -12,7 +12,7 @@ public class BDD_Classe {
 
     private static String name_table = "Classe";
 
-    public ArrayList<Classe> getAll(Connection con) throws SQLException {
+    public static ArrayList<Classe> getAll(Connection con) throws SQLException {
         String query = "SELECT * FROM ?";
 
         ArrayList<Classe> classeList = new ArrayList<Classe>();
@@ -33,7 +33,7 @@ public class BDD_Classe {
     }
 
 
-    public boolean insert(Connection con, Classe classe) throws SQLException {
+    public static boolean insert(Connection con, Classe classe) throws SQLException {
 
         boolean success = false;
 
@@ -53,7 +53,7 @@ public class BDD_Classe {
         return success;
     }
 
-    public boolean update(Connection con, Classe classe) throws SQLException {
+    public static boolean update(Connection con, Classe classe) throws SQLException {
 
         boolean success = false;
 
@@ -74,7 +74,7 @@ public class BDD_Classe {
         return success;
     }
 
-    public boolean delete(Connection con, Classe classe) throws SQLException {
+    public static boolean delete(Connection con, Classe classe) throws SQLException {
 
         boolean success = false;
 

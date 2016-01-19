@@ -15,7 +15,7 @@ public class BDD_Professeur {
 
     private static String name_table = "Professeur";
 
-    public ArrayList<Professeur> getAll(Connection con) throws SQLException {
+    public static ArrayList<Professeur> getAll(Connection con) throws SQLException {
         String query = "SELECT * FROM ?";
 
         ArrayList<Professeur> professeurList = new ArrayList<Professeur>();
@@ -37,7 +37,7 @@ public class BDD_Professeur {
         return professeurList;
     }
 
-    public Professeur getById(Connection con, int id) throws SQLException {
+    public static Professeur getById(Connection con, int id) throws SQLException {
         String query = "SELECT * FROM ? WHERE id = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
@@ -55,7 +55,7 @@ public class BDD_Professeur {
         return professeur;
     }
 
-    public boolean checkAuth(Connection con, String login, String password) throws SQLException {
+    public static boolean checkAuth(Connection con, String login, String password) throws SQLException {
         String query = "SELECT id FROM ? WHERE email = ? AND password = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
@@ -67,7 +67,7 @@ public class BDD_Professeur {
         return rs.isBeforeFirst();
     }
 
-    public boolean insert(Connection con, Professeur professeur) throws SQLException {
+    public static boolean insert(Connection con, Professeur professeur) throws SQLException {
 
         boolean success = false;
 
@@ -90,7 +90,7 @@ public class BDD_Professeur {
         return success;
     }
 
-    public boolean update(Connection con, Professeur professeur) throws SQLException {
+    public static boolean update(Connection con, Professeur professeur) throws SQLException {
 
         boolean success = false;
 
@@ -113,7 +113,7 @@ public class BDD_Professeur {
         return success;
     }
 
-    public boolean updatePassword(Connection con, Professeur professeur, String newpassword) throws SQLException {
+    public static boolean updatePassword(Connection con, Professeur professeur, String newpassword) throws SQLException {
 
         boolean success = false;
 
@@ -134,7 +134,7 @@ public class BDD_Professeur {
         return success;
     }
 
-    public boolean delete(Connection con, Professeur professeur) throws SQLException {
+    public static boolean delete(Connection con, Professeur professeur) throws SQLException {
 
         boolean success = false;
 

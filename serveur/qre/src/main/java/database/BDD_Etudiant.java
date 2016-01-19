@@ -15,7 +15,7 @@ public class BDD_Etudiant {
 
     private static String name_table = "Etudiant";
 
-    public ArrayList<Etudiant> getAll(Connection con) throws SQLException {
+    public static ArrayList<Etudiant> getAll(Connection con) throws SQLException {
         String query = "SELECT * FROM ?";
 
         ArrayList<Etudiant> etudiantList = new ArrayList<Etudiant>();
@@ -41,7 +41,7 @@ public class BDD_Etudiant {
         return etudiantList;
     }
 
-    public Etudiant getById(Connection con, int id) throws SQLException {
+    public static Etudiant getById(Connection con, int id) throws SQLException {
         String query = "SELECT * FROM ? WHERE id = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
@@ -63,7 +63,7 @@ public class BDD_Etudiant {
         return etudiant;
     }
 
-    public Etudiant getByNumEtu(Connection con, String num_etu) throws SQLException {
+    public static Etudiant getByNumEtu(Connection con, String num_etu) throws SQLException {
         String query = "SELECT * FROM ? WHERE num_etu = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
@@ -85,7 +85,7 @@ public class BDD_Etudiant {
         return etudiant;
     }
 
-    public ArrayList<Etudiant> getByClassId(Connection con, int classe_id) throws SQLException {
+    public static ArrayList<Etudiant> getByClassId(Connection con, int classe_id) throws SQLException {
         String query = "SELECT * FROM ? WHERE classe_id = ?";
 
         ArrayList<Etudiant> etudiantList = new ArrayList<Etudiant>();
@@ -112,7 +112,7 @@ public class BDD_Etudiant {
         return etudiantList;
     }
 
-    public ArrayList<Etudiant> getByGroupeId(Connection con, int groupe_id) throws SQLException {
+    public static ArrayList<Etudiant> getByGroupeId(Connection con, int groupe_id) throws SQLException {
         String query = "SELECT * FROM ? WHERE groupe_id = ?";
 
         ArrayList<Etudiant> etudiantList = new ArrayList<Etudiant>();
@@ -139,7 +139,7 @@ public class BDD_Etudiant {
         return etudiantList;
     }
 
-    public boolean insert(Connection con, Etudiant etudiant) throws SQLException {
+    public static boolean insert(Connection con, Etudiant etudiant) throws SQLException {
 
         boolean success = false;
 
@@ -165,7 +165,7 @@ public class BDD_Etudiant {
         return success;
     }
 
-    public boolean update(Connection con, Etudiant etudiant) throws SQLException {
+    public static boolean update(Connection con, Etudiant etudiant) throws SQLException {
 
         boolean success = false;
 
@@ -192,7 +192,7 @@ public class BDD_Etudiant {
         return success;
     }
 
-    public boolean delete(Connection con, Etudiant etudiant) throws SQLException {
+    public static boolean delete(Connection con, Etudiant etudiant) throws SQLException {
 
         boolean success = false;
 
@@ -212,7 +212,7 @@ public class BDD_Etudiant {
         return success;
     }
 
-    public boolean checkAuth(Connection con, String login, String password) throws SQLException, ParseException {
+    public static boolean checkAuth(Connection con, String login, String password) throws SQLException, ParseException {
 
         // Password = date_naiss, Login = num_etu OR email
 

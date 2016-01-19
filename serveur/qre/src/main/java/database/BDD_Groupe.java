@@ -15,7 +15,7 @@ public class BDD_Groupe {
 
     private static String name_table = "Groupe";
 
-    public ArrayList<Groupe> getAll(Connection con) throws SQLException {
+    public static ArrayList<Groupe> getAll(Connection con) throws SQLException {
         String query = "SELECT * FROM ?";
 
         ArrayList<Groupe> groupeList = new ArrayList<Groupe>();
@@ -36,7 +36,7 @@ public class BDD_Groupe {
         return groupeList;
     }
 
-    public Groupe getById(Connection con, int id) throws SQLException {
+    public static Groupe getById(Connection con, int id) throws SQLException {
         String query = "SELECT * FROM ? WHERE id = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
@@ -53,7 +53,7 @@ public class BDD_Groupe {
         return groupe;
     }
 
-    public ArrayList<Groupe> getByClassId(Connection con, int classe_id) throws SQLException {
+    public static ArrayList<Groupe> getByClassId(Connection con, int classe_id) throws SQLException {
         String query = "SELECT * FROM ? WHERE classe_id = ?";
 
         ArrayList<Groupe> groupeList = new ArrayList<Groupe>();
@@ -75,7 +75,7 @@ public class BDD_Groupe {
         return groupeList;
     }
 
-    public boolean insert(Connection con, Groupe groupe) throws SQLException {
+    public static boolean insert(Connection con, Groupe groupe) throws SQLException {
 
         boolean success = false;
 
@@ -96,7 +96,7 @@ public class BDD_Groupe {
         return success;
     }
 
-    public boolean update(Connection con, Groupe groupe) throws SQLException {
+    public static boolean update(Connection con, Groupe groupe) throws SQLException {
 
         boolean success = false;
 
@@ -118,7 +118,7 @@ public class BDD_Groupe {
         return success;
     }
 
-    public boolean delete(Connection con, Groupe groupe) throws SQLException {
+    public static boolean delete(Connection con, Groupe groupe) throws SQLException {
 
         boolean success = false;
 

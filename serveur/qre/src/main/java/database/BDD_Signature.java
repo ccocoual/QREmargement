@@ -13,7 +13,7 @@ public class BDD_Signature {
 
     private static String name_table = "Signature";
 
-    public ArrayList<Signature> getAll(Connection con) throws SQLException {
+    public static ArrayList<Signature> getAll(Connection con) throws SQLException {
         String query = "SELECT * FROM ?";
 
         ArrayList<Signature> signatureList = new ArrayList<Signature>();
@@ -35,7 +35,7 @@ public class BDD_Signature {
         return signatureList;
     }
 
-    public Signature getById(Connection con, int id) throws SQLException {
+    public static Signature getById(Connection con, int id) throws SQLException {
         String query = "SELECT * FROM ? WHERE id = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
@@ -53,7 +53,7 @@ public class BDD_Signature {
         return signature;
     }
 
-    public Signature getByEmargementId(Connection con, int emargement_id) throws SQLException {
+    public static Signature getByEmargementId(Connection con, int emargement_id) throws SQLException {
         String query = "SELECT * FROM ? WHERE emargement_id = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
@@ -71,7 +71,7 @@ public class BDD_Signature {
         return signature;
     }
 
-    public ArrayList<Signature> getByEtudiantId(Connection con, int etudiant_id) throws SQLException {
+    public static ArrayList<Signature> getByEtudiantId(Connection con, int etudiant_id) throws SQLException {
         String query = "SELECT * FROM ? WHERE etudiant_id = ?";
 
         ArrayList<Signature> signatureList = new ArrayList<Signature>();
@@ -94,7 +94,7 @@ public class BDD_Signature {
         return signatureList;
     }
 
-    public boolean insert(Connection con, Signature signature) throws SQLException {
+    public static boolean insert(Connection con, Signature signature) throws SQLException {
 
         boolean success = false;
 
@@ -116,7 +116,7 @@ public class BDD_Signature {
         return success;
     }
 
-    public boolean update(Connection con, Signature signature) throws SQLException {
+    public static boolean update(Connection con, Signature signature) throws SQLException {
 
         boolean success = false;
 
@@ -139,7 +139,7 @@ public class BDD_Signature {
         return success;
     }
 
-    public boolean delete(Connection con, Signature signature) throws SQLException {
+    public static boolean delete(Connection con, Signature signature) throws SQLException {
 
         boolean success = false;
 

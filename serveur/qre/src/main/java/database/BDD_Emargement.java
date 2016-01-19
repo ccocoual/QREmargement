@@ -15,7 +15,7 @@ public class BDD_Emargement {
 
     private static String name_table = "Emargement";
 
-    public ArrayList<Emargement> getAll(Connection con) throws SQLException {
+    public static ArrayList<Emargement> getAll(Connection con) throws SQLException {
         String query = "SELECT * FROM ?";
 
         ArrayList<Emargement> emargementList = new ArrayList<Emargement>();
@@ -39,7 +39,7 @@ public class BDD_Emargement {
         return emargementList;
     }
 
-    public Emargement getById(Connection con, int id) throws SQLException {
+    public static Emargement getById(Connection con, int id) throws SQLException {
         String query = "SELECT * FROM ? WHERE id = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
@@ -59,7 +59,7 @@ public class BDD_Emargement {
         return emargement;
     }
 
-    public ArrayList<Emargement> getByProfesseurId(Connection con, int professeur_id) throws SQLException {
+    public static ArrayList<Emargement> getByProfesseurId(Connection con, int professeur_id) throws SQLException {
         String query = "SELECT * FROM ? WHERE professeur_id = ?";
 
         ArrayList<Emargement> emargementList = new ArrayList<Emargement>();
@@ -85,7 +85,7 @@ public class BDD_Emargement {
         return emargementList;
     }
 
-    public ArrayList<Emargement> getByMatiereId(Connection con, int matiere_id) throws SQLException {
+    public static ArrayList<Emargement> getByMatiereId(Connection con, int matiere_id) throws SQLException {
         String query = "SELECT * FROM ? WHERE matiere_id = ?";
 
         ArrayList<Emargement> emargementList = new ArrayList<Emargement>();
@@ -111,7 +111,7 @@ public class BDD_Emargement {
         return emargementList;
     }
 
-    public ArrayList<Emargement> getByClasseId(Connection con, int classe_id) throws SQLException {
+    public static ArrayList<Emargement> getByClasseId(Connection con, int classe_id) throws SQLException {
         String query = "SELECT * FROM ? e JOIN Emargement_has_classe ehp ON e.id = ehp.emargement_id WHERE classe_id = ?";
 
         ArrayList<Emargement> emargementList = new ArrayList<Emargement>();
@@ -137,7 +137,7 @@ public class BDD_Emargement {
         return emargementList;
     }
 
-    public boolean insert(Connection con, Emargement emargement) throws SQLException {
+    public static boolean insert(Connection con, Emargement emargement) throws SQLException {
 
         boolean success = false;
 
@@ -161,7 +161,7 @@ public class BDD_Emargement {
         return success;
     }
 
-    public boolean update(Connection con, Emargement emargement) throws SQLException {
+    public static boolean update(Connection con, Emargement emargement) throws SQLException {
 
         boolean success = false;
 
@@ -187,7 +187,7 @@ public class BDD_Emargement {
         return success;
     }
 
-    public boolean delete(Connection con, Emargement emargement) throws SQLException {
+    public static boolean delete(Connection con, Emargement emargement) throws SQLException {
 
         boolean success = false;
 
