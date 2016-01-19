@@ -4,6 +4,29 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
+            <li ui-sref-active="active" class="treeview">
+                <a ui-sref="cours">
+                    <i class="fa fa-calendar fa-fw"></i> <span>Cours</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ui-sref-active="active"><a ui-sref="cours.list"><i class="fa fa-list fa-fw"></i>Liste des cours</a></li>
+                    <li ui-sref-active="active"><a ui-sref="cours.create"><i class="fa fa-plus-circle fa-fw"></i>Créer un cours</a></li>
+                </ul>
+            </li>
+            <li ui-sref-active="active" class="treeview">
+                <a ui-sref="etudiant">
+                    <i class="fa fa-graduation-cap fa-fw"></i> <span>Etudiants</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li ui-sref-active="active" ><a ui-sref="etudiant.list"><i class="fa fa-list fa-fw"></i>Liste des étudiants</a></li>
+                    <li ui-sref-active="active"><a ui-sref="etudiant.create"><i class="fa fa-plus-circle fa-fw"></i>Créer une promotion</a></li>
+                </ul>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="statistiques">
+                    <i class="fa fa-line-chart fa-fw"></i> <span>Statistiques</span>
+                </a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

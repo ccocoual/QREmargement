@@ -19,6 +19,11 @@
   "dependencies": {
     "angular": "~1.4.7",
     "angular-ui-router": "~0.2.15",
-    "AdminLTE": "admin-lte#~2.3.2"
+    "AdminLTE": "admin-lte#~2.3.2",
+    "font-awesome": "~4.5.0",
+    "Ionicons": "ionicons#~2.0.1",
+    "raphael": "~2.1.4",
+    "moment": "~2.11.1",
+    "jquery-ui": "~1.11.4"
   }
 }
