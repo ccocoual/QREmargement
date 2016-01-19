@@ -85,6 +85,27 @@
                     <mainClass>com.qre.Main</mainClass>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <executions>
+                    <execution>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>com.qre.Main</mainClass>
+                            <arguments>
+                                <argument>arg0</argument>
+                                <argument>arg1</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            - See more at: http://www.vineetmanohar.com/2009/11/3-ways-to-run-java-main-from-maven/#sthash.ZCmCgE9e.dpuf
         </plugins>
     </build>
 
