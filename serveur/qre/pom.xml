@@ -105,7 +105,6 @@
                     </execution>
                 </executions>
             </plugin>
-            - See more at: http://www.vineetmanohar.com/2009/11/3-ways-to-run-java-main-from-maven/#sthash.ZCmCgE9e.dpuf
         </plugins>
     </build>
 
