@@ -1,22 +1,26 @@
 package database;
 
+import model.Emargement;
 import model.Etudiant;
 import sun.security.provider.MD5;
 import utils.EncrypteString;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.*;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class BDD_Etudiant {
 
+    private static String name_table = "Etudiant";
+
     public ArrayList<Etudiant> getAll(Connection con) throws SQLException {
-        String query = "SELECT * FROM Etudiant";
+        String query = "SELECT * FROM ?";
 
         ArrayList<Etudiant> etudiantList = new ArrayList<Etudiant>();
         PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, name_table);
         ResultSet rs = stmt.executeQuery();
         try {
             while(rs.next()) {
@@ -38,9 +42,11 @@ public class BDD_Etudiant {
     }
 
     public Etudiant getById(Connection con, int id) throws SQLException {
-        String query = "SELECT * FROM Etudiant WHERE id="+id;
+        String query = "SELECT * FROM ? WHERE id = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, name_table);
+        stmt.setInt(2, id);
         ResultSet rs = stmt.executeQuery();
         rs.first();
 
@@ -58,9 +64,11 @@ public class BDD_Etudiant {
     }
 
     public Etudiant getByNumEtu(Connection con, String num_etu) throws SQLException {
-        String query = "SELECT * FROM Etudiant WHERE num_etu="+num_etu;
+        String query = "SELECT * FROM ? WHERE num_etu = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, name_table);
+        stmt.setString(2, num_etu);
         ResultSet rs = stmt.executeQuery();
         rs.first();
 
@@ -78,10 +86,12 @@ public class BDD_Etudiant {
     }
 
     public ArrayList<Etudiant> getByClassId(Connection con, int classe_id) throws SQLException {
-        String query = "SELECT * FROM Etudiant WHERE classe_id="+classe_id;
+        String query = "SELECT * FROM ? WHERE classe_id = ?";
 
         ArrayList<Etudiant> etudiantList = new ArrayList<Etudiant>();
         PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, name_table);
+        stmt.setInt(2, classe_id);
         ResultSet rs = stmt.executeQuery();
         try {
             while(rs.next()) {
@@ -103,10 +113,12 @@ public class BDD_Etudiant {
     }
 
     public ArrayList<Etudiant> getByGroupeId(Connection con, int groupe_id) throws SQLException {
-        String query = "SELECT * FROM Etudiant WHERE groupe_id="+groupe_id;
+        String query = "SELECT * FROM ? WHERE groupe_id = ?";
 
         ArrayList<Etudiant> etudiantList = new ArrayList<Etudiant>();
         PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, name_table);
+        stmt.setInt(2, groupe_id);
         ResultSet rs = stmt.executeQuery();
         try {
             while(rs.next()) {
@@ -127,20 +139,98 @@ public class BDD_Etudiant {
         return etudiantList;
     }
 
-    public boolean checkAuth(Connection con, String login, String password) throws SQLException {
-       String query = "SELECT id FROM Etudiant " +
-                "WHERE date_naiss="+password +
-                "AND (email="+ login + " OR num_etu=" + login + ")";
+    public boolean insert(Connection con, Etudiant etudiant) throws SQLException {
+
+        boolean success = false;
+
+        String query = "INSERT INTO ? (nom, prenom, email, date_naiss, num_etu, classe_id, groupe_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement stmt = con.prepareStatement(query);
-        ResultSet rs = stmt.executeQuery();
-        rs.first();
+        stmt.setString(1, name_table);
+        stmt.setString(2, etudiant.getNom());
+        stmt.setString(3, etudiant.getPrenom());
+        stmt.setString(4, etudiant.getEmail());
+        stmt.setDate(5, etudiant.getDate_naiss());
+        stmt.setString(6, etudiant.getNum_etu());
+        stmt.setInt(7, etudiant.getClasse_id());
+        stmt.setInt(8, etudiant.getGroupe_id());
 
-        if (!rs.isBeforeFirst() ) {
-            return false;
+        int rowsUpdated = stmt.executeUpdate();
+
+        if(rowsUpdated > 0){
+            con.commit();
+            success = true;
         }
 
-        return true;
+        return success;
+    }
+
+    public boolean update(Connection con, Etudiant etudiant) throws SQLException {
+
+        boolean success = false;
+
+        String query = "UPDATE ? SET nom= ?, prenom= ?, email= ?, date_naiss= ?, num_etu= ?, classe_id= ?, groupe_id= ? WHERE id= ?";
+
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, name_table);
+        stmt.setString(2, etudiant.getNom());
+        stmt.setString(3, etudiant.getPrenom());
+        stmt.setString(4, etudiant.getEmail());
+        stmt.setDate(5, etudiant.getDate_naiss());
+        stmt.setString(6, etudiant.getNum_etu());
+        stmt.setInt(7, etudiant.getClasse_id());
+        stmt.setInt(8, etudiant.getGroupe_id());
+        stmt.setInt(9, etudiant.getId());
+
+        int rowsUpdated = stmt.executeUpdate();
+
+        if(rowsUpdated > 0){
+            con.commit();
+            success = true;
+        }
+
+        return success;
+    }
+
+    public boolean delete(Connection con, Etudiant etudiant) throws SQLException {
+
+        boolean success = false;
+
+        String query = "DELETE FROM ? WHERE id = ?";
+
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, name_table);
+        stmt.setInt(2, etudiant.getId());
+
+        int rowsUpdated = stmt.executeUpdate();
+
+        if(rowsUpdated > 0){
+            con.commit();
+            success = true;
+        }
+
+        return success;
+    }
+
+    public boolean checkAuth(Connection con, String login, String password) throws SQLException, ParseException {
+
+        // Password = date_naiss, Login = num_etu OR email
+
+        String query = "SELECT id FROM ? WHERE date_naiss = ? AND (email = ? OR num_etu = ?)";
+
+        // TODO verifier format date de password
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        java.util.Date parsed = formatter.parse(password);
+        java.sql.Date date_naiss = new Date(parsed.getTime());
+
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, name_table);
+        stmt.setDate(2, date_naiss);
+        stmt.setString(3, login);
+        stmt.setString(4, login);
+        ResultSet rs = stmt.executeQuery();
+
+        return rs.isBeforeFirst();
     }
 
 }

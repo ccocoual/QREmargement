@@ -1,6 +1,8 @@
 package model;
 
 
+import utils.EncrypteString;
+
 import java.sql.Date;
 
 public class Professeur {
@@ -63,6 +65,10 @@ public class Professeur {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean checkPassword(String passwordCompare){
+        return this.password.equals(EncrypteString.encode(passwordCompare));
     }
 
     @Override

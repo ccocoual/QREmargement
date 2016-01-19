@@ -10,11 +10,14 @@ import java.util.ArrayList;
 
 public class BDD_Classe {
 
+    private static String name_table = "Classe";
+
     public ArrayList<Classe> getAll(Connection con) throws SQLException {
-        String query = "SELECT * FROM Classe";
+        String query = "SELECT * FROM ?";
 
         ArrayList<Classe> classeList = new ArrayList<Classe>();
         PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, name_table);
         ResultSet rs = stmt.executeQuery();
         try {
             while(rs.next()) {
@@ -29,18 +32,67 @@ public class BDD_Classe {
         return classeList;
     }
 
-    public Classe getById(Connection con, int id) throws SQLException {
-        String query = "SELECT * FROM Classe WHERE id="+id;
+
+    public boolean insert(Connection con, Classe classe) throws SQLException {
+
+        boolean success = false;
+
+        String query = "INSERT INTO ? (libelle) VALUES (?)";
 
         PreparedStatement stmt = con.prepareStatement(query);
-        ResultSet rs = stmt.executeQuery();
-        rs.first();
+        stmt.setString(1, name_table);
+        stmt.setString(2, classe.getLibelle());
 
-        Classe classe = new Classe();
-        classe.setId(rs.getInt("id"));
-        classe.setLibelle(rs.getString("libelle"));
+        int rowsUpdated = stmt.executeUpdate();
 
-        return classe;
+        if(rowsUpdated > 0){
+            con.commit();
+            success = true;
+        }
+
+        return success;
     }
+
+    public boolean update(Connection con, Classe classe) throws SQLException {
+
+        boolean success = false;
+
+        String query = "UPDATE ? SET libelle = ? WHERE id = ?";
+
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, name_table);
+        stmt.setString(2, classe.getLibelle());
+        stmt.setInt(3, classe.getId());
+
+        int rowsUpdated = stmt.executeUpdate();
+
+        if(rowsUpdated > 0){
+            con.commit();
+            success = true;
+        }
+
+        return success;
+    }
+
+    public boolean delete(Connection con, Classe classe) throws SQLException {
+
+        boolean success = false;
+
+        String query = "DELETE FROM ? WHERE id = ?";
+
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, name_table);
+        stmt.setInt(2, classe.getId());
+
+        int rowsUpdated = stmt.executeUpdate();
+
+        if(rowsUpdated > 0){
+            con.commit();
+            success = true;
+        }
+
+        return success;
+    }
+
 
 }
