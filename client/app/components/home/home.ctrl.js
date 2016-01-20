@@ -1,6 +1,10 @@
-'use strict';
+(function () {
+    'use strict';
 
-qrApp.controller('HomeCtrl', function($scope, $http) {
-    console.log("Welcome Home ! ");
-});
+    qrApp.controller('HomeCtrl', HomeCtrl);
 
+
+    function HomeCtrl() {
+
+    }
+})();

@@ -4,7 +4,7 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
 
     $stateProvider
         .state('home', {
-            url: '/home',
+            url: '/',
             controller: 'HomeCtrl',
             templateUrl: "./app/components/home/home.tpl.html"
         });
@@ -12,39 +12,39 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
 
     //Routes pour les vues relatives aux cours
     $stateProvider
-        .state('cours', {
-            url: '/cours'/**,
-            abstract:true,
-             controller: 'HomeCtrl',
-             templateUrl: "./app/components/home/home.tpl.html"**/
+        .state('lesson', {
+            url: '/lesson',
+            //abstract:true,
+            controller: 'LessonCtrl',
+            templateUrl: "./app/components/lesson/lesson.tpl.html"
         })
-        .state('cours.list', {
+        .state('lesson.list', {
             url: '/list'
         })
-        .state('cours.create', {
+        .state('lesson.create', {
             url: '/create'
         });
 
     //Routes pour les vues relatives aux étudiants
     $stateProvider
-        .state('etudiant', {
-            url: '/etudiant'/**,
-             abstract:true,
-             controller: 'HomeCtrl',
-             templateUrl: "./app/components/home/home.tpl.html"**/
+        .state('student', {
+            url: '/student',
+            //abstract:true,
+            controller: 'StudentCtrl',
+            templateUrl: "./app/components/student/student.tpl.html"
         })
-        .state('etudiant.list', {
+        .state('student.list', {
             url: '/list'
         })
-        .state('etudiant.create', {
+        .state('student.create', {
             url: '/create'
         });
 
     //Routes pour les vues relatives aux statistiques
     $stateProvider
-        .state('statistiques', {
-            url: '/statistiques'/**,
-             controller: 'HomeCtrl',
-             templateUrl: "./app/components/home/home.tpl.html"**/
+        .state('statistic', {
+            url: '/statistic',
+             controller: 'StatisticCtrl',
+             templateUrl: "./app/components/statistic/statistic.tpl.html"
         });
 });
