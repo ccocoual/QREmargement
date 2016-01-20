@@ -8,8 +8,10 @@
     function StudentCtrl(StudentFactory) {
         var vm = this;
         vm.students = [];
+        vm.test = "toto";
 
-        function getStudents() {
+        vm.getStudents = function() {
+            console.log('getstudents');
             return StudentFactory.getStudents()
                 .then(function(data) {
                     vm.students = data;

@@ -31,10 +31,12 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/student',
             //abstract:true,
             controller: 'StudentCtrl',
+            controllerAs: 'studentCtrl',
             templateUrl: "./app/components/student/student.tpl.html"
         })
         .state('student.list', {
-            url: '/list'
+            url: '/list',
+            templateUrl: "./app/components/student/student.list.tpl.html"
         })
         .state('student.create', {
             url: '/create'
