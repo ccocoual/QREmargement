@@ -2,6 +2,7 @@ package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public final class Database {
@@ -9,7 +10,7 @@ public final class Database {
     private Statement statement;
     public static Database db;
 
-    private Database() {
+    private Database() throws SQLException {
         String url= "jdbc:mysql://localhost:3306/";
         String dbName = "qre";
         String driver = "com.mysql.jdbc.Driver";
@@ -17,17 +18,20 @@ public final class Database {
         String password = "";
         try {
             Class.forName(driver).newInstance();
-            this.conn = (Connection)DriverManager.getConnection(url+dbName,userName,password);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        catch (Exception sqle) {
-            sqle.printStackTrace();
-        }
+        this.conn = (Connection)DriverManager.getConnection(url+dbName,userName,password);
     }
     /**
      *
      * @return MysqlConnect Database connection object
      */
-    public static synchronized Database getDbCon() {
+    public static synchronized Database getDbCon() throws SQLException {
         if ( db == null ) {
             db = new Database();
         }

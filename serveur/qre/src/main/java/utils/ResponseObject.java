@@ -1,5 +1,7 @@
 package utils;
 
+import com.google.gson.Gson;
+
 /**
  * Created by stagiaire on 20/01/2016.
  */
@@ -49,5 +51,9 @@ public class ResponseObject {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String toJSON(){
+        return new Gson().toJson(this);
     }
 }

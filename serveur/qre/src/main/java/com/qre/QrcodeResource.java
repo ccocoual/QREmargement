@@ -27,67 +27,69 @@ public class QrcodeResource {
     @GET
     @Path("/scan/{url_generated}")
     @Produces({MediaType.APPLICATION_JSON})
-    public String scanQRE(@PathParam("url_generated") String url_generated, @CookieParam(value = cookie_name) String cookie_num_etu) throws SQLException {
+    public Response scanQRE(@PathParam("url_generated") String url_generated, @CookieParam(value = cookie_name) String cookie_num_etu){
         if(cookie_num_etu != null && !cookie_num_etu.isEmpty() && url_generated != null && !url_generated.isEmpty()){
-            Connection connection = Database.getDbCon().conn;
 
-            Etudiant etudiant = BDD_Etudiant.getByNumEtu(connection, cookie_num_etu);
-            if(etudiant == null){
-                String status = "error";
-                String nextURL = "NEXTURL";
-                String message = "Etudiant with num_etu:"+cookie_num_etu+" not found";
-                return new Gson().toJson(new ResponseObject(status, nextURL, message));
+            try {
+                Connection connection = Database.getDbCon().conn;
+
+                Etudiant etudiant = BDD_Etudiant.getByNumEtu(connection, cookie_num_etu);
+                if(etudiant == null){
+                    String json = new ResponseObject("error", "NEXTURL", "Etudiant with num_etu:"+cookie_num_etu+" not found").toJSON();
+                    return Response.status(Response.Status.NOT_FOUND).entity(json).build();
+                }
+
+                Emargement emargement = BDD_Emargement.getByURL(connection, url_generated);
+                if(emargement == null){
+                    String json = new ResponseObject("error", "NEXTURL", "Emargement with url_generated:"+url_generated+" not found").toJSON();
+                    return Response.status(Response.Status.NOT_FOUND).entity(json).build();
+                }
+
+                Signature signature = BDD_Signature.getById(connection, emargement.getId(), etudiant.getId());
+                if(signature == null){
+                    String json = new ResponseObject("error", "NEXTURL", "Signature with emargement_id:"+emargement.getId()+" and etudiant_id:"+etudiant.getId()+"not found").toJSON();
+                    return Response.status(Response.Status.NOT_FOUND).entity(json).build();
+                }
+
+                /* START TRAITEMENT */
+                signature.setSignee(true);
+                signature.setDate(new java.sql.Date(new java.util.Date().getTime()));
+                /* END TRAITEMENT*/
+
+                if (BDD_Signature.update(connection, signature)){
+                    String json = new ResponseObject("success", "NEXTURL", "Signature has been updated with success").toJSON();
+                    return Response.status(Response.Status.OK).entity(json).build();
+                } else {
+                    String json = new ResponseObject("error", "NEXTURL", "Updating signature with emargement_id:"+emargement.getId()+" and etudiant_id:"+etudiant.getId()+"has failed").toJSON();
+                    return Response.status(Response.Status.NOT_FOUND).entity(json).build();
+                }
+            } catch (SQLException e) {
+                String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
             }
 
-            Emargement emargement = BDD_Emargement.getByURL(connection, url_generated);
-            if(emargement == null){
-                String status = "error";
-                String nextURL = "NEXTURL";
-                String message = "Emargement with url_generated:"+url_generated+" not found";
-                return new Gson().toJson(new ResponseObject(status, nextURL, message));
-            }
-
-            Signature signature= BDD_Signature.getById(connection, emargement.getId(), etudiant.getId());
-            if(signature == null){
-                String status = "error";
-                String nextURL = "NEXTURL";
-                String message = "Signature with emargement_id:"+emargement.getId()+" and etudiant_id:"+etudiant.getId()+"not found";
-                return new Gson().toJson(new ResponseObject(status, nextURL, message));
-            }
-
-            signature.setSignee(true);
-            signature.setDate(new java.sql.Date(new java.util.Date().getTime()));
-
-            if(BDD_Signature.update(connection, signature)){
-                String status = "success";
-                String nextURL = "NEXTURL";
-                String message = "Signature has been updated with success";
-                return new Gson().toJson(new ResponseObject(status, nextURL, message));
-            } else {
-                String status = "error";
-                String nextURL = "NEXTURL";
-                String message = "Updating signature with emargement_id:"+emargement.getId()+" and etudiant_id:"+etudiant.getId()+"has failed";
-                return new Gson().toJson(new ResponseObject(status, nextURL, message));
-            }
         }
 
-        String status = "cookie_not_found";
-        String nextURL = "NEXTURL";
-        String message = "No cookie found";
-        return new Gson().toJson(new ResponseObject(status, nextURL, message));
+        String json = new ResponseObject("cookie_not_found", "NEXTURL", "No cookie found").toJSON();
+        return Response.status(Response.Status.NOT_FOUND).entity(json).build();
     }
 
     @GET
     @Path("/setCookie")
     public Response setCookie(){
-        return Response.seeOther(URI.create("qrcode/getCookie"))
-                .cookie(new NewCookie(cookie_name, "15003456"))
-                .build();
+        return Response.seeOther(URI.create("qrcode/getCookie")).cookie(new NewCookie(cookie_name, "15003456")).build();
     }
 
     @GET
     @Path("/getCookie")
-    public String getCookie(@CookieParam(value = cookie_name) String cookie_num_etu){
-        return new Gson().toJson(cookie_num_etu);
+    public Response getCookie(@CookieParam(value = cookie_name) String cookie_num_etu){
+        if(cookie_num_etu != null && !cookie_num_etu.isEmpty()){
+            String json = new ResponseObject("success", "NEXTURL", cookie_num_etu).toJSON();
+            return Response.status(Response.Status.OK).entity(json).build();
+        } else {
+            String json = new ResponseObject("error", "NEXTURL", "No cookie found").toJSON();
+            return Response.status(Response.Status.NOT_FOUND).entity(json).build();
+        }
+
     }
 }
