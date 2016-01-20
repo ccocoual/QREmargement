@@ -1,2 +1,4 @@
 serveur/qre/.idea
 serveur/qre/target/*
+
+client/bower_components/*
