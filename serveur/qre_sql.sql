@@ -19,11 +19,11 @@ CREATE SCHEMA IF NOT EXISTS `qre` DEFAULT CHARACTER SET utf8 COLLATE utf8_genera
 USE `qre` ;
 
 -- -----------------------------------------------------
--- Table `qre`.`Classe`
+-- Table `qre`.`classe`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `qre`.`Classe` ;
+DROP TABLE IF EXISTS `qre`.`classe` ;
 
-CREATE TABLE IF NOT EXISTS `qre`.`Classe` (
+CREATE TABLE IF NOT EXISTS `qre`.`classe` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `libelle` VARCHAR(255) NULL,
   PRIMARY KEY (`id`))
@@ -31,29 +31,29 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `qre`.`Groupe`
+-- Table `qre`.`groupe`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `qre`.`Groupe` ;
+DROP TABLE IF EXISTS `qre`.`groupe` ;
 
-CREATE TABLE IF NOT EXISTS `qre`.`Groupe` (
+CREATE TABLE IF NOT EXISTS `qre`.`groupe` (
   `id` INT NOT NULL,
   `libelle` VARCHAR(45) NULL,
   `classe_id` INT NOT NULL,
   PRIMARY KEY (`id`, `classe_id`),
-  CONSTRAINT `fk_Groupe_Classe1`
+  CONSTRAINT `fk_groupe_classe1`
     FOREIGN KEY (`classe_id`)
-    REFERENCES `qre`.`Classe` (`id`)
+    REFERENCES `qre`.`classe` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `qre`.`Etudiant`
+-- Table `qre`.`etudiant`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `qre`.`Etudiant` ;
+DROP TABLE IF EXISTS `qre`.`etudiant` ;
 
-CREATE TABLE IF NOT EXISTS `qre`.`Etudiant` (
+CREATE TABLE IF NOT EXISTS `qre`.`etudiant` (
   `id` INT NOT NULL,
   `nom` VARCHAR(255) NULL,
   `prenom` VARCHAR(255) NULL,
@@ -63,20 +63,20 @@ CREATE TABLE IF NOT EXISTS `qre`.`Etudiant` (
   `groupe_id` INT NOT NULL,
   `classe_id` INT NOT NULL,
   PRIMARY KEY (`id`, `groupe_id`, `classe_id`),
-  CONSTRAINT `fk_Etudiant_Groupe1`
+  CONSTRAINT `fk_etudiant_groupe1`
     FOREIGN KEY (`groupe_id` , `classe_id`)
-    REFERENCES `qre`.`Groupe` (`id` , `classe_id`)
+    REFERENCES `qre`.`groupe` (`id` , `classe_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `qre`.`Matiere`
+-- Table `qre`.`matiere`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `qre`.`Matiere` ;
+DROP TABLE IF EXISTS `qre`.`matiere` ;
 
-CREATE TABLE IF NOT EXISTS `qre`.`Matiere` (
+CREATE TABLE IF NOT EXISTS `qre`.`matiere` (
   `id` INT NOT NULL,
   `libelle` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
@@ -84,11 +84,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `qre`.`Professeur`
+-- Table `qre`.`professeur`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `qre`.`Professeur` ;
+DROP TABLE IF EXISTS `qre`.`professeur` ;
 
-CREATE TABLE IF NOT EXISTS `qre`.`Professeur` (
+CREATE TABLE IF NOT EXISTS `qre`.`professeur` (
   `id` INT NOT NULL,
   `nom` VARCHAR(255) NULL,
   `prenom` VARCHAR(255) NULL,
@@ -99,11 +99,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `qre`.`Emargement`
+-- Table `qre`.`emargement`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `qre`.`Emargement` ;
+DROP TABLE IF EXISTS `qre`.`emargement` ;
 
-CREATE TABLE IF NOT EXISTS `qre`.`Emargement` (
+CREATE TABLE IF NOT EXISTS `qre`.`emargement` (
   `id` INT NOT NULL,
   `date` DATETIME NOT NULL,
   `url_generated` VARCHAR(255) NOT NULL,
@@ -111,61 +111,61 @@ CREATE TABLE IF NOT EXISTS `qre`.`Emargement` (
   `matiere_id` INT NOT NULL,
   `professeur_id` INT NOT NULL,
   PRIMARY KEY (`id`, `matiere_id`, `professeur_id`),
-  CONSTRAINT `fk_Emargement_Matiere1`
+  CONSTRAINT `fk_emargement_matiere1`
     FOREIGN KEY (`matiere_id`)
-    REFERENCES `qre`.`Matiere` (`id`)
+    REFERENCES `qre`.`matiere` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Emargement_Professeur1`
+  CONSTRAINT `fk_emargement_professeur1`
     FOREIGN KEY (`professeur_id`)
-    REFERENCES `qre`.`Professeur` (`id`)
+    REFERENCES `qre`.`professeur` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `qre`.`Signature`
+-- Table `qre`.`signature`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `qre`.`Signature` ;
+DROP TABLE IF EXISTS `qre`.`signature` ;
 
-CREATE TABLE IF NOT EXISTS `qre`.`Signature` (
+CREATE TABLE IF NOT EXISTS `qre`.`signature` (
   `emargement_id` INT NOT NULL,
   `etudiant_id` INT NOT NULL,
   `signee` TINYINT(1) NULL,
   `date` DATETIME NULL,
   PRIMARY KEY (`emargement_id`, `etudiant_id`),
-  CONSTRAINT `fk_Emargement_has_Etudiant_Emargement1`
+  CONSTRAINT `fk_emargement_has_etudiant_emargement1`
     FOREIGN KEY (`emargement_id`)
-    REFERENCES `qre`.`Emargement` (`id`)
+    REFERENCES `qre`.`emargement` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Emargement_has_Etudiant_Etudiant1`
+  CONSTRAINT `fk_emargement_has_etudiant_etudiant1`
     FOREIGN KEY (`etudiant_id`)
-    REFERENCES `qre`.`Etudiant` (`id`)
+    REFERENCES `qre`.`etudiant` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `qre`.`Emargement_has_Classe`
+-- Table `qre`.`emargement_has_classe`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `qre`.`Emargement_has_Classe` ;
+DROP TABLE IF EXISTS `qre`.`emargement_has_classe` ;
 
-CREATE TABLE IF NOT EXISTS `qre`.`Emargement_has_Classe` (
+CREATE TABLE IF NOT EXISTS `qre`.`emargement_has_classe` (
   `emargement_id` INT NOT NULL,
   `matiere_id` INT NOT NULL,
   `classe_id` INT NOT NULL,
   PRIMARY KEY (`emargement_id`, `matiere_id`, `classe_id`),
-  CONSTRAINT `fk_Emargement_has_Classe_Emargement1`
+  CONSTRAINT `fk_emargement_has_classe_emargement1`
     FOREIGN KEY (`emargement_id` , `matiere_id`)
-    REFERENCES `qre`.`Emargement` (`id` , `matiere_id`)
+    REFERENCES `qre`.`emargement` (`id` , `matiere_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Emargement_has_Classe_Classe1`
+  CONSTRAINT `fk_emargement_has_classe_classe1`
     FOREIGN KEY (`classe_id`)
-    REFERENCES `qre`.`Classe` (`id`)
+    REFERENCES `qre`.`classe` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

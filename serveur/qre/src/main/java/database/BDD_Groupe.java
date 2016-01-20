@@ -1,7 +1,5 @@
 package database;
 
-import model.Classe;
-import model.Etudiant;
 import model.Groupe;
 
 import java.sql.Connection;
@@ -13,78 +11,75 @@ import java.util.ArrayList;
 public class BDD_Groupe {
 
 
-    private static String name_table = "Groupe";
+    private static String name_table = "groupe";
 
-    public ArrayList<Groupe> getAll(Connection con) throws SQLException {
-        String query = "SELECT * FROM ?";
+    public static ArrayList<Groupe> getAll(Connection con) throws SQLException {
+        String query = "SELECT * FROM "+name_table;
 
         ArrayList<Groupe> groupeList = new ArrayList<Groupe>();
         PreparedStatement stmt = con.prepareStatement(query);
         stmt.setString(1, name_table);
         ResultSet rs = stmt.executeQuery();
-        try {
-            while(rs.next()) {
-                Groupe groupe = new Groupe();
-                groupe.setId(rs.getInt("id"));
-                groupe.setLibelle(rs.getString("libelle"));
-                groupe.setId(rs.getInt("classe_id"));
-                groupeList.add(groupe);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        while(rs.next()) {
+            Groupe groupe = new Groupe();
+            groupe.setId(rs.getInt("id"));
+            groupe.setLibelle(rs.getString("libelle"));
+            groupe.setId(rs.getInt("classe_id"));
+            groupeList.add(groupe);
         }
+
         return groupeList;
     }
 
-    public Groupe getById(Connection con, int id) throws SQLException {
+    public static Groupe getById(Connection con, int id) throws SQLException {
         String query = "SELECT * FROM ? WHERE id = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
         stmt.setString(1, name_table);
         stmt.setInt(2, id);
         ResultSet rs = stmt.executeQuery();
-        rs.first();
 
-        Groupe groupe = new Groupe();
-        groupe.setId(rs.getInt("id"));
-        groupe.setLibelle(rs.getString("libelle"));
-        groupe.setClasse_id(rs.getInt("classe_id"));
+        Groupe  groupe = null;
+        if (rs.isBeforeFirst()) {
+            rs.first();
+            groupe = new Groupe();
+            groupe.setId(rs.getInt("id"));
+            groupe.setLibelle(rs.getString("libelle"));
+            groupe.setClasse_id(rs.getInt("classe_id"));
+        }
 
         return groupe;
     }
 
-    public ArrayList<Groupe> getByClassId(Connection con, int classe_id) throws SQLException {
-        String query = "SELECT * FROM ? WHERE classe_id = ?";
+    public static ArrayList<Groupe> getByClassId(Connection con, int classe_id) throws SQLException {
+        String query = "SELECT * FROM "+name_table+" WHERE classe_id = ?";
 
         ArrayList<Groupe> groupeList = new ArrayList<Groupe>();
         PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, name_table);
-        stmt.setInt(2, classe_id);
+        stmt.setInt(1, classe_id);
         ResultSet rs = stmt.executeQuery();
-        try {
-            while(rs.next()) {
-                Groupe groupe = new Groupe();
-                groupe.setId(rs.getInt("id"));
-                groupe.setLibelle(rs.getString("libelle"));
-                groupe.setClasse_id(rs.getInt("classe_id"));
-                groupeList.add(groupe);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        while(rs.next()) {
+            Groupe groupe = new Groupe();
+            groupe.setId(rs.getInt("id"));
+            groupe.setLibelle(rs.getString("libelle"));
+            groupe.setClasse_id(rs.getInt("classe_id"));
+            groupeList.add(groupe);
         }
+
         return groupeList;
     }
 
-    public boolean insert(Connection con, Groupe groupe) throws SQLException {
+    public static boolean insert(Connection con, Groupe groupe) throws SQLException {
 
         boolean success = false;
 
-        String query = "INSERT INTO ? (libelle, classe_id) VALUES (?, ?)";
+        String query = "INSERT INTO "+name_table+" (libelle, classe_id) VALUES (?, ?)";
 
         PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, name_table);
-        stmt.setString(2, groupe.getLibelle());
-        stmt.setInt(3, groupe.getClasse_id());
+        stmt.setString(1, groupe.getLibelle());
+        stmt.setInt(2, groupe.getClasse_id());
 
         int rowsUpdated = stmt.executeUpdate();
 
@@ -96,17 +91,16 @@ public class BDD_Groupe {
         return success;
     }
 
-    public boolean update(Connection con, Groupe groupe) throws SQLException {
+    public static boolean update(Connection con, Groupe groupe) throws SQLException {
 
         boolean success = false;
 
-        String query = "UPDATE ? SET libelle= ?, classe_id= ? WHERE id= ?";
+        String query = "UPDATE "+name_table+" SET libelle= ?, classe_id= ? WHERE id= ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, name_table);
-        stmt.setString(2, groupe.getLibelle());
-        stmt.setInt(3, groupe.getClasse_id());
-        stmt.setInt(4, groupe.getId());
+        stmt.setString(1, groupe.getLibelle());
+        stmt.setInt(2, groupe.getClasse_id());
+        stmt.setInt(3, groupe.getId());
 
         int rowsUpdated = stmt.executeUpdate();
 
@@ -118,15 +112,14 @@ public class BDD_Groupe {
         return success;
     }
 
-    public boolean delete(Connection con, Groupe groupe) throws SQLException {
+    public static boolean delete(Connection con, Groupe groupe) throws SQLException {
 
         boolean success = false;
 
-        String query = "DELETE FROM ? WHERE id = ?";
+        String query = "DELETE FROM "+name_table+" WHERE id = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, name_table);
-        stmt.setInt(2, groupe.getId());
+        stmt.setInt(1, groupe.getId());
 
         int rowsUpdated = stmt.executeUpdate();
 

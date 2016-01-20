@@ -3,8 +3,6 @@ package model;
 
 import utils.EncrypteString;
 
-import java.sql.Date;
-
 public class Professeur {
     private int id;
     private String nom;
