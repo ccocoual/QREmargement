@@ -2,6 +2,7 @@ package com.qre;
 
 import com.google.gson.Gson;
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
+import com.sun.jersey.spi.container.ResourceFilters;
 import database.*;
 import model.*;
 import utils.ResponseObject;
@@ -20,15 +21,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-@Path("/admin/classes")
+@Path("{token}/classes")
 public class ClasseResource {
+
 
     @GET
     @Produces("application/json")
-    public Response getAllClasses(){
+    public Response getAllClasses(@PathParam("token") String token){
         try {
-            Connection connection = Database.getDbCon().conn;
-            String json = new Gson().toJson(BDD_Classe.getAll(connection));
+
+            Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
+            if(authentication == null){
+                String json = new ResponseObject("error", "nextURL", "Token invalid or expired").toJSON();
+                return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
+            }
+            String json = new Gson().toJson(BDD_Classe.getAll());
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
@@ -39,10 +46,15 @@ public class ClasseResource {
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public Response getClasseById(@PathParam("id") int id){
+    public Response getClasseById(@PathParam("id") int id, @PathParam("token") String token){
         try {
-            Connection connection = Database.getDbCon().conn;
-            Classe classe = BDD_Classe.getById(connection, id);
+            Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
+            if(authentication == null){
+                String json = new ResponseObject("error", "nextURL", "Token invalid or expired").toJSON();
+                return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
+            }
+
+            Classe classe = BDD_Classe.getById(id);
             if (classe == null){
                 String json = new ResponseObject("error", "NEXTURL", "Classe with id:"+id+" not found").toJSON();
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
@@ -60,8 +72,8 @@ public class ClasseResource {
     @Produces("application/json")
     public Response getGroupesByClasse(@PathParam("id") int id){
         try {
-            Connection connection = Database.getDbCon().conn;
-            ArrayList<Groupe> groupes = BDD_Groupe.getByClassId(connection, id);
+
+            ArrayList<Groupe> groupes = BDD_Groupe.getByClassId(id);
             String json = new Gson().toJson(groupes);
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
@@ -76,9 +88,9 @@ public class ClasseResource {
     public Response getGroupeByClasse(@PathParam("id") int id,
                                       @PathParam("groupe_id") int groupe_id){
         try {
-            Connection connection = Database.getDbCon().conn;
-            Groupe groupe = BDD_Groupe.getById(connection, groupe_id);
-            ArrayList<Groupe> groupes = BDD_Groupe.getByClassId(connection, id);
+
+            Groupe groupe = BDD_Groupe.getById(groupe_id);
+            ArrayList<Groupe> groupes = BDD_Groupe.getByClassId(id);
             if(groupes.contains(groupe)){
                 String json = new Gson().toJson(groupe);
                 return Response.status(Response.Status.OK).entity(json).build();
@@ -98,11 +110,11 @@ public class ClasseResource {
     public Response getEtudiantsByGroupeByClasse(@PathParam("id") int id,
                                                  @PathParam("groupe_id") int groupe_id){
         try {
-            Connection connection = Database.getDbCon().conn;
-            Groupe groupe = BDD_Groupe.getById(connection, groupe_id);
-            ArrayList<Groupe> groupes = BDD_Groupe.getByClassId(connection, id);
+
+            Groupe groupe = BDD_Groupe.getById(groupe_id);
+            ArrayList<Groupe> groupes = BDD_Groupe.getByClassId(id);
             if(groupes.contains(groupe)){
-                ArrayList<Etudiant> etudiants = BDD_Etudiant.getByGroupeId(connection, groupe_id);
+                ArrayList<Etudiant> etudiants = BDD_Etudiant.getByGroupeId(groupe_id);
                 String json = new Gson().toJson(etudiants);
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {
@@ -122,12 +134,12 @@ public class ClasseResource {
                                                  @PathParam("groupe_id") int groupe_id,
                                                  @PathParam("etudiant_id") int etudiant_id){
         try {
-            Connection connection = Database.getDbCon().conn;
-            ArrayList<Groupe> groupes = BDD_Groupe.getByClassId(connection, id);
-            Groupe groupe = BDD_Groupe.getById(connection, groupe_id);
+
+            ArrayList<Groupe> groupes = BDD_Groupe.getByClassId(id);
+            Groupe groupe = BDD_Groupe.getById(groupe_id);
             if(groupes.contains(groupe)){
-                ArrayList<Etudiant> etudiants = BDD_Etudiant.getByGroupeId(connection, groupe_id);
-                Etudiant etudiant = BDD_Etudiant.getById(connection, etudiant_id);
+                ArrayList<Etudiant> etudiants = BDD_Etudiant.getByGroupeId(groupe_id);
+                Etudiant etudiant = BDD_Etudiant.getById(etudiant_id);
                 if(etudiants.contains(etudiant)){
                     String json = new Gson().toJson(etudiant);
                     return Response.status(Response.Status.OK).entity(json).build();
@@ -150,8 +162,8 @@ public class ClasseResource {
     @Produces("application/json")
     public Response getClasseByEmargementId(@PathParam("id") int id){
         try {
-            Connection connection = Database.getDbCon().conn;
-            ArrayList<Classe> classes = BDD_Classe.getByEmargementId(connection, id);
+
+            ArrayList<Classe> classes = BDD_Classe.getByEmargementId(id);
             String json = new Gson().toJson(classes);
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
@@ -162,12 +174,11 @@ public class ClasseResource {
 
     @POST
     @Consumes("application/json")
-    @Produces("application/json")
     public Response insertClasse(String data){
         try {
             Classe classe = new Gson().fromJson(data, Classe.class);
-            Connection connection = Database.getDbCon().conn;
-            if(BDD_Classe.insert(connection, classe)){
+
+            if(BDD_Classe.insert(classe)){
                 String json = new Gson().toJson(classe);
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {
@@ -183,12 +194,11 @@ public class ClasseResource {
     @PUT
     @Path("/{id}")
     @Consumes("application/json")
-    @Produces("application/json")
     public Response updateClasse(@PathParam("id") int id, String data){
         try {
             Classe classe = new Gson().fromJson(data, Classe.class);
-            Connection connection = Database.getDbCon().conn;
-            if(BDD_Classe.update(connection, classe)){
+
+            if(BDD_Classe.update(classe)){
                 String json = new Gson().toJson(classe);
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {
@@ -204,11 +214,10 @@ public class ClasseResource {
     @DELETE
     @Path("/{id}")
     @Consumes("application/json")
-    @Produces("application/json")
     public Response deleteClasse(@PathParam("id") int id){
         try {
-            Connection connection = Database.getDbCon().conn;
-            if(BDD_Classe.delete(connection, id)){
+
+            if(BDD_Classe.delete(id)){
                 String json = new ResponseObject("success", "nextURL",  "Classe has been deleted with succes").toJSON();
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {

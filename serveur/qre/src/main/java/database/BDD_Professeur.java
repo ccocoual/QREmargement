@@ -13,11 +13,13 @@ public class BDD_Professeur {
 
     private static String name_table = "professeur";
 
-    public static ArrayList<Professeur> getAll(Connection con) throws SQLException {
+    public static ArrayList<Professeur> getAll() throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT * FROM "+name_table;
 
         ArrayList<Professeur> professeurList = new ArrayList<Professeur>();
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, name_table);
         ResultSet rs = stmt.executeQuery();
 
@@ -33,10 +35,12 @@ public class BDD_Professeur {
         return professeurList;
     }
 
-    public static Professeur getById(Connection con, int id) throws SQLException {
+    public static Professeur getById(int id) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT * FROM "+name_table+" WHERE id = ?";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
         ResultSet rs = stmt.executeQuery();
 
@@ -53,10 +57,12 @@ public class BDD_Professeur {
         return professeur;
     }
 
-    public static Professeur checkAuth(Connection con, String login, String password) throws SQLException {
+    public static Professeur checkAuth(String login, String password) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT id FROM "+name_table+" WHERE email = ? AND password = ?";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, login);
         stmt.setString(2, EncrypteString.encode(password));
         ResultSet rs = stmt.executeQuery();
@@ -74,13 +80,12 @@ public class BDD_Professeur {
         return professeur;
     }
 
-    public static boolean insert(Connection con, Professeur professeur) throws SQLException {
-
-        boolean success = false;
+    public static boolean insert(Professeur professeur) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
 
         String query = "INSERT INTO "+name_table+" (nom, prenom, email, password) VALUES (?, ?, ?, ?)";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, professeur.getNom());
         stmt.setString(2, professeur.getPrenom());
         stmt.setString(3, professeur.getEmail());
@@ -89,20 +94,19 @@ public class BDD_Professeur {
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            con.commit();
-            success = true;
+            connection.commit();
+            return true;
         }
 
-        return success;
+        return false;
     }
 
-    public static boolean update(Connection con, Professeur professeur) throws SQLException {
-
-        boolean success = false;
+    public static boolean update(Professeur professeur) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
 
         String query = "UPDATE "+name_table+" SET nom= ?, prenom= ?, email= ? WHERE id= ?";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, professeur.getNom());
         stmt.setString(2, professeur.getPrenom());
         stmt.setString(3, professeur.getEmail());
@@ -111,50 +115,48 @@ public class BDD_Professeur {
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            con.commit();
-            success = true;
+            connection.commit();
+            return true;
         }
 
-        return success;
+        return false;
     }
 
-    public static boolean updatePassword(Connection con, Professeur professeur, String newpassword) throws SQLException {
-
-        boolean success = false;
+    public static boolean updatePassword(Professeur professeur, String newpassword) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
 
         String query = "UPDATE "+name_table+" SET password= ? WHERE id= ?";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, EncrypteString.encode(newpassword));
         stmt.setInt(2, professeur.getId());
 
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            con.commit();
-            success = true;
+            connection.commit();
+            return true;
         }
 
-        return success;
+        return false;
     }
 
-    public boolean delete(Connection con, int id) throws SQLException {
-
-        boolean success = false;
+    public boolean delete(int id) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
 
         String query = "DELETE FROM "+name_table+" WHERE id = ?";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
 
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            con.commit();
-            success = true;
+            connection.commit();
+            return true;
         }
 
-        return success;
+        return false;
     }
 
 }

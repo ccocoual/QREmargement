@@ -12,11 +12,13 @@ public class BDD_Emargement {
 
     private static String name_table = "emargement";
 
-    public static ArrayList<Emargement> getAll(Connection con) throws SQLException {
+    public static ArrayList<Emargement> getAll() throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT * FROM "+name_table;
 
         ArrayList<Emargement> emargementList = new ArrayList<Emargement>();
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         ResultSet rs = stmt.executeQuery();
         while(rs.next()) {
             Emargement emargement = new Emargement();
@@ -31,10 +33,12 @@ public class BDD_Emargement {
         return emargementList;
     }
 
-    public static Emargement getById(Connection con, int id) throws SQLException {
+    public static Emargement getById(int id) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT * FROM "+name_table+" WHERE id = ?";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
         ResultSet rs = stmt.executeQuery();
 
@@ -53,10 +57,12 @@ public class BDD_Emargement {
         return emargement;
     }
 
-    public static Emargement getByURL(Connection con, String url_generated) throws SQLException {
+    public static Emargement getByURL(String url_generated) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT * FROM "+name_table+" WHERE url_generated = ?";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, url_generated);
         ResultSet rs = stmt.executeQuery();
 
@@ -75,11 +81,13 @@ public class BDD_Emargement {
         return emargement;
     }
 
-    public static ArrayList<Emargement> getByProfesseurId(Connection con, int professeur_id) throws SQLException {
+    public static ArrayList<Emargement> getByProfesseurId(int professeur_id) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT * FROM "+name_table+" WHERE professeur_id = ?";
 
         ArrayList<Emargement> emargementList = new ArrayList<Emargement>();
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, professeur_id);
         ResultSet rs = stmt.executeQuery();
 
@@ -97,11 +105,13 @@ public class BDD_Emargement {
         return emargementList;
     }
 
-    public static ArrayList<Emargement> getByMatiereId(Connection con, int matiere_id) throws SQLException {
+    public static ArrayList<Emargement> getByMatiereId(int matiere_id) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT * FROM "+name_table+" WHERE matiere_id = ?";
 
         ArrayList<Emargement> emargementList = new ArrayList<Emargement>();
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, matiere_id);
         ResultSet rs = stmt.executeQuery();
 
@@ -119,11 +129,13 @@ public class BDD_Emargement {
         return emargementList;
     }
 
-    public static ArrayList<Emargement> getByClasseId(Connection con, int classe_id) throws SQLException {
+    public static ArrayList<Emargement> getByClasseId(int classe_id) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT * FROM "+name_table+" e JOIN emargement_has_classe ehp ON e.id = ehp.emargement_id WHERE classe_id = ?";
 
         ArrayList<Emargement> emargementList = new ArrayList<Emargement>();
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, classe_id);
         ResultSet rs = stmt.executeQuery();
 
@@ -141,13 +153,12 @@ public class BDD_Emargement {
         return emargementList;
     }
 
-    public static boolean insert(Connection con, Emargement emargement) throws SQLException {
-
-        boolean success = false;
+    public static boolean insert(Emargement emargement) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
 
         String query = "INSERT INTO "+name_table+" (date, url_generated, type, matiere_id, professeur_id) VALUES (?, ?, ?, ?, ?)";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setDate(1, emargement.getDate());
         stmt.setString(2, emargement.getUrl_generated());
         stmt.setString(3, emargement.getType_cours());
@@ -157,20 +168,19 @@ public class BDD_Emargement {
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            con.commit();
-            success = true;
+            connection.commit();
+            return true;
         }
 
-        return success;
+        return false;
     }
 
-    public static boolean update(Connection con, Emargement emargement) throws SQLException {
-
-        boolean success = false;
+    public static boolean update(Emargement emargement) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
 
         String query = "UPDATE "+name_table+" SET date= ?, url_generated= ?, type= ?, matiere_id= ?, professeur_id= ? WHERE id= ?";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setDate(1, emargement.getDate());
         stmt.setString(2, emargement.getUrl_generated());
         stmt.setString(3, emargement.getType_cours());
@@ -181,30 +191,29 @@ public class BDD_Emargement {
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            con.commit();
-            success = true;
+            connection.commit();
+            return true;
         }
 
-        return success;
+        return false;
     }
 
-    public static boolean delete(Connection con, int id) throws SQLException {
-
-        boolean success = false;
+    public static boolean delete(int id) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
 
         String query = "DELETE FROM "+name_table+" WHERE id = ?";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
 
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            con.commit();
-            success = true;
+            connection.commit();
+            return true;
         }
 
-        return success;
+        return false;
     }
 
 }

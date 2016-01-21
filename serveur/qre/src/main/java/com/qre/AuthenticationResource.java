@@ -7,6 +7,7 @@ import database.BDD_Professeur;
 import database.Database;
 import model.Etudiant;
 import model.Professeur;
+import utils.ResponseObject;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
@@ -36,32 +37,29 @@ public class AuthenticationResource {
             // Issue a token
             String token = generateToken();
 
-            Connection connection = Database.getDbCon().conn;
-            BDD_Authentication.insertOrUpdateToken(connection, token, professeur.getId());
 
-            // Return the token on the response
-            return Response.ok(token).build();
+            if(BDD_Authentication.insertOrReplaceToken( token, professeur.getId()))
+                return Response.ok(token).build();
+            else
+                return Response.status(Response.Status.NOT_FOUND).build();
 
-        } catch (Exception e) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (Exception e) {String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
+            return Response.status(Response.Status.NOT_FOUND).entity(json).build();
         }
     }
 
     private Professeur authenticate(String login, String password) throws Exception {
         // Authenticate against a database, LDAP, file or whatever
         // Throw an Exception if the credentials are invalid
-        if(login == null || login.isEmpty()){
-            throw new Exception("Login is not acceptable");
-        }
-        if(password == null || password.isEmpty()){
-            throw new Exception("Password is not acceptable");
-        }
 
-        Connection connection = Database.getDbCon().conn;
-        Professeur professeur = BDD_Professeur.checkAuth(connection, login, password);
-        if (professeur == null){
+        if(login == null || login.isEmpty() || password == null || password.isEmpty())
+            throw new Exception("Login and Password are not acceptable");
+
+
+        Professeur professeur = BDD_Professeur.checkAuth( login, password);
+
+        if (professeur == null)
             throw new Exception("Login and password don't match");
-        }
 
         return professeur;
     }
@@ -70,6 +68,6 @@ public class AuthenticationResource {
         // Issue a token (can be a random String persisted to a database or a JWT token)
         // The issued token must be associated to a user
         // Return the issued token
-         return new BigInteger(130, new SecureRandom()).toString(32);
+        return new BigInteger(130, new SecureRandom()).toString(32);
     }
 }

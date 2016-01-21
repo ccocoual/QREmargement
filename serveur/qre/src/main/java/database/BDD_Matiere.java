@@ -15,10 +15,12 @@ public class BDD_Matiere {
     private static String name_table = "matiere";
 
     public static ArrayList<Matiere> getAll(Connection con) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT * FROM "+name_table;
 
         ArrayList<Matiere> matiereList = new ArrayList<Matiere>();
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, name_table);
         ResultSet rs = stmt.executeQuery();
 
@@ -33,10 +35,12 @@ public class BDD_Matiere {
         return matiereList;
     }
 
-    public static Matiere getById(Connection con, int id) throws SQLException {
+    public static Matiere getById(int id) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT * FROM ? WHERE id = ?";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, name_table);
         stmt.setInt(2, id);
         ResultSet rs = stmt.executeQuery();
@@ -52,61 +56,58 @@ public class BDD_Matiere {
         return matiere;
     }
 
-    public static boolean insert(Connection con, Matiere matiere) throws SQLException {
-
-        boolean success = false;
+    public static boolean insert(Matiere matiere) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
 
         String query = "INSERT INTO "+name_table+" (libelle) VALUES (?)";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, matiere.getLibelle());
 
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            con.commit();
-            success = true;
+            connection.commit();
+            return true;
         }
 
-        return success;
+        return false;
     }
 
-    public static boolean update(Connection con, Matiere matiere) throws SQLException {
-
-        boolean success = false;
+    public static boolean update(Matiere matiere) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
 
         String query = "UPDATE "+name_table+" SET libelle= ? WHERE id= ?";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, matiere.getLibelle());
         stmt.setInt(2, matiere.getId());
 
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            con.commit();
-            success = true;
+            connection.commit();
+            return true;
         }
 
-        return success;
+        return false;
     }
 
-    public static boolean delete(Connection con, int id) throws SQLException {
-
-        boolean success = false;
+    public static boolean delete(int id) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
 
         String query = "DELETE FROM "+name_table+" WHERE id = ?";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
 
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            con.commit();
-            success = true;
+            connection.commit();
+            return true;
         }
 
-        return success;
+        return false;
     }
 }

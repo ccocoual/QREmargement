@@ -7,7 +7,6 @@ import java.sql.Statement;
 
 public final class Database {
     public Connection conn;
-    private Statement statement;
     public static Database db;
 
     private Database() throws SQLException {
@@ -25,7 +24,7 @@ public final class Database {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        this.conn = (Connection)DriverManager.getConnection(url+dbName,userName,password);
+        this.conn = DriverManager.getConnection(url+dbName,userName,password);
     }
     /**
      *

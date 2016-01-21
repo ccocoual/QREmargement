@@ -32,8 +32,8 @@ public class EtudiantResource {
     @Produces("application/json")
     public Response getAllEtudiants(){
         try {
-            Connection connection = Database.getDbCon().conn;
-            String json = new Gson().toJson(BDD_Etudiant.getAll(connection));
+
+            String json = new Gson().toJson(BDD_Etudiant.getAll());
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
@@ -46,8 +46,8 @@ public class EtudiantResource {
     @Produces("application/json")
     public Response getEtudiantById(@PathParam("id") int id){
         try {
-            Connection connection = Database.getDbCon().conn;
-            Etudiant etudiant = BDD_Etudiant.getById(connection, id);
+
+            Etudiant etudiant = BDD_Etudiant.getById(id);
             if (etudiant == null){
                 String json = new ResponseObject("error", "NEXTURL", "Etudiant with id:"+id+" not found").toJSON();
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
@@ -65,8 +65,8 @@ public class EtudiantResource {
     @Produces("application/json")
     public Response getEtudiantsByNumEtu(@PathParam("num_etu") String num_etu){
         try {
-            Connection connection = Database.getDbCon().conn;
-            Etudiant etudiant = BDD_Etudiant.getByNumEtu(connection, num_etu);
+
+            Etudiant etudiant = BDD_Etudiant.getByNumEtu(num_etu);
             if (etudiant == null){
                 String json = new ResponseObject("error", "NEXTURL", "Etudiant with num_etu:"+num_etu+" not found").toJSON();
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
@@ -87,8 +87,8 @@ public class EtudiantResource {
     public Response insertEtudiant(String data){
         try {
             Etudiant etudiant = new Gson().fromJson(data, Etudiant.class);
-            Connection connection = Database.getDbCon().conn;
-            if(BDD_Etudiant.insert(connection, etudiant)){
+
+            if(BDD_Etudiant.insert(etudiant)){
                 String json = new Gson().toJson(etudiant);
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {
@@ -108,8 +108,8 @@ public class EtudiantResource {
     public Response updateEtudiant(@PathParam("id") int id, String data){
         try {
             Etudiant etudiant = new Gson().fromJson(data, Etudiant.class);
-            Connection connection = Database.getDbCon().conn;
-            if(BDD_Etudiant.update(connection, etudiant)){
+
+            if(BDD_Etudiant.update(etudiant)){
                 String json = new Gson().toJson(etudiant);
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {
@@ -128,8 +128,8 @@ public class EtudiantResource {
     @Produces("application/json")
     public Response deleteEtudiant(@PathParam("id") int id){
         try {
-            Connection connection = Database.getDbCon().conn;
-            if(BDD_Etudiant.delete(connection, id)){
+
+            if(BDD_Etudiant.delete(id)){
                 String json = new ResponseObject("success", "nextURL",  "Etudiant has been deleted with succes").toJSON();
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {

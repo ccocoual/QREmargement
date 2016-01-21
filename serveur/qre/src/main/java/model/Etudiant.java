@@ -14,13 +14,12 @@ public class Etudiant {
 
     public Etudiant() {}
 
-    public Etudiant(int id, String nom, String prenom, String email, Date date_naiss, String num_etu, int groupe_id, int classe_id) {
+    public Etudiant(int id, String nom, String prenom, String email, String num_etu, int groupe_id, int classe_id) {
         super();
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
-        this.date_naiss = date_naiss;
         this.num_etu = num_etu;
         this.groupe_id = groupe_id;
         this.classe_id = classe_id;
@@ -56,14 +55,6 @@ public class Etudiant {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Date getDate_naiss() {
-        return date_naiss;
-    }
-
-    public void setDate_naiss(Date date_naiss) {
-        this.date_naiss = date_naiss;
     }
 
     public String getNum_etu() {

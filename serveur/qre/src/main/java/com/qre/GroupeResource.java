@@ -28,8 +28,8 @@ public class GroupeResource {
     @Produces("application/json")
     public Response getAllGroupes(){
         try {
-            Connection connection = Database.getDbCon().conn;
-            String json = new Gson().toJson(BDD_Groupe.getAll(connection));
+
+            String json = new Gson().toJson(BDD_Groupe.getAll());
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
@@ -42,8 +42,8 @@ public class GroupeResource {
     @Produces("application/json")
     public Response getGroupeById(@PathParam("id") int id){
         try {
-            Connection connection = Database.getDbCon().conn;
-            Groupe groupe = BDD_Groupe.getById(connection, id);
+
+            Groupe groupe = BDD_Groupe.getById(id);
             if (groupe == null){
                 String json = new ResponseObject("error", "NEXTURL", "Classe with id:"+id+" not found").toJSON();
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
@@ -61,8 +61,8 @@ public class GroupeResource {
     @Produces("application/json")
     public Response getEtudiantsByGroupe(@PathParam("id") int id){
         try {
-            Connection connection = Database.getDbCon().conn;
-            ArrayList<Etudiant> etudiants = BDD_Etudiant.getByGroupeId(connection, id);
+
+            ArrayList<Etudiant> etudiants = BDD_Etudiant.getByGroupeId(id);
             String json = new Gson().toJson(etudiants);
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
@@ -77,8 +77,8 @@ public class GroupeResource {
     public Response insertGroupe(String data){
         try {
             Groupe groupe = new Gson().fromJson(data, Groupe.class);
-            Connection connection = Database.getDbCon().conn;
-            if(BDD_Groupe.insert(connection, groupe)){
+
+            if(BDD_Groupe.insert(groupe)){
                 String json = new Gson().toJson(groupe);
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {
@@ -98,8 +98,8 @@ public class GroupeResource {
     public Response updateGroupe(@PathParam("id") int id, String data){
         try {
             Groupe groupe = new Gson().fromJson(data, Groupe.class);
-            Connection connection = Database.getDbCon().conn;
-            if(BDD_Groupe.update(connection, groupe)){
+
+            if(BDD_Groupe.update(groupe)){
                 String json = new Gson().toJson(groupe);
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {
@@ -118,8 +118,8 @@ public class GroupeResource {
     @Produces("application/json")
     public Response deleteGroupe(@PathParam("id") int id){
         try {
-            Connection connection = Database.getDbCon().conn;
-            if(BDD_Groupe.delete(connection, id)){
+
+            if(BDD_Groupe.delete(id)){
                 String json = new ResponseObject("success", "nextURL",  "Groupe has been deleted with succes").toJSON();
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {

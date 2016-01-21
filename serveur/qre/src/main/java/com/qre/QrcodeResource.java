@@ -33,21 +33,21 @@ public class QrcodeResource {
         if(cookie_num_etu != null && !cookie_num_etu.isEmpty() && url_generated != null && !url_generated.isEmpty()){
 
             try {
-                Connection connection = Database.getDbCon().conn;
 
-                Etudiant etudiant = BDD_Etudiant.getByNumEtu(connection, cookie_num_etu);
+
+                Etudiant etudiant = BDD_Etudiant.getByNumEtu(cookie_num_etu);
                 if(etudiant == null){
                     String json = new ResponseObject("error", "NEXTURL", "Etudiant with num_etu:"+cookie_num_etu+" not found").toJSON();
                     return Response.status(Response.Status.NOT_FOUND).entity(json).build();
                 }
 
-                Emargement emargement = BDD_Emargement.getByURL(connection, url_generated);
+                Emargement emargement = BDD_Emargement.getByURL(url_generated);
                 if(emargement == null){
                     String json = new ResponseObject("error", "NEXTURL", "Emargement with url_generated:"+url_generated+" not found").toJSON();
                     return Response.status(Response.Status.NOT_FOUND).entity(json).build();
                 }
 
-                Signature signature = BDD_Signature.getById(connection, emargement.getId(), etudiant.getId());
+                Signature signature = BDD_Signature.getById(emargement.getId(), etudiant.getId());
                 if(signature == null){
                     String json = new ResponseObject("error", "NEXTURL", "Signature with emargement_id:"+emargement.getId()+" and etudiant_id:"+etudiant.getId()+"not found").toJSON();
                     return Response.status(Response.Status.NOT_FOUND).entity(json).build();
@@ -58,7 +58,7 @@ public class QrcodeResource {
                 signature.setDate(new java.sql.Date(new java.util.Date().getTime()));
                 /* END TRAITEMENT*/
 
-                if (BDD_Signature.update(connection, signature)){
+                if (BDD_Signature.update(signature)){
                     String json = new ResponseObject("success", "NEXTURL", "Signature has been updated with success").toJSON();
                     return Response.status(Response.Status.OK).entity(json).build();
                 } else {
@@ -94,13 +94,14 @@ public class QrcodeResource {
                 return Response.status(Response.Status.NOT_ACCEPTABLE).entity(json).build();
             }
 
-            Connection connection = Database.getDbCon().conn;
-            Etudiant etudiant = BDD_Etudiant.checkAuth(connection, login, password);
+
+            Etudiant etudiant = BDD_Etudiant.checkAuth(login, password);
             if (etudiant == null){
                 String json = new ResponseObject("error", "NEXTURL", "Login and password don't match").toJSON();
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
             }
 
+            // NEW COOKIE
             return Response.ok().cookie(new NewCookie(cookie_name, etudiant.getNum_etu())).build();
 
         } catch (SQLException e) {

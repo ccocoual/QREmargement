@@ -11,11 +11,13 @@ public class BDD_Etudiant {
 
     private static String name_table = "etudiant";
 
-    public static ArrayList<Etudiant> getAll(Connection con) throws SQLException {
+    public static ArrayList<Etudiant> getAll() throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT * FROM "+name_table;
 
         ArrayList<Etudiant> etudiantList = new ArrayList<Etudiant>();
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         ResultSet rs = stmt.executeQuery();
 
         while(rs.next()) {
@@ -24,7 +26,6 @@ public class BDD_Etudiant {
             etudiant.setNom(rs.getString("nom"));
             etudiant.setPrenom(rs.getString("prenom"));
             etudiant.setEmail(rs.getString("email"));
-            etudiant.setDate_naiss(rs.getDate("date_naiss"));
             etudiant.setNum_etu(rs.getString("num_etu"));
             etudiant.setClasse_id(rs.getInt("classe_id"));
             etudiant.setGroupe_id(rs.getInt("groupe_id"));
@@ -34,10 +35,12 @@ public class BDD_Etudiant {
         return etudiantList;
     }
 
-    public static Etudiant getById(Connection con, int id) throws SQLException {
+    public static Etudiant getById(int id) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT * FROM "+name_table+" WHERE id = ?";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
         ResultSet rs = stmt.executeQuery();
 
@@ -49,7 +52,6 @@ public class BDD_Etudiant {
             etudiant.setNom(rs.getString("nom"));
             etudiant.setPrenom(rs.getString("prenom"));
             etudiant.setEmail(rs.getString("email"));
-            etudiant.setDate_naiss(rs.getDate("date_naiss"));
             etudiant.setNum_etu(rs.getString("num_etu"));
             etudiant.setClasse_id(rs.getInt("classe_id"));
             etudiant.setGroupe_id(rs.getInt("groupe_id"));
@@ -58,10 +60,12 @@ public class BDD_Etudiant {
         return etudiant;
     }
 
-    public static Etudiant getByNumEtu(Connection con, String num_etu) throws SQLException {
+    public static Etudiant getByNumEtu(String num_etu) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT * FROM "+name_table+" WHERE num_etu = ?";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, num_etu);
 
         ResultSet rs = stmt.executeQuery();
@@ -74,7 +78,6 @@ public class BDD_Etudiant {
             etudiant.setNom(rs.getString("nom"));
             etudiant.setPrenom(rs.getString("prenom"));
             etudiant.setEmail(rs.getString("email"));
-            etudiant.setDate_naiss(rs.getDate("date_naiss"));
             etudiant.setNum_etu(rs.getString("num_etu"));
             etudiant.setClasse_id(rs.getInt("classe_id"));
             etudiant.setGroupe_id(rs.getInt("groupe_id"));
@@ -83,11 +86,13 @@ public class BDD_Etudiant {
         return etudiant;
     }
 
-    public static ArrayList<Etudiant> getByClassId(Connection con, int classe_id) throws SQLException {
+    public static ArrayList<Etudiant> getByClassId(int classe_id) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT * FROM "+name_table+" WHERE classe_id = ?";
 
         ArrayList<Etudiant> etudiantList = new ArrayList<Etudiant>();
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, classe_id);
         ResultSet rs = stmt.executeQuery();
         while(rs.next()) {
@@ -96,7 +101,6 @@ public class BDD_Etudiant {
             etudiant.setNom(rs.getString("nom"));
             etudiant.setPrenom(rs.getString("prenom"));
             etudiant.setEmail(rs.getString("email"));
-            etudiant.setDate_naiss(rs.getDate("date_naiss"));
             etudiant.setNum_etu(rs.getString("num_etu"));
             etudiant.setClasse_id(rs.getInt("classe_id"));
             etudiant.setGroupe_id(rs.getInt("groupe_id"));
@@ -106,11 +110,13 @@ public class BDD_Etudiant {
         return etudiantList;
     }
 
-    public static ArrayList<Etudiant> getByGroupeId(Connection con, int groupe_id) throws SQLException {
+    public static ArrayList<Etudiant> getByGroupeId(int groupe_id) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
+
         String query = "SELECT * FROM "+name_table+" WHERE groupe_id = ?";
 
         ArrayList<Etudiant> etudiantList = new ArrayList<Etudiant>();
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, groupe_id);
         ResultSet rs = stmt.executeQuery();
         while(rs.next()) {
@@ -119,7 +125,6 @@ public class BDD_Etudiant {
             etudiant.setNom(rs.getString("nom"));
             etudiant.setPrenom(rs.getString("prenom"));
             etudiant.setEmail(rs.getString("email"));
-            etudiant.setDate_naiss(rs.getDate("date_naiss"));
             etudiant.setNum_etu(rs.getString("num_etu"));
             etudiant.setClasse_id(rs.getInt("classe_id"));
             etudiant.setGroupe_id(rs.getInt("groupe_id"));
@@ -129,91 +134,79 @@ public class BDD_Etudiant {
         return etudiantList;
     }
 
-    public static boolean insert(Connection con, Etudiant etudiant) throws SQLException {
+    public static boolean insert(Etudiant etudiant) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
 
-        boolean success = false;
+        String query = "INSERT INTO "+name_table+" (nom, prenom, email, num_etu, classe_id, groupe_id) VALUES (?, ?, ?, ?, ?, ?)";
 
-        String query = "INSERT INTO "+name_table+" (nom, prenom, email, date_naiss, num_etu, classe_id, groupe_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, etudiant.getNom());
         stmt.setString(2, etudiant.getPrenom());
         stmt.setString(3, etudiant.getEmail());
-        stmt.setDate(4, etudiant.getDate_naiss());
-        stmt.setString(5, etudiant.getNum_etu());
-        stmt.setInt(6, etudiant.getClasse_id());
-        stmt.setInt(7, etudiant.getGroupe_id());
+        stmt.setString(4, etudiant.getNum_etu());
+        stmt.setInt(5, etudiant.getClasse_id());
+        stmt.setInt(6, etudiant.getGroupe_id());
 
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            con.commit();
-            success = true;
+            connection.commit();
+            return true;
         }
 
-        return success;
+        return false;
     }
 
-    public static boolean update(Connection con, Etudiant etudiant) throws SQLException {
+    public static boolean update(Etudiant etudiant) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
 
-        boolean success = false;
+        String query = "UPDATE "+name_table+" SET nom= ?, prenom= ?, email= ?, num_etu= ?, classe_id= ?, groupe_id= ? WHERE id= ?";
 
-        String query = "UPDATE "+name_table+" SET nom= ?, prenom= ?, email= ?, date_naiss= ?, num_etu= ?, classe_id= ?, groupe_id= ? WHERE id= ?";
-
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, etudiant.getNom());
         stmt.setString(2, etudiant.getPrenom());
         stmt.setString(3, etudiant.getEmail());
-        stmt.setDate(4, etudiant.getDate_naiss());
-        stmt.setString(5, etudiant.getNum_etu());
-        stmt.setInt(6, etudiant.getClasse_id());
-        stmt.setInt(7, etudiant.getGroupe_id());
-        stmt.setInt(8, etudiant.getId());
+        stmt.setString(4, etudiant.getNum_etu());
+        stmt.setInt(5, etudiant.getClasse_id());
+        stmt.setInt(6, etudiant.getGroupe_id());
+        stmt.setInt(7, etudiant.getId());
 
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            con.commit();
-            success = true;
+            connection.commit();
+            return true;
         }
 
-        return success;
+        return false;
     }
 
-    public static boolean delete(Connection con, int id) throws SQLException {
-
-        boolean success = false;
+    public static boolean delete(int id) throws SQLException {
+        Connection connection = Database.getDbCon().conn;
 
         String query = "DELETE FROM "+name_table+" WHERE id = ?";
 
-        PreparedStatement stmt = con.prepareStatement(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
 
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            con.commit();
-            success = true;
+            connection.commit();
+            return true;
         }
 
-        return success;
+        return false;
     }
 
-    public static Etudiant checkAuth(Connection con, String login, String password) throws SQLException, ParseException {
+    public static Etudiant checkAuth(String login, String password) throws SQLException, ParseException {
+        Connection connection = Database.getDbCon().conn;
 
-        // Password = date_naiss, Login = num_etu OR email
+        String query = "SELECT * FROM "+name_table+" WHERE email = ? AND num_etu = ?";
 
-        String query = "SELECT * FROM "+name_table+" WHERE date_naiss = ? AND (email = ? OR num_etu = ?)";
-
-        // TODO verifier format date de password
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        java.util.Date parsed = formatter.parse(password);
-        java.sql.Date date_naiss = new Date(parsed.getTime());
-
-        PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setDate(1, date_naiss);
-        stmt.setString(2, login);
-        stmt.setString(3, login);
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setString(1, login);
+        stmt.setString(2, password);
         ResultSet rs = stmt.executeQuery();
 
         Etudiant etudiant = null;
@@ -224,7 +217,6 @@ public class BDD_Etudiant {
             etudiant.setNom(rs.getString("nom"));
             etudiant.setPrenom(rs.getString("prenom"));
             etudiant.setEmail(rs.getString("email"));
-            etudiant.setDate_naiss(rs.getDate("date_naiss"));
             etudiant.setNum_etu(rs.getString("num_etu"));
             etudiant.setClasse_id(rs.getInt("classe_id"));
             etudiant.setGroupe_id(rs.getInt("groupe_id"));
