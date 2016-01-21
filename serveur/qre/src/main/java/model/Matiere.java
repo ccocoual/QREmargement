@@ -30,7 +30,7 @@ public class Matiere {
 
     @Override
     public String toString() {
-        return "Matiere [id=" + id
+        return "MatiereResource [id=" + id
                 + ", libelle=" + libelle + "]";
     }
 

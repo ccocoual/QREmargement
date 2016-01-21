@@ -112,14 +112,14 @@ public class BDD_Groupe {
         return success;
     }
 
-    public static boolean delete(Connection con, Groupe groupe) throws SQLException {
+    public static boolean delete(Connection con, int id) throws SQLException {
 
         boolean success = false;
 
         String query = "DELETE FROM "+name_table+" WHERE id = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setInt(1, groupe.getId());
+        stmt.setInt(1, id);
 
         int rowsUpdated = stmt.executeUpdate();
 

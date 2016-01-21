@@ -188,14 +188,14 @@ public class BDD_Emargement {
         return success;
     }
 
-    public static boolean delete(Connection con, Emargement emargement) throws SQLException {
+    public static boolean delete(Connection con, int id) throws SQLException {
 
         boolean success = false;
 
         String query = "DELETE FROM "+name_table+" WHERE id = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setInt(1, emargement.getId());
+        stmt.setInt(1, id);
 
         int rowsUpdated = stmt.executeUpdate();
 

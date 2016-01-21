@@ -1,6 +1,7 @@
 package com.qre;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import database.BDD_Emargement;
 import database.BDD_Etudiant;
 import database.BDD_Signature;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 
 @Path("/qrcode")
@@ -74,10 +76,40 @@ public class QrcodeResource {
         return Response.status(Response.Status.NOT_FOUND).entity(json).build();
     }
 
-    @GET
-    @Path("/setCookie")
-    public Response setCookie(){
-        return Response.seeOther(URI.create("qrcode/getCookie")).cookie(new NewCookie(cookie_name, "15003456")).build();
+    @POST
+    @Path("/auth")
+    @Consumes("application/json")
+    public Response AuthEtudiant(String data){
+        try {
+            JsonObject jobj = new Gson().fromJson(data, JsonObject.class);
+            String login = jobj.get("login").toString();
+            if(login == null || login.isEmpty()){
+                String json = new ResponseObject("error", "NEXTURL", "Login not acceptable").toJSON();
+                return Response.status(Response.Status.NOT_ACCEPTABLE).entity(json).build();
+            }
+
+            String password = jobj.get("password").toString();
+            if(password == null || password.isEmpty()){
+                String json = new ResponseObject("error", "NEXTURL", "Password not acceptable").toJSON();
+                return Response.status(Response.Status.NOT_ACCEPTABLE).entity(json).build();
+            }
+
+            Connection connection = Database.getDbCon().conn;
+            Etudiant etudiant = BDD_Etudiant.checkAuth(connection, login, password);
+            if (etudiant == null){
+                String json = new ResponseObject("error", "NEXTURL", "Login and password don't match").toJSON();
+                return Response.status(Response.Status.NOT_FOUND).entity(json).build();
+            }
+
+            return Response.ok().cookie(new NewCookie(cookie_name, etudiant.getNum_etu())).build();
+
+        } catch (SQLException e) {
+            String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
+        } catch (ParseException e) {
+            String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
+        }
     }
 
     @GET

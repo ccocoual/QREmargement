@@ -136,15 +136,15 @@ public class BDD_Signature {
         return success;
     }
 
-    public static boolean delete(Connection con, Signature signature) throws SQLException {
+    public static boolean delete(Connection con, int emargement_id, int etudiant_id) throws SQLException {
 
         boolean success = false;
 
         String query = "DELETE FROM "+name_table+" WHERE emargement_id = ? AND etudiant_id = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setInt(1, signature.getEmargement_id());
-        stmt.setInt(2, signature.getEtudiant_id());
+        stmt.setInt(1, emargement_id);
+        stmt.setInt(2, etudiant_id);
 
         int rowsUpdated = stmt.executeUpdate();
 

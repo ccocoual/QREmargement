@@ -53,7 +53,7 @@ public class BDD_Professeur {
         return professeur;
     }
 
-    public static boolean checkAuth(Connection con, String login, String password) throws SQLException {
+    public static Professeur checkAuth(Connection con, String login, String password) throws SQLException {
         String query = "SELECT id FROM "+name_table+" WHERE email = ? AND password = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
@@ -61,7 +61,17 @@ public class BDD_Professeur {
         stmt.setString(2, EncrypteString.encode(password));
         ResultSet rs = stmt.executeQuery();
 
-        return rs.isBeforeFirst();
+        Professeur professeur = null;
+        if (rs.isBeforeFirst()) {
+            rs.first();
+            professeur = new Professeur();
+            professeur.setId(rs.getInt("id"));
+            professeur.setNom(rs.getString("nom"));
+            professeur.setPrenom(rs.getString("prenom"));
+            professeur.setEmail(rs.getString("email"));
+        }
+
+        return professeur;
     }
 
     public static boolean insert(Connection con, Professeur professeur) throws SQLException {
@@ -128,14 +138,14 @@ public class BDD_Professeur {
         return success;
     }
 
-    public boolean delete(Connection con, Professeur professeur) throws SQLException {
+    public boolean delete(Connection con, int id) throws SQLException {
 
         boolean success = false;
 
         String query = "DELETE FROM "+name_table+" WHERE id = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setInt(1, professeur.getId());
+        stmt.setInt(1, id);
 
         int rowsUpdated = stmt.executeUpdate();
 

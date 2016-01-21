@@ -180,14 +180,14 @@ public class BDD_Etudiant {
         return success;
     }
 
-    public static boolean delete(Connection con, Etudiant etudiant) throws SQLException {
+    public static boolean delete(Connection con, int id) throws SQLException {
 
         boolean success = false;
 
         String query = "DELETE FROM "+name_table+" WHERE id = ?";
 
         PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setInt(1, etudiant.getId());
+        stmt.setInt(1, id);
 
         int rowsUpdated = stmt.executeUpdate();
 
@@ -199,11 +199,11 @@ public class BDD_Etudiant {
         return success;
     }
 
-    public static boolean checkAuth(Connection con, String login, String password) throws SQLException, ParseException {
+    public static Etudiant checkAuth(Connection con, String login, String password) throws SQLException, ParseException {
 
         // Password = date_naiss, Login = num_etu OR email
 
-        String query = "SELECT id FROM "+name_table+" WHERE date_naiss = ? AND (email = ? OR num_etu = ?)";
+        String query = "SELECT * FROM "+name_table+" WHERE date_naiss = ? AND (email = ? OR num_etu = ?)";
 
         // TODO verifier format date de password
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -216,7 +216,21 @@ public class BDD_Etudiant {
         stmt.setString(3, login);
         ResultSet rs = stmt.executeQuery();
 
-        return rs.isBeforeFirst();
+        Etudiant etudiant = null;
+        if (rs.isBeforeFirst()) {
+            rs.first();
+            etudiant = new Etudiant();
+            etudiant.setId(rs.getInt("id"));
+            etudiant.setNom(rs.getString("nom"));
+            etudiant.setPrenom(rs.getString("prenom"));
+            etudiant.setEmail(rs.getString("email"));
+            etudiant.setDate_naiss(rs.getDate("date_naiss"));
+            etudiant.setNum_etu(rs.getString("num_etu"));
+            etudiant.setClasse_id(rs.getInt("classe_id"));
+            etudiant.setGroupe_id(rs.getInt("groupe_id"));
+        }
+
+        return etudiant;
     }
 
 }
