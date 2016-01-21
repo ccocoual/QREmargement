@@ -3,6 +3,8 @@ package model;
 
 import utils.EncrypteString;
 
+import java.security.NoSuchAlgorithmException;
+
 public class Professeur {
     private int id;
     private String nom;
@@ -65,7 +67,7 @@ public class Professeur {
         this.password = password;
     }
 
-    public boolean checkPassword(String passwordCompare){
+    public boolean checkPassword(String passwordCompare) throws NoSuchAlgorithmException {
         return this.password.equals(EncrypteString.encode(passwordCompare));
     }
 

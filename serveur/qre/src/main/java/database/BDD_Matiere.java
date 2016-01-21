@@ -1,6 +1,5 @@
 package database;
 
-import model.Groupe;
 import model.Matiere;
 
 import java.sql.Connection;
@@ -14,7 +13,7 @@ public class BDD_Matiere {
 
     private static String name_table = "matiere";
 
-    public static ArrayList<Matiere> getAll(Connection con) throws SQLException {
+    public static ArrayList<Matiere> getAll() throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
         String query = "SELECT * FROM "+name_table;

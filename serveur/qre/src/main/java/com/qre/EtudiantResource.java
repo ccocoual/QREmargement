@@ -5,33 +5,31 @@ package com.qre;
  */
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import database.BDD_Authentication;
 import database.BDD_Etudiant;
-import database.BDD_Groupe;
-import database.Database;
+import model.Authentication;
 import model.Etudiant;
-import model.Groupe;
 import utils.ResponseObject;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
-import java.net.URI;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.ArrayList;
 
 
-@Path("/admin/etudiants")
+@Path("/{token}/etudiants")
 public class EtudiantResource {
 
     final String cookie_name = "QREmargement";
 
     @GET
     @Produces("application/json")
-    public Response getAllEtudiants(){
+    public Response getAllEtudiants(@PathParam("token") String token){
         try {
+            Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
+            if(authentication == null){
+                String json = new ResponseObject("error", "nextURL", "Token invalid or expired").toJSON();
+                return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
+            }
 
             String json = new Gson().toJson(BDD_Etudiant.getAll());
             return Response.status(Response.Status.OK).entity(json).build();
@@ -44,8 +42,14 @@ public class EtudiantResource {
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public Response getEtudiantById(@PathParam("id") int id){
+    public Response getEtudiantById(@PathParam("token") String token,
+                                    @PathParam("id") int id){
         try {
+            Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
+            if(authentication == null){
+                String json = new ResponseObject("error", "nextURL", "Token invalid or expired").toJSON();
+                return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
+            }
 
             Etudiant etudiant = BDD_Etudiant.getById(id);
             if (etudiant == null){
@@ -63,8 +67,14 @@ public class EtudiantResource {
     @GET
     @Path("/num_etu/{num_etu}")
     @Produces("application/json")
-    public Response getEtudiantsByNumEtu(@PathParam("num_etu") String num_etu){
+    public Response getEtudiantsByNumEtu(@PathParam("token") String token,
+                                         @PathParam("num_etu") String num_etu){
         try {
+            Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
+            if(authentication == null){
+                String json = new ResponseObject("error", "nextURL", "Token invalid or expired").toJSON();
+                return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
+            }
 
             Etudiant etudiant = BDD_Etudiant.getByNumEtu(num_etu);
             if (etudiant == null){
@@ -84,8 +94,15 @@ public class EtudiantResource {
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public Response insertEtudiant(String data){
+    public Response insertEtudiant(@PathParam("token") String token,
+                                   String data){
         try {
+            Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
+            if(authentication == null){
+                String json = new ResponseObject("error", "nextURL", "Token invalid or expired").toJSON();
+                return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
+            }
+
             Etudiant etudiant = new Gson().fromJson(data, Etudiant.class);
 
             if(BDD_Etudiant.insert(etudiant)){
@@ -105,8 +122,16 @@ public class EtudiantResource {
     @Path("/{id}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response updateEtudiant(@PathParam("id") int id, String data){
+    public Response updateEtudiant(@PathParam("token") String token,
+                                   @PathParam("id") int id,
+                                   String data){
         try {
+            Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
+            if(authentication == null){
+                String json = new ResponseObject("error", "nextURL", "Token invalid or expired").toJSON();
+                return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
+            }
+
             Etudiant etudiant = new Gson().fromJson(data, Etudiant.class);
 
             if(BDD_Etudiant.update(etudiant)){
@@ -126,8 +151,14 @@ public class EtudiantResource {
     @Path("/{id}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response deleteEtudiant(@PathParam("id") int id){
+    public Response deleteEtudiant(@PathParam("token") String token,
+                                   @PathParam("id") int id){
         try {
+            Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
+            if(authentication == null){
+                String json = new ResponseObject("error", "nextURL", "Token invalid or expired").toJSON();
+                return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
+            }
 
             if(BDD_Etudiant.delete(id)){
                 String json = new ResponseObject("success", "nextURL",  "Etudiant has been deleted with succes").toJSON();

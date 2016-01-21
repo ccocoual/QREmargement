@@ -3,6 +3,7 @@ package database;
 import model.Professeur;
 import utils.EncrypteString;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,7 +58,7 @@ public class BDD_Professeur {
         return professeur;
     }
 
-    public static Professeur checkAuth(String login, String password) throws SQLException {
+    public static Professeur checkAuth(String login, String password) throws SQLException, NoSuchAlgorithmException {
         Connection connection = Database.getDbCon().conn;
 
         String query = "SELECT id FROM "+name_table+" WHERE email = ? AND password = ?";
@@ -80,7 +81,7 @@ public class BDD_Professeur {
         return professeur;
     }
 
-    public static boolean insert(Professeur professeur) throws SQLException {
+    public static boolean insert(Professeur professeur) throws SQLException, NoSuchAlgorithmException {
         Connection connection = Database.getDbCon().conn;
 
         String query = "INSERT INTO "+name_table+" (nom, prenom, email, password) VALUES (?, ?, ?, ?)";
@@ -122,7 +123,7 @@ public class BDD_Professeur {
         return false;
     }
 
-    public static boolean updatePassword(Professeur professeur, String newpassword) throws SQLException {
+    public static boolean updatePassword(Professeur professeur, String newpassword) throws SQLException, NoSuchAlgorithmException {
         Connection connection = Database.getDbCon().conn;
 
         String query = "UPDATE "+name_table+" SET password= ? WHERE id= ?";

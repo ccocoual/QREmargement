@@ -9,6 +9,7 @@ import database.Database;
 import model.Emargement;
 import model.Etudiant;
 import model.Signature;
+import utils.EncrypteString;
 import utils.ResponseObject;
 
 import javax.ws.rs.*;
@@ -125,4 +126,6 @@ public class QrcodeResource {
         }
 
     }
+
+
 }

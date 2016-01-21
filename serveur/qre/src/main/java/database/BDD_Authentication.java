@@ -1,13 +1,8 @@
 package database;
 
 import model.Authentication;
-import model.Classe;
-import model.Etudiant;
-import model.Signature;
-import org.glassfish.grizzly.http.server.Response;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class BDD_Authentication {

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class BDD_Emargement {
 
     private static String name_table = "emargement";
+    private static String join_table_groupe = "emargement_has_groupe";
 
     public static ArrayList<Emargement> getAll() throws SQLException {
         Connection connection = Database.getDbCon().conn;
@@ -132,7 +133,7 @@ public class BDD_Emargement {
     public static ArrayList<Emargement> getByClasseId(int classe_id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "SELECT * FROM "+name_table+" e JOIN emargement_has_classe ehp ON e.id = ehp.emargement_id WHERE classe_id = ?";
+        String query = "SELECT * FROM "+name_table+" e JOIN "+join_table_groupe+" ehp ON e.id = ehp.emargement_id WHERE classe_id = ?";
 
         ArrayList<Emargement> emargementList = new ArrayList<Emargement>();
         PreparedStatement stmt = connection.prepareStatement(query);
