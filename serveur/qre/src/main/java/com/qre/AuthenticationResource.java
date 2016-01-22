@@ -2,14 +2,17 @@ package com.qre;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import database.BDD_Authentication;
 import database.BDD_Professeur;
 import model.Professeur;
+import utils.EncrypteString;
 import utils.ResponseObject;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -18,18 +21,14 @@ import java.security.SecureRandom;
 public class AuthenticationResource {
 
     @POST
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response authenticateUser(String data) {
 
-        System.out.println("json:"+data.toString());
-        JsonObject jobj = new Gson().fromJson(data, JsonObject.class);
+        JsonObject jsonObject =  new JsonParser().parse(data).getAsJsonObject();
 
-        System.out.println("json:"+jobj.toString());
-        String login = jobj.get("login").toString();
-        String password = jobj.get("password").toString();
+        String login = jsonObject.get("login").getAsString();
+        String password = jsonObject.get("password").getAsString();
 
-        System.out.println("login:"+login);
-        System.out.println("password:"+password);
         try {
 
             // Authenticate the user using the credentials provided
@@ -47,13 +46,13 @@ public class AuthenticationResource {
         } catch (Exception e) {String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.NOT_FOUND).entity(json).build();
         }
+
     }
 
     private Professeur authenticate(String login, String password) throws Exception {
 
         if(login == null || login.isEmpty() || password == null || password.isEmpty())
             throw new Exception("Login and Password are not acceptable");
-
 
         Professeur professeur = BDD_Professeur.checkAuth(login, password);
 

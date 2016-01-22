@@ -28,10 +28,10 @@ public class QrcodeResource {
     final String cookie_name = "QREmargement";
 
     @GET
-    @Path("/scan/{url_generated}")
+    @Path("/scan/{token_generated}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response scanQRE(@PathParam("url_generated") String url_generated, @CookieParam(value = cookie_name) String cookie_num_etu){
-        if(cookie_num_etu != null && !cookie_num_etu.isEmpty() && url_generated != null && !url_generated.isEmpty()){
+    public Response scanQRE(@PathParam("token_generated") String token_generated, @CookieParam(value = cookie_name) String cookie_num_etu){
+        if(cookie_num_etu != null && !cookie_num_etu.isEmpty() && token_generated != null && !token_generated.isEmpty()){
 
             try {
 
@@ -42,9 +42,9 @@ public class QrcodeResource {
                     return Response.status(Response.Status.NOT_FOUND).entity(json).build();
                 }
 
-                Emargement emargement = BDD_Emargement.getByURL(url_generated);
+                Emargement emargement = BDD_Emargement.getByURL(token_generated);
                 if(emargement == null){
-                    String json = new ResponseObject("error", "NEXTURL", "Emargement with url_generated:"+url_generated+" not found").toJSON();
+                    String json = new ResponseObject("error", "NEXTURL", "Emargement with url_generated:"+token_generated+" not found").toJSON();
                     return Response.status(Response.Status.NOT_FOUND).entity(json).build();
                 }
 
@@ -78,7 +78,7 @@ public class QrcodeResource {
     }
 
     @POST
-    @Path("/auth")
+    @Path("/authentication_etudiant")
     @Consumes("application/json")
     public Response AuthEtudiant(String data){
         try {

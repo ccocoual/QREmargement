@@ -66,7 +66,6 @@ public class BDD_Matiere {
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            connection.commit();
             return true;
         }
 
@@ -85,7 +84,6 @@ public class BDD_Matiere {
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            connection.commit();
             return true;
         }
 
@@ -103,7 +101,6 @@ public class BDD_Matiere {
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            connection.commit();
             return true;
         }
 

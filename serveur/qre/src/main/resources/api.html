@@ -1,0 +1,362 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+          rel="stylesheet" type="text/css">
+    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
+          rel="stylesheet" type="text/css">
+    <style>
+        .http{
+            text-align : center;
+        }
+        .GET .http{
+            color: white;
+            background-color: #0F6AB4;
+        }
+        .GET .path{
+            color: black;
+            background-color: #E7F0F7; 
+        }
+        .GET .details{
+            color: #6989C6;
+            background-color: #E7F0F7; 
+        }
+        .POST .http{
+            color: white;
+            background-color: #10A54A;
+        }
+        .POST .path{
+            color: black;
+            background-color: #E7F6EC; 
+        }
+        .POST .details{
+            color: #4BBA8A;
+            background-color: #E7F6EC; 
+        }
+        .PUT .http{
+            color: white;
+            background-color: #C5862B;
+        }
+        .PUT .path{
+            color: black;
+            background-color: #F9F2E9; 
+        }
+        .PUT .details{
+            color: #E0AB66;
+            background-color: #F9F2E9; 
+        }
+        .DELETE .http{
+            color: white;
+            background-color: #A41E22;
+        }
+        .DELETE .path{
+            color: black;
+            background-color: #F5E8E8; 
+        }
+        .DELETE .details{
+            color: #C3545E;
+            background-color: #F5E8E8; 
+        }
+    </style>
+</head>
+
+<body>
+<div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">QREmargement API</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active">
+                    <a href="#">Documentation<br></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel-group" id="accordion">
+                     <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#authentication">/authentication</a>
+                            </h4>
+                        </div>
+                        <div id="authentication" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:12%">HTTP Methods</th>
+                                        <th>Path</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="POST">
+                                        <td class="http">POST</td>
+                                        <td class="path"></td>
+                                        <td class="details">If login and password match a 'professeur', generate a new token</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+					<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#classes">/classes</a>
+                            </h4>
+                        </div>
+                        <div id="classes" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:12%">HTTP Methods</th>
+                                        <th>Path</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="GET">
+                                        <td class="http">GET</td>
+                                        <td class="path"></td>
+                                        <td class="details">Get all classes</td>
+                                    </tr>
+                                    <tr class="GET">
+                                        <td class="http">GET</td>
+                                        <td class="path">/{classe_id}</td>
+                                        <td class="details">Get classe by id</td>
+                                    </tr>
+                                    <tr class="GET">
+                                        <td class="http">GET</td>
+                                        <td class="path">/{classe_id}/groupes</td>
+                                        <td class="details">Get all groupes in classe by id</td>
+                                    </tr>
+                                    <tr class="POST">
+                                        <td class="http">POST</td>
+                                        <td class="path"></td>
+                                        <td class="details">Insert new classe</td>
+                                    </tr>
+                                    <tr class="PUT">
+                                        <td class="http">PUT</td>
+                                        <td class="path">/{classe_id}</td>
+                                        <td class="details">Update classe by id</td>
+                                    </tr>
+                                    <tr class="DELETE">
+                                        <td class="http">DELETE</td>
+                                        <td class="path">/{classe_id}</td>
+                                        <td class="details">Delete class by id</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#groupes">/groupes</a>
+                            </h4>
+                        </div>
+                        <div id="groupes" class="panel-collapse collapse">
+                            <div class="panel-body">
+								<table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:12%">HTTP Methods</th>
+                                        <th>Path</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="GET">
+                                        <td class="http">GET</td>
+                                        <td class="path"></td>
+                                        <td class="details">Get all groupes</td>
+                                    </tr>
+                                    <tr class="GET">
+                                        <td class="http">GET</td>
+                                        <td class="path">/{groupe_id}</td>
+                                        <td class="details">Get groupe by id</td>
+                                    </tr>
+                                    <tr class="GET">
+                                        <td class="http">GET</td>
+                                        <td class="path">/{groupe_id}/etudiants</td>
+                                        <td class="details">Get all etudiants in groupe by id</td>
+                                    </tr>
+                                    <tr class="POST">
+                                        <td class="http">POST</td>
+                                        <td class="path"></td>
+                                        <td class="details">Insert new groupe</td>
+                                    </tr>
+                                    <tr class="PUT">
+                                        <td class="http">PUT</td>
+                                        <td class="path">/{groupe_id}</td>
+                                        <td class="details">Update groupe by id</td>
+                                    </tr>
+                                    <tr class="DELETE">
+                                        <td class="http">DELETE</td>
+                                        <td class="path">/{groupe_id}</td>
+                                        <td class="details">Delete groupe by id</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+							</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#etudiants">/etudiants</a>
+                            </h4>
+                        </div>
+                        <div id="etudiants" class="panel-collapse collapse">
+                            <div class="panel-body">
+															<table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:12%">HTTP Methods</th>
+                                        <th>Path</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="GET">
+                                        <td class="http">GET</td>
+                                        <td class="path"></td>
+                                        <td class="details">Get all etudiants</td>
+                                    </tr>
+                                    <tr class="GET">
+                                        <td class="http">GET</td>
+                                        <td class="path">/{etudiant_id}</td>
+                                        <td class="details">Get etudiant by id</td>
+                                    </tr>
+                                    <tr class="GET">
+                                        <td class="http">GET</td>
+                                        <td class="path">/num_etu/{num_etu}</td>
+                                        <td class="details">Get etudiant by num_etu</td>
+                                    </tr>
+                                    <tr class="POST">
+                                        <td class="http">POST</td>
+                                        <td class="path"></td>
+                                        <td class="details">Insert new etudiant</td>
+                                    </tr>
+                                    <tr class="PUT">
+                                        <td class="http">PUT</td>
+                                        <td class="path">/{etudiant_id}</td>
+                                        <td class="details">Update etudiant by id</td>
+                                    </tr>
+                                    <tr class="DELETE">
+                                        <td class="http">DELETE</td>
+                                        <td class="path">/{etudiant_id}</td>
+                                        <td class="details">Delete etudiant by id</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+							</div>
+                        </div>
+                    </div>
+					<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#matieres">/matieres</a>
+                            </h4>
+                        </div>
+                        <div id="matieres" class="panel-collapse collapse">
+                            <div class="panel-body">
+								<table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:12%">HTTP Methods</th>
+                                        <th>Path</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="GET">
+                                        <td class="http">GET</td>
+                                        <td class="path"></td>
+                                        <td class="details">Get all matieres</td>
+                                    </tr>
+                                    <tr class="GET">
+                                        <td class="http">GET</td>
+                                        <td class="path">/{matiere_id}</td>
+                                        <td class="details">Get matiere by id</td>
+                                    </tr>
+                                    <tr class="POST">
+                                        <td class="http">POST</td>
+                                        <td class="path"></td>
+                                        <td class="details">Insert new matiere</td>
+                                    </tr>
+                                    <tr class="PUT">
+                                        <td class="http">PUT</td>
+                                        <td class="path">/{matiere_id}</td>
+                                        <td class="details">Update matiere by id</td>
+                                    </tr>
+                                    <tr class="DELETE">
+                                        <td class="http">DELETE</td>
+                                        <td class="path">/{matiere_id}</td>
+                                        <td class="details">Delete matiere by id</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+							</div>
+                        </div>
+                    </div>
+					<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#qrcode">/qrcode</a>
+                            </h4>
+                        </div>
+                        <div id="qrcode" class="panel-collapse collapse">
+                            <div class="panel-body">
+								<table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:12%">HTTP Methods</th>
+                                        <th>Path</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="GET">
+                                        <td class="http">GET</td>
+                                        <td class="path">/scan/{token_generated}</td>
+                                        <td class="details">Try to read a cookie to identify the 'etudiant' and his 'signature' updates for 'emergement' with 'token_generated'</td>
+                                    </tr>
+                                    <tr class="POST">
+                                        <td class="http">POST</td>
+                                        <td class="path">/authentication_etudiant</td>
+                                        <td class="details">If login and password match an 'etudiant', set a cookie with num_etu</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

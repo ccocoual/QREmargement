@@ -61,7 +61,7 @@ public class BDD_Professeur {
     public static Professeur checkAuth(String login, String password) throws SQLException, NoSuchAlgorithmException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "SELECT id FROM "+name_table+" WHERE email = ? AND password = ?";
+        String query = "SELECT * FROM "+name_table+" WHERE email = ? AND password = ?";
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, login);
@@ -116,7 +116,6 @@ public class BDD_Professeur {
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            connection.commit();
             return true;
         }
 
@@ -135,7 +134,6 @@ public class BDD_Professeur {
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            connection.commit();
             return true;
         }
 
@@ -153,7 +151,6 @@ public class BDD_Professeur {
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            connection.commit();
             return true;
         }
 
