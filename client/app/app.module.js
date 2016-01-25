@@ -1,6 +1,16 @@
 'use strict';
 
 var qrApp = angular.module("QRApp", [
-    "ui.router"
-    
-  ]);
+    "ui.router",
+    "monospaced.qrcode",
+    "chart.js"
+
+]);
+
+
+qrApp.config(['ChartJsProvider', function (ChartJsProvider) {
+    ChartJsProvider.setOptions({
+        colours: ['#4abebc', '#f54b50'],
+        responsive: true
+    })
+}]);

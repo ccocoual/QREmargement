@@ -13,6 +13,7 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
     //Routes pour les vues relatives aux cours
     $stateProvider
         .state('lesson', {
+            name: "Cours",
             url: '/lesson',
             //abstract:true,
             controller: 'LessonCtrl',
@@ -49,4 +50,5 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
              controller: 'StatisticCtrl',
              templateUrl: "./app/components/statistic/statistic.tpl.html"
         });
+
 });
