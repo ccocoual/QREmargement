@@ -8,15 +8,21 @@
     function StudentCtrl(StudentFactory) {
         var vm = this;
         vm.students = [];
-        vm.test = "toto";
+        vm.newStudent = {
+            group_id: "",
+            classe_id: ""
+        };
 
         vm.getStudents = function() {
-            console.log('getstudents');
             return StudentFactory.getStudents()
                 .then(function(data) {
                     vm.students = data;
                     return vm.students;
                 });
+        }
+        
+        vm.createStudent = function() {
+            return StudentFactory.createStudent(vm.newStudent);
         }
     }
 })();

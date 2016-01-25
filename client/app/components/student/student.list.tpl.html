@@ -1,15 +1,15 @@
 <div ng-init="studentCtrl.getStudents()">
     <table class="table">
         <thead>
-            <th>Identifiant</th>
             <th>Nom</th>
             <th>Prénom</th>
+            <th>Identifiant</th>
         </thead>
         <tbody ng-repeat="student in studentCtrl.students">
             <tr>
-                <td>{{student.id}}</td>
-                <td>{{student.lastname}}</td>
-                <td>{{student.firstname}}</td>
+                <td>{{student.nom}}</td>
+                <td>{{student.prenom}}</td>
+                <td>{{student.num_etu}}</td>
             </tr>
         </tbody>
     </table>
