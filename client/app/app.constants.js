@@ -1,0 +1,1 @@
+qrApp.constant('RESTURL', 'http://localhost:3000/');
