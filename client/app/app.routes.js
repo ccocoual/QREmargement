@@ -39,7 +39,8 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: "./app/components/student/student.list.tpl.html"
         })
         .state('student.create', {
-            url: '/create'
+            url: '/create',
+            templateUrl: "./app/components/student/student.create.tpl.html"
         });
 
     //Routes pour les vues relatives aux statistiques
