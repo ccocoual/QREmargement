@@ -41,7 +41,7 @@ public class ClasseResourceTest {
 
     @Test
     public void testGetAll() {
-
+        String responseMsg = target.path("classes").request().get(String.class);
 
     }
 }

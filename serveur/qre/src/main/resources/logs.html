@@ -1,0 +1,107 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+          rel="stylesheet" type="text/css">
+    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
+          rel="stylesheet" type="text/css">
+    <style>
+        .type{
+            text-align : center;
+            width : 10%;
+        }
+        .date{
+            width : 15%;
+        }
+        .message{
+            width : 75%;
+        }
+        .INFO .type{
+            color: white;
+            background-color: #0F6AB4 !important;
+        }
+        .INFO .date{
+            color: black;
+            background-color: #E7F0F7 !important;
+        }
+        .INFO .message{
+            color: #6989C6;
+            background-color: #E7F0F7 !important;
+        }
+        .WARNING .type{
+            color: white;
+            background-color: #C5862B !important;
+        }
+        .WARNING .date{
+            color: black;
+            background-color: #F9F2E9 !important;
+        }
+        .WARNING .message{
+            color: #E0AB66;
+            background-color: #F9F2E9 !important;
+        }
+        .ERROR .type{
+            color: white;
+            background-color: #A41E22 !important;
+        }
+        .ERROR .date{
+            color: black;
+            background-color: #F5E8E8 !important;
+        }
+        .ERROR .message{
+            color: #C3545E;
+            background-color: #F5E8E8 !important;
+        }
+    </style>
+</head>
+
+<body>
+<div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">QREmargement API</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/api">Documentation<br></a>
+                </li>
+                <li class="active">
+                    <a href="/api/logs">Logs<br></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th style="width:12%">Type</th>
+                        <th>Date</th>
+                        <th>Message</th>
+                    </tr>
+                    </thead>
+                    <tbody id="logs">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

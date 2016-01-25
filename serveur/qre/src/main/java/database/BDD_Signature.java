@@ -2,11 +2,9 @@ package database;
 
 import model.Signature;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class BDD_Signature {
 
@@ -25,7 +23,7 @@ public class BDD_Signature {
             Signature signature = new Signature();
             signature.setEmargement_id(rs.getInt("emargement_id"));
             signature.setEtudiant_id(rs.getInt("etudiant_id"));
-            signature.setDate(rs.getDate("date"));
+            signature.setDate(rs.getTimestamp("date"));
             signature.setSignee(rs.getBoolean("signee"));
             signatureList.add(signature);
         }
@@ -49,7 +47,7 @@ public class BDD_Signature {
             signature = new Signature();;
             signature.setEmargement_id(rs.getInt("emargement_id"));
             signature.setEtudiant_id(rs.getInt("etudiant_id"));
-            signature.setDate(rs.getDate("date"));
+            signature.setDate(rs.getTimestamp("date"));
             signature.setSignee(rs.getBoolean("signee"));
         }
 
@@ -70,7 +68,7 @@ public class BDD_Signature {
             Signature signature = new Signature();
             signature.setEmargement_id(rs.getInt("emargement_id"));
             signature.setEtudiant_id(rs.getInt("etudiant_id"));
-            signature.setDate(rs.getDate("date"));
+            signature.setDate(rs.getTimestamp("date"));
             signature.setSignee(rs.getBoolean("signee"));
             signatureList.add(signature);
         }
@@ -92,7 +90,7 @@ public class BDD_Signature {
             Signature signature = new Signature();
             signature.setEmargement_id(rs.getInt("emargement_id"));
             signature.setEtudiant_id(rs.getInt("etudiant_id"));
-            signature.setDate(rs.getDate("date"));
+            signature.setDate(rs.getTimestamp("date"));
             signature.setSignee(rs.getBoolean("signee"));
             signatureList.add(signature);
         }
@@ -105,10 +103,15 @@ public class BDD_Signature {
 
         String query = "INSERT INTO "+name_table+" (emargement_id, etudiant_id, date, signee) VALUES (?, ?, ?, ?)";
 
+        Calendar cal = Calendar.getInstance(); // creates calendar
+        cal.setTime(new java.util.Date()); // sets calendar time/date
+        cal.add(Calendar.HOUR_OF_DAY, 1); // adds one hour
+        Timestamp date_insert = new Timestamp(cal.getTime().getTime());
+
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, signature.getEmargement_id());
         stmt.setInt(2, signature.getEtudiant_id());
-        stmt.setDate(3, signature.getDate());
+        stmt.setTimestamp(3, date_insert);
         stmt.setBoolean(4, signature.isSignee());
 
         int rowsUpdated = stmt.executeUpdate();
@@ -125,8 +128,13 @@ public class BDD_Signature {
 
         String query = "UPDATE "+name_table+" SET date= ?, signee= ? WHERE emargement_id= ? AND etudiant_id= ?";
 
+        Calendar cal = Calendar.getInstance(); // creates calendar
+        cal.setTime(new java.util.Date()); // sets calendar time/date
+        cal.add(Calendar.HOUR_OF_DAY, 1); // adds one hour
+        Timestamp date_signature = new Timestamp(cal.getTime().getTime());
+
         PreparedStatement stmt = connection.prepareStatement(query);
-        stmt.setDate(1, signature.getDate());
+        stmt.setTimestamp(1, date_signature);
         stmt.setBoolean(2, signature.isSignee());
         stmt.setInt(3, signature.getEmargement_id());
         stmt.setInt(4, signature.getEtudiant_id());

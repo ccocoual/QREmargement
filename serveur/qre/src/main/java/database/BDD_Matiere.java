@@ -66,6 +66,10 @@ public class BDD_Matiere {
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()){
+                matiere.setId(generatedKeys.getInt(1));
+            }
             return true;
         }
 

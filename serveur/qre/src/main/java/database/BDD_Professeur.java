@@ -95,7 +95,10 @@ public class BDD_Professeur {
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            connection.commit();
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()){
+                professeur.setId(generatedKeys.getInt(1));
+            }
             return true;
         }
 

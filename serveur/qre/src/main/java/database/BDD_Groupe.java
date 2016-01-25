@@ -20,7 +20,6 @@ public class BDD_Groupe {
 
         ArrayList<Groupe> groupeList = new ArrayList<Groupe>();
         PreparedStatement stmt = connection.prepareStatement(query);
-        stmt.setString(1, name_table);
         ResultSet rs = stmt.executeQuery();
 
         while(rs.next()) {
@@ -37,11 +36,10 @@ public class BDD_Groupe {
     public static Groupe getById(int id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "SELECT * FROM ? WHERE id = ?";
+        String query = "SELECT * FROM "+name_table+" WHERE id = ?";
 
         PreparedStatement stmt = connection.prepareStatement(query);
-        stmt.setString(1, name_table);
-        stmt.setInt(2, id);
+        stmt.setInt(1, id);
         ResultSet rs = stmt.executeQuery();
 
         Groupe  groupe = null;
@@ -89,6 +87,10 @@ public class BDD_Groupe {
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()){
+                groupe.setId(generatedKeys.getInt(1));
+            }
             return true;
         }
 

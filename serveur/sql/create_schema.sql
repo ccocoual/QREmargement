@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `qre`.`emargement` (
   `id` INT NOT NULL,
   `date` DATETIME NOT NULL,
   `url_generated` VARCHAR(255) NOT NULL,
-  `type` ENUM('CM', 'TD', 'TP') NULL,
+  `type_cours` ENUM('CM', 'TD', 'TP') NULL,
   `matiere_id` INT NOT NULL,
   `professeur_id` INT NOT NULL,
   PRIMARY KEY (`id`, `matiere_id`, `professeur_id`),

@@ -2,16 +2,17 @@ package model;
 
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Signature {
     private int emargement_id;
     private int etudiant_id;
-    private Date date;
+    private Timestamp date;
     private boolean signee;
 
     public Signature() {}
 
-    public Signature(int emargement_id, int etudiant_id, Date date, boolean signee) {
+    public Signature(int emargement_id, int etudiant_id, Timestamp date, boolean signee) {
         super();
         this.emargement_id = emargement_id;
         this.etudiant_id = etudiant_id;
@@ -35,11 +36,11 @@ public class Signature {
         this.etudiant_id = etudiant_id;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 

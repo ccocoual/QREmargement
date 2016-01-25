@@ -6,6 +6,7 @@ package com.qre;
 
 import com.google.gson.Gson;
 import utils.EncrypteString;
+import utils.Log;
 import utils.ResponseObject;
 
 import javax.ws.rs.GET;
@@ -14,10 +15,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.security.NoSuchAlgorithmException;
 
 @Path("/api")
@@ -25,9 +23,22 @@ public class APIResource {
 
     @GET
     @Produces({MediaType.TEXT_HTML})
-    public InputStream viewHome() throws FileNotFoundException {
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("api.html").getFile());
-        return new FileInputStream(file);
+    public InputStream api() throws FileNotFoundException {
+        return new FileInputStream(new File(getClass().getClassLoader().getResource("api.html").getFile()));
+    }
+
+    @GET
+    @Path("/logs")
+    @Produces({MediaType.TEXT_HTML})
+    public InputStream logs() throws FileNotFoundException {
+        return new FileInputStream(new File(getClass().getClassLoader().getResource("logs.html").getFile()));
+    }
+
+    @GET
+    @Path("/testLogs")
+    public void test() throws IOException {
+        Log.getInstance().info("Une information");
+        Log.getInstance().warn("Un warning");
+        Log.getInstance().err("Une erreur");
     }
 }

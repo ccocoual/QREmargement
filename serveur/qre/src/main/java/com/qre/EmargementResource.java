@@ -6,8 +6,10 @@ package com.qre;
 
 import com.google.gson.Gson;
 import database.BDD_Authentication;
+import database.BDD_Emargement;
 import database.BDD_Etudiant;
 import model.Authentication;
+import model.Emargement;
 import model.Etudiant;
 import utils.Log;
 import utils.ResponseObject;
@@ -17,12 +19,12 @@ import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 
 
-@Path("/{token}/etudiants")
-public class EtudiantResource {
+@Path("/{token}/emargements")
+public class EmargementResource {
 
     @GET
     @Produces("application/json")
-    public Response getAllEtudiants(@PathParam("token") String token){
+    public Response getAllEmargements(@PathParam("token") String token){
         try {
             Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
             if(authentication == null){
@@ -32,7 +34,7 @@ public class EtudiantResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            String json = new Gson().toJson(BDD_Etudiant.getAll());
+            String json = new Gson().toJson(BDD_Emargement.getAll(professeur_id));
             return Response.status(Response.Status.OK).entity(json).build();
 
         } catch (SQLException e) {
@@ -45,8 +47,7 @@ public class EtudiantResource {
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public Response getEtudiantById(@PathParam("token") String token,
-                                    @PathParam("id") int id){
+    public Response getEmargementById(@PathParam("token") String token){
         try {
             Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
             if(authentication == null){
@@ -56,54 +57,20 @@ public class EtudiantResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            Etudiant etudiant = BDD_Etudiant.getById(id);
-            if (etudiant == null){
-                String json = new ResponseObject("error", "NEXTURL", "Etudiant with id:"+id+" not found").toJSON();
-                return Response.status(Response.Status.NOT_FOUND).entity(json).build();
-            }
-            String json = new Gson().toJson(etudiant);
+            String json = new Gson().toJson(BDD_Emargement.getAll(professeur_id));
             return Response.status(Response.Status.OK).entity(json).build();
+
         } catch (SQLException e) {
             Log.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
     }
-
-    @GET
-    @Path("/num_etu/{num_etu}")
-    @Produces("application/json")
-    public Response getEtudiantsByNumEtu(@PathParam("token") String token,
-                                         @PathParam("num_etu") String num_etu){
-        try {
-            Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
-            if(authentication == null){
-                String json = new ResponseObject("error", "nextURL", "Token invalid or expired").toJSON();
-                return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
-            }
-
-            int professeur_id = authentication.getProfesseur_id();
-
-            Etudiant etudiant = BDD_Etudiant.getByNumEtu(num_etu);
-            if (etudiant == null){
-                String json = new ResponseObject("error", "NEXTURL", "Etudiant with num_etu:"+num_etu+" not found").toJSON();
-                return Response.status(Response.Status.NOT_FOUND).entity(json).build();
-            }
-            String json = new Gson().toJson(etudiant);
-            return Response.status(Response.Status.OK).entity(json).build();
-        } catch (SQLException e) {
-            Log.getInstance().err(e.getMessage());
-            String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
-        }
-    }
-
-
 
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public Response insertEtudiant(@PathParam("token") String token,
+    public Response insertEmargement(@PathParam("token") String token,
                                    String data){
         try {
             Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
@@ -114,10 +81,10 @@ public class EtudiantResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            Etudiant etudiant = new Gson().fromJson(data, Etudiant.class);
+            Emargement emargement = new Gson().fromJson(data, Emargement.class);
 
-            if(BDD_Etudiant.insert(etudiant)){
-                String json = new Gson().toJson(etudiant);
+            if(BDD_Emargement.insert(emargement, professeur_id)){
+                String json = new Gson().toJson(emargement);
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {
                 String json = new ResponseObject("error", "nextURL",  "Etudiant inserting has failed").toJSON();

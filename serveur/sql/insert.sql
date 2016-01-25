@@ -31,7 +31,7 @@ INSERT INTO `qre`.`matiere`(`id`, `libelle`) VALUES
 (1, 'BDD'),
 (2, 'PRM');
 
-INSERT INTO `qre`.`emargement`(`id`, `date`, `url_generated`, `type`, `matiere_id`, `professeur_id`) VALUES 
+INSERT INTO `qre`.`emargement`(`id`, `date`, `url_generated`, `type_cours`, `matiere_id`, `professeur_id`) VALUES 
 (1, '2016-01-20 11:22:33','ezlkffsjekf','CM', 1, 1),
 (2, '2016-01-21 11:22:33','klzlkefnz','TD', 2, 1);
 

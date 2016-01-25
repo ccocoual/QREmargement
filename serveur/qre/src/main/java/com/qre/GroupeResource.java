@@ -11,6 +11,7 @@ import database.BDD_Groupe;
 import model.Authentication;
 import model.Etudiant;
 import model.Groupe;
+import utils.Log;
 import utils.ResponseObject;
 
 import javax.ws.rs.*;
@@ -35,6 +36,7 @@ public class GroupeResource {
             String json = new Gson().toJson(BDD_Groupe.getAll());
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
+            Log.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
@@ -60,6 +62,7 @@ public class GroupeResource {
             String json = new Gson().toJson(groupe);
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
+            Log.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
@@ -77,10 +80,13 @@ public class GroupeResource {
                 return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
             }
 
+            int professeur_id = authentication.getProfesseur_id();
+
             ArrayList<Etudiant> etudiants = BDD_Etudiant.getByGroupeId(id);
             String json = new Gson().toJson(etudiants);
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
+            Log.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
@@ -98,6 +104,8 @@ public class GroupeResource {
                 return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
             }
 
+            int professeur_id = authentication.getProfesseur_id();
+
             Groupe groupe = new Gson().fromJson(data, Groupe.class);
 
             if(BDD_Groupe.insert(groupe)){
@@ -108,6 +116,7 @@ public class GroupeResource {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
             }
         } catch (Exception e) {
+            Log.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
@@ -127,6 +136,8 @@ public class GroupeResource {
                 return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
             }
 
+            int professeur_id = authentication.getProfesseur_id();
+
             Groupe groupe = new Gson().fromJson(data, Groupe.class);
 
             if(BDD_Groupe.update(groupe)){
@@ -137,6 +148,7 @@ public class GroupeResource {
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
             }
         } catch (Exception e) {
+            Log.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
@@ -155,6 +167,8 @@ public class GroupeResource {
                 return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
             }
 
+            int professeur_id = authentication.getProfesseur_id();
+
             if(BDD_Groupe.delete(id)){
                 String json = new ResponseObject("success", "nextURL",  "Groupe has been deleted with succes").toJSON();
                 return Response.status(Response.Status.OK).entity(json).build();
@@ -163,6 +177,7 @@ public class GroupeResource {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
             }
         } catch (Exception e) {
+            Log.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }

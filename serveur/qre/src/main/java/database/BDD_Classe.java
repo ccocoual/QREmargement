@@ -79,6 +79,10 @@ public class BDD_Classe {
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()){
+                classe.setId(generatedKeys.getInt(1));
+            }
             return true;
         }
 
