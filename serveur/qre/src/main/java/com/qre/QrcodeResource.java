@@ -7,16 +7,12 @@ import model.Emargement;
 import model.Etudiant;
 import model.Groupe;
 import model.Signature;
-import utils.EncrypteString;
-import utils.Log;
+import utils.Logger;
 import utils.ResponseObject;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
-import java.net.URI;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -124,11 +120,11 @@ public class QrcodeResource {
             return Response.ok().cookie(new NewCookie(cookie_name, etudiant.getNum_etu())).build();
 
         } catch (SQLException e) {
-            Log.getInstance().err(e.getMessage());
+            Logger.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         } catch (ParseException e) {
-            Log.getInstance().err(e.getMessage());
+            Logger.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }

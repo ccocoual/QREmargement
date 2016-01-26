@@ -1,13 +1,11 @@
 package com.qre;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import database.BDD_Authentication;
 import database.BDD_Professeur;
 import model.Professeur;
-import utils.EncrypteString;
-import utils.Log;
+import utils.Logger;
 import utils.ResponseObject;
 
 import javax.ws.rs.Consumes;
@@ -49,7 +47,7 @@ public class AuthenticationResource {
                 return Response.status(Response.Status.NOT_FOUND).build();
 
         } catch (Exception e) {
-            Log.getInstance().info(e.getMessage());
+            Logger.getInstance().info(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.NOT_FOUND).entity(json).build();
         }

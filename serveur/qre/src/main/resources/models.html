@@ -1,0 +1,477 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+          rel="stylesheet" type="text/css">
+    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
+          rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">QREmargement API</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/api">Documentation<br></a>
+                </li>
+                <li class="active">
+                    <a href="/api/models">Models<br></a>
+                </li>
+                <li>
+                    <a href="/api/logs">Logs<br></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#classes">Table Classe</a>
+                            </h4>
+                        </div>
+                        <div id="classes" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:12%">Field</th>
+                                        <th>Type</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key</td>
+                                    </tr>
+                                    <tr>
+                                        <td>libelle</td>
+                                        <td>VARCHAR(255)</td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#groupes">Table Groupe</a>
+                            </h4>
+                        </div>
+                        <div id="groupes" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:12%">Field</th>
+                                        <th>Type</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key</td>
+                                    </tr>
+                                    <tr>
+                                        <td>libelle</td>
+                                        <td>VARCHAR(255)</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>classe_id</td>
+                                        <td>INT</td>
+                                        <td>Foreign Key Classe</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+							</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#etudiants">Table Etudiant</a>
+                            </h4>
+                        </div>
+                        <div id="etudiants" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Field</th>
+                                        <th>Type</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key</td>
+                                    </tr>
+                                    <tr>
+                                        <td>nom</td>
+                                        <td>VARCHAR(255)</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>prenom</td>
+                                        <td>VARCHAR(255)</td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>email</td>
+                                        <td>VARCHAR(255)</td>
+                                        <td>Unique</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>num_etu</td>
+                                        <td>VARCHAR(255)</td>
+                                        <td>Unique</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>groupe_id</td>
+                                        <td>INT</td>
+                                        <td>Foreign Key Groupe</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>classe_id</td>
+                                        <td>INT</td>
+                                        <td>Foreign Key Classe</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+							</div>
+                        </div>
+                    </div>
+					<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#matieres">Table Matiere</a>
+                            </h4>
+                        </div>
+                        <div id="matieres" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:12%">Field</th>
+                                        <th>Type</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key</td>
+                                    </tr>
+                                    <tr>
+                                        <td>libelle</td>
+                                        <td>VARCHAR(255)</td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+							</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#signatures">Table Signature</a>
+                            </h4>
+                        </div>
+                        <div id="signatures" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:12%">Field</th>
+                                        <th>Type</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>emargement_id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key, Foreign Key Emargement</td>
+                                    </tr>
+                                    <tr>
+                                        <td>etudiant_id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key, Foreign Key Etudiant</td>
+                                    </tr>
+                                    <tr>
+                                        <td>signee</td>
+                                        <td>Boolean</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>date</td>
+                                        <td>Datetime</td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#professeurs">Table Professeur</a>
+                            </h4>
+                        </div>
+                        <div id="professeurs" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:12%">Field</th>
+                                        <th>Type</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key</td>
+                                    </tr>
+                                    <tr>
+                                        <td>nom</td>
+                                        <td>VARCHAR(255)</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>prenom</td>
+                                        <td>VARCHAR(255)</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>email</td>
+                                        <td>VARCHAR(255)</td>
+                                        <td>Unique</td>
+                                    </tr>
+                                    <tr>
+                                        <td>password</td>
+                                        <td>VARCHAR(255)</td>
+                                        <td>MD5 Encrypted</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#professeurs_has_classe">Table Professeur_has_classe</a>
+                            </h4>
+                        </div>
+                        <div id="professeurs_has_classe" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:12%">Field</th>
+                                        <th>Type</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>professeur_id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key, Foreign Key Professeur</td>
+                                    </tr>
+                                    <tr>
+                                        <td>classe_id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key, Foreign Key Classe</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#emargements">Table Emargement</a>
+                            </h4>
+                        </div>
+                        <div id="emargements" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:12%">Field</th>
+                                        <th>Type</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key</td>
+                                    </tr>
+                                    <tr>
+                                        <td>date</td>
+                                        <td>Datetime</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>url_generated</td>
+                                        <td>VARCHAR(255)</td>
+                                        <td>Unique</td>
+                                    </tr>
+                                    <tr>
+                                        <td>type_cours</td>
+                                        <td>ENUM('CM','TD','TP')</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>matiere_id</td>
+                                        <td>INT</td>
+                                        <td>Foreign Key Matiere</td>
+                                    </tr>
+                                    <tr>
+                                        <td>professeur_id</td>
+                                        <td>INT</td>
+                                        <td>Foreign Key Professeur</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#emargements_has_groupe">Table Emargement_has_groupe</a>
+                            </h4>
+                        </div>
+                        <div id="emargements_has_groupe" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:12%">Field</th>
+                                        <th>Type</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>emargement_id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key, Foreign Key Emargement</td>
+                                    </tr>
+                                    <tr>
+                                        <td>classe_id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key, Foreign Key Classe</td>
+                                    </tr>
+                                    <tr>
+                                        <td>groupe_id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key, Foreign Key Groupe</td>
+                                    </tr>
+                                    <tr>
+                                        <td>matiere_id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key, Foreign Key Matiere</td>
+                                    </tr>
+                                    <tr>
+                                        <td>professeur_id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key, Foreign Key Professeur</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#authentication">Table Authentication</a>
+                            </h4>
+                        </div>
+                        <div id="authentication" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:12%">Field</th>
+                                        <th>Type</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>id</td>
+                                        <td>INT</td>
+                                        <td>Primary Key</td>
+                                    </tr>
+                                    <tr>
+                                        <td>token</td>
+                                        <td>VARCHAR(255)</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>date_expiration</td>
+                                        <td>Datetime</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>professeur_id</td>
+                                        <td>INT</td>
+                                        <td>Foreign Key Professeur</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

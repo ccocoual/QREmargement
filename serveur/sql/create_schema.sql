@@ -19,6 +19,19 @@ CREATE SCHEMA IF NOT EXISTS `qre` DEFAULT CHARACTER SET utf8 ;
 USE `qre` ;
 
 -- -----------------------------------------------------
+-- Table `qre`.`logs`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `qre`.`logs` ;
+
+CREATE TABLE IF NOT EXISTS `qre`.`logs` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type_log` VARCHAR(255) NULL,
+  `date` DATETIME NOT NULL,
+  `message` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
 -- Table `qre`.`classe`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `qre`.`classe` ;

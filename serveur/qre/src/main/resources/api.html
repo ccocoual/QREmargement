@@ -82,6 +82,9 @@
                     <a href="/api">Documentation<br></a>
                 </li>
                 <li>
+                    <a href="/api/models">Models<br></a>
+                </li>
+                <li>
                     <a href="/api/logs">Logs<br></a>
                 </li>
             </ul>
@@ -93,15 +96,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel-group" id="accordion">
-                     <div class="panel panel-default">
-                        <div class="panel-heading  actives">
-                            <h4 class="panel-title  actives">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#authentication">/authentication</a>
                             </h4>
                         </div>
                         <div id="authentication" class="panel-collapse collapse in">
                             <div class="panel-body">
-
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -118,6 +120,7 @@
                                     </tr>
                                     </tbody>
                                 </table>
+
                             </div>
                         </div>
                     </div>
@@ -127,29 +130,8 @@
                                 <a data-toggle="collapse" data-parent="#accordion" href="#classes">/classes</a>
                             </h4>
                         </div>
-                        <div id="classes" class="panel-collapse collapse in">
+                        <div id="classes" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th style="width:12%">Field</th>
-                                        <th>Type</th>
-                                        <th>Details</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>id</td>
-                                        <td>INT</td>
-                                        <td>Primary Key</td>
-                                    </tr>
-                                    <tr>
-                                        <td>libelle</td>
-                                        <td>VARCHAR(255)</td>
-                                        <td></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -202,32 +184,6 @@
                         </div>
                         <div id="groupes" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th style="width:12%">Field</th>
-                                        <th>Type</th>
-                                        <th>Details</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>id</td>
-                                        <td>INT</td>
-                                        <td>Primary Key</td>
-                                    </tr>
-                                    <tr>
-                                        <td>libelle</td>
-                                        <td>VARCHAR(255)</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>classe_id</td>
-                                        <td>INT</td>
-                                        <td>Foreign Key</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
 								<table class="table">
                                     <thead>
                                     <tr>
@@ -283,56 +239,6 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th>Field</th>
-                                        <th>Type</th>
-                                        <th>Details</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>id</td>
-                                        <td>INT</td>
-                                        <td>Primary Key</td>
-                                    </tr>
-                                    <tr>
-                                        <td>nom</td>
-                                        <td>VARCHAR(255)</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>prenom</td>
-                                        <td>VARCHAR(255)</td>
-                                        <td></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>email</td>
-                                        <td>VARCHAR(255)</td>
-                                        <td>Unique</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>num_etu</td>
-                                        <td>VARCHAR(255)</td>
-                                        <td>Unique</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>groupe_id</td>
-                                        <td>INT</td>
-                                        <td>Foreign Key</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>classe_id</td>
-                                        <td>INT</td>
-                                        <td>Foreign Key</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <table class="table">
-                                    <thead>
-                                    <tr>
                                         <th style="width:12%">HTTP Methods</th>
                                         <th>Path</th>
                                         <th>Details</th>
@@ -382,27 +288,6 @@
                         </div>
                         <div id="matieres" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th style="width:12%">Field</th>
-                                        <th>Type</th>
-                                        <th>Details</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>id</td>
-                                        <td>INT</td>
-                                        <td>Primary Key</td>
-                                    </tr>
-                                    <tr>
-                                        <td>libelle</td>
-                                        <td>VARCHAR(255)</td>
-                                        <td></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
 								<table class="table">
                                     <thead>
                                     <tr>

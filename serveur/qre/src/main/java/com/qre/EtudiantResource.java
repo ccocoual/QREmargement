@@ -9,7 +9,7 @@ import database.BDD_Authentication;
 import database.BDD_Etudiant;
 import model.Authentication;
 import model.Etudiant;
-import utils.Log;
+import utils.Logger;
 import utils.ResponseObject;
 
 import javax.ws.rs.*;
@@ -36,7 +36,7 @@ public class EtudiantResource {
             return Response.status(Response.Status.OK).entity(json).build();
 
         } catch (SQLException e) {
-            Log.getInstance().err(e.getMessage());
+            Logger.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
@@ -64,7 +64,7 @@ public class EtudiantResource {
             String json = new Gson().toJson(etudiant);
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
-            Log.getInstance().err(e.getMessage());
+            Logger.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
@@ -92,7 +92,7 @@ public class EtudiantResource {
             String json = new Gson().toJson(etudiant);
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
-            Log.getInstance().err(e.getMessage());
+            Logger.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
@@ -124,7 +124,7 @@ public class EtudiantResource {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
             }
         } catch (Exception e) {
-            Log.getInstance().err(e.getMessage());
+            Logger.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
@@ -156,7 +156,7 @@ public class EtudiantResource {
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
             }
         } catch (Exception e) {
-            Log.getInstance().err(e.getMessage());
+            Logger.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
@@ -185,7 +185,7 @@ public class EtudiantResource {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
             }
         } catch (Exception e) {
-            Log.getInstance().err(e.getMessage());
+            Logger.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }

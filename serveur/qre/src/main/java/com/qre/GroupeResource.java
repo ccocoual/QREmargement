@@ -11,7 +11,7 @@ import database.BDD_Groupe;
 import model.Authentication;
 import model.Etudiant;
 import model.Groupe;
-import utils.Log;
+import utils.Logger;
 import utils.ResponseObject;
 
 import javax.ws.rs.*;
@@ -36,7 +36,7 @@ public class GroupeResource {
             String json = new Gson().toJson(BDD_Groupe.getAll());
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
-            Log.getInstance().err(e.getMessage());
+            Logger.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
@@ -62,7 +62,7 @@ public class GroupeResource {
             String json = new Gson().toJson(groupe);
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
-            Log.getInstance().err(e.getMessage());
+            Logger.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
@@ -86,7 +86,7 @@ public class GroupeResource {
             String json = new Gson().toJson(etudiants);
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
-            Log.getInstance().err(e.getMessage());
+            Logger.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
@@ -116,7 +116,7 @@ public class GroupeResource {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
             }
         } catch (Exception e) {
-            Log.getInstance().err(e.getMessage());
+            Logger.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
@@ -148,7 +148,7 @@ public class GroupeResource {
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
             }
         } catch (Exception e) {
-            Log.getInstance().err(e.getMessage());
+            Logger.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
@@ -177,7 +177,7 @@ public class GroupeResource {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
             }
         } catch (Exception e) {
-            Log.getInstance().err(e.getMessage());
+            Logger.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
