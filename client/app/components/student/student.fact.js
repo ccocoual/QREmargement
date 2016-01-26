@@ -5,8 +5,6 @@
 
     function StudentFactory($http, RESTURL) {
 
-        console.log(RESTURL);
-
         var factory = {
             getStudents: getStudents,
             createStudent: createStudent
@@ -19,12 +17,12 @@
                 .catch(getFailed);
 
             function getComplete(response) {
+                console.log("GETS students succeed" + response.data);
                 return response.data;
-                console.log("GETS OK" + reponse.data);
             }
 
             function getFailed(error) {
-                console.log('GET failed for gets.' + error.data);
+                console.log('GETS students failed' + error.data);
             }
         }  
 
@@ -35,11 +33,11 @@
                 .catch(getFailed);
 
             function getComplete(response) {
-                console.log("post ok");
+                console.log("POST student succeed");
             }
 
             function getFailed(error) {
-                console.log('POST failed for create.' + error.data);
+                console.log('POST student for create.' + error.data);
             }
         }
     }
