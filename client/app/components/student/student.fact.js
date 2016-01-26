@@ -7,7 +7,10 @@
 
         var factory = {
             getStudents: getStudents,
-            createStudent: createStudent
+            getStudent: getStudent,
+            createStudent: createStudent,
+            updateStudent: updateStudent,
+            removeStudent: removeStudent
         };
         return factory;
 
@@ -25,6 +28,21 @@
                 console.log('GETS students failed' + error.data);
             }
         }  
+        
+        function getStudent(id) {
+            return $http.get(RESTURL + 'students/' + id)
+                .then(getComplete)
+                .catch(getFailed);
+
+            function getComplete(response) {
+                console.log('GET Student succeed');
+                return response.data;
+            }
+
+            function getFailed(error) {
+                console.log('GET Student failed .' + error.data);
+            }
+        }
 
         function createStudent(student) {
             console.log(student);
@@ -38,6 +56,34 @@
 
             function getFailed(error) {
                 console.log('POST student for create.' + error.data);
+            }
+        }
+        
+        function updateStudent(Student) {
+            return $http.put(RESTURL + 'students', Student)
+                .then(getComplete)
+                .catch(getFailed);
+            
+            function getComplete(response) {
+                console.log('PUT student succeed');
+            }
+            
+            function getFailed(error) {
+                console.log('PUT student failed' + error.data);
+            }
+        }
+        
+        function removeStudent(id) {
+            return $http.delete(RESTURL + 'students/' + id)
+                .then(getComplete)
+                .catch(getFailed);
+            
+            function getComplete(response) {
+                console.log('DELETE student succeed');
+            }
+            
+            function getFailed(error) {
+                console.log('DELETE student failed' + error.data);
             }
         }
     }

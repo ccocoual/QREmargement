@@ -25,5 +25,10 @@
             StudentFactory.createStudent(vm.newStudent);
             $state.go('student.list');
         }
+        
+        vm.removeStudent = function(id) {
+            StudentFactory.removeStudent(id);
+            $state.reload();
+        }
     }
 })();
