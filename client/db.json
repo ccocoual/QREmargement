@@ -1,10 +1,73 @@
 {
   "students": [
     {
-      "id": 14008414,
-      "lastname": "MEUNIER",
-      "firstname": "Maxime",
-      "email": "mxmeunier@gmail.com"
+      "id": 1,
+      "num_etu": 14008414,
+      "nom": "MEUNIER",
+      "prenom": "Maxime",
+      "email": "mxmeunier@gmail.com",
+      "groupe_id": "",
+      "class_id": ""
+    },
+    {
+      "group_id": "",
+      "classe_id": "",
+      "num_etu": 14008976,
+      "nom": "Dupont",
+      "prenom": "Pierre",
+      "email": "pdupont",
+      "id": 2
+    },
+    {
+      "group_id": "",
+      "classe_id": "",
+      "num_etu": 1123435135,
+      "nom": "zdqzd",
+      "prenom": "qzldk",
+      "email": "qzdqzdqzd",
+      "id": 3
+    },
+    {
+      "group_id": "",
+      "classe_id": "",
+      "num_etu": 1342423212,
+      "nom": "dQZDQZD",
+      "prenom": "dQZDdqzd",
+      "email": "qdqzdQD",
+      "id": 4
+    },
+    {
+      "group_id": "",
+      "classe_id": "",
+      "num_etu": "1D",
+      "nom": "DZQD",
+      "prenom": "qD",
+      "email": "QDZ",
+      "id": 5
+    },
+    {
+      "group_id": "",
+      "classe_id": "",
+      "num_etu": "DQZDdzdq",
+      "nom": "dQZDzd",
+      "prenom": "ZDQZD",
+      "email": "qdQZD",
+      "id": 6
+    }
+  ],
+  "emargements": [
+    {
+      "id": 1,
+      "url_generated": "monUrlGeneree"
+    }
+  ],
+  "lessons": [
+    {
+      "id": 1,
+      "date": "2030-01-20 11:22:33",
+      "url_generated": "ezlkffsjekf",
+      "type": "CM",
+      "matière": 1
     }
   ]
 }
