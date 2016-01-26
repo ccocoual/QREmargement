@@ -1,5 +1,7 @@
 package database;
 
+import utils.OSValidator;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,7 +15,10 @@ public final class Database {
         String dbName = "qre";
         String driver = "com.mysql.jdbc.Driver";
         String userName = "root";
-        String password = "";
+        String password = "miageQRE2016";
+        if(OSValidator.isWindows() || OSValidator.isMac()){
+            password = "";
+        }
         try {
             Class.forName(driver).newInstance();
         } catch (InstantiationException e) {
