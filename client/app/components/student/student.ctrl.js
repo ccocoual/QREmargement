@@ -3,9 +3,9 @@
 
     qrApp.controller('StudentCtrl', StudentCtrl);
 
-    StudentCtrl.$inject = ['StudentFactory'];
+    StudentCtrl.$inject = ['StudentFactory', '$state'];
 
-    function StudentCtrl(StudentFactory) {
+    function StudentCtrl(StudentFactory, $state) {
         var vm = this;
         vm.students = [];
         vm.newStudent = {
@@ -22,7 +22,8 @@
         }
         
         vm.createStudent = function() {
-            return StudentFactory.createStudent(vm.newStudent);
+            StudentFactory.createStudent(vm.newStudent);
+            $state.go('student.list');
         }
     }
 })();
