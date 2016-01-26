@@ -11,7 +11,7 @@
             createLesson: createLesson,
             updateLesson: updateLesson,
             removeLesson: removeLesson,
-            getGeneratedUrl: getGeneratedUrl
+            getUrlGenerated: getUrlGenerated
         };
         return factory;
         
@@ -21,8 +21,8 @@
                 .catch(getFailed);
 
             function getComplete(response) {
-                return response.data;
                 console.log('GETS lessons succeed');
+                return response.data;
             }
 
             function getFailed(error) {
@@ -30,14 +30,14 @@
             }
         }
         
-        function getLessons(id) {
+        function getLesson(id) {
             return $http.get(RESTURL + 'lessons/' + id)
                 .then(getComplete)
                 .catch(getFailed);
 
             function getComplete(response) {
-                return response.data;
                 console.log('GET lesson succeed');
+                return response.data;
             }
 
             function getFailed(error) {
@@ -87,14 +87,14 @@
             }
         }
         
-        function getUrlGenerated() {
-            return $http.get(RESTURL + 'emargements/1')
+        function getUrlGenerated(id) {
+            return $http.get(RESTURL + 'lessons/' + id)
                 .then(getComplete)
                 .catch(getFailed);
 
             function getComplete(response) {
-                return response.data.url_generated;
                 console.log('GET UrlGenerated succeed');
+                return response.data.url_generated;
             }
 
             function getFailed(error) {

@@ -17,6 +17,7 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/lesson',
             //abstract:true,
             controller: 'LessonCtrl',
+            controllerAs: 'lesson',
             templateUrl: "./app/components/lesson/lesson.tpl.html"
         })
         .state('lesson.list', {

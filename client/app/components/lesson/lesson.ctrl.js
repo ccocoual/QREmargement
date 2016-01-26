@@ -3,22 +3,21 @@
 
     qrApp.controller('LessonCtrl', LessonCtrl);
 
+    LessonCtrl.$inject = ['LessonFactory'];
 
-    function LessonCtrl() {
+    function LessonCtrl(LessonFactory) {
         var vm = this;
-        vm.getLessonQrCode = getLessonQrCode;
-        vm.getNbSignatures = getNbSignatures;
-
-
-        /**
-         * Return the string to transform into QRCode
-         */
-        function getLessonQrCode(lessonId){
-
-            return 'Test';
+        vm.qrCodeUrl = "";
+        
+        vm.getQRCodeURL = function(id) {
+            return LessonFactory.getUrlGenerated(id)
+                .then(function(data) {
+                    vm.qrCodeUrl = data;
+                    return vm.qrCodeUrl;
+                });
         }
 
-        function getNbSignatures(){
+        vm.getNbSignatures = function getNbSignatures(){
             vm.nbSignatures = [12,1];
             vm.nbSignaturesLabels = ["Présents", "Absents"];
             console.log(vm.nbSignatures);
