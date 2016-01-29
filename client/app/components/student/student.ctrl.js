@@ -8,10 +8,7 @@
     function StudentCtrl(StudentFactory, $state) {
         var vm = this;
         vm.students = [];
-        vm.newStudent = {
-            group_id: "",
-            classe_id: ""
-        };
+        vm.newStudent = {};
 
         vm.getStudents = function() {
             return StudentFactory.getStudents()
