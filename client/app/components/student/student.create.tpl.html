@@ -17,9 +17,9 @@
             <label for="email">Email</label>
             <input type="text" class="form-control" id="email" ng-model="student.newStudent.email">
         </div>
-        <div class="form-group" ng-controller="ClassCtrl as classCtrl" ng-init="classCtrl.getClasses()">
+        <div class="form-group" ng-controller="ClassCtrl as class" ng-init="class.getClasses()">
             <label for="email">Promotion</label>
-            <select class="form-control" ng-options="class.id as class.libelle for class in classCtrl.classes" ng-model="student.newStudent.classe_id"></select>
+            <select class="form-control" ng-options="class_stu.id as class_stu.libelle for class_stu in class.classes" ng-model="student.newStudent.classe_id"></select>
         </div>
         <button type="button" class="btn btn-success" ng-click="student.createStudent()">Créer</button>
     </form>
