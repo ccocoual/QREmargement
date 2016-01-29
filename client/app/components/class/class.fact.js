@@ -15,74 +15,74 @@
         return factory;
         
         function getClasses() {
-            return $http.get(RESTURL + 'Classes')
+            return $http.get(RESTURL + 'classes')
                 .then(getComplete)
                 .catch(getFailed);
 
             function getComplete(response) {
-                console.log('GETS Classes succeed');
+                console.log('GETS classes succeed');
                 return response.data;
             }
 
             function getFailed(error) {
-                console.log('GETS Classes failed' + error.data);
+                console.log('GETS classes failed' + error.data);
             }
         }
         
         function getClass(id) {
-            return $http.get(RESTURL + 'Classes/' + id)
+            return $http.get(RESTURL + 'classes/' + id)
                 .then(getComplete)
                 .catch(getFailed);
 
             function getComplete(response) {
-                console.log('GET Class succeed');
+                console.log('GET class succeed');
                 return response.data;
             }
 
             function getFailed(error) {
-                console.log('GET Class failed .' + error.data);
+                console.log('GET class failed .' + error.data);
             }
         }  
 
-        function createClass(Class) {
-            return $http.post(RESTURL + 'Classes', Class)
+        function createClass(class_) {
+            return $http.post(RESTURL + 'classes', class_)
                 .then(getComplete)
                 .catch(getFailed);
 
             function getComplete(response) {
-                console.log('POST Class succeed');
+                console.log('POST class succeed');
             }
 
             function getFailed(error) {
-                console.log('POST Class failed' + error.data);
+                console.log('POST class failed' + error.data);
             }
         }
         
-        function updateClass(Class) {
-            return $http.put(RESTURL + 'Classs', Class)
+        function updateClass(class_) {
+            return $http.put(RESTURL + 'classes', class_)
                 .then(getComplete)
                 .catch(getFailed);
             
             function getComplete(response) {
-                console.log('PUT Class succeed');
+                console.log('PUT class succeed');
             }
             
             function getFailed(error) {
-                console.log('PUT Class failed' + error.data);
+                console.log('PUT class failed' + error.data);
             }
         }
         
         function removeClass(id) {
-            return $http.delete(RESTURL + 'Classs/' + id)
+            return $http.delete(RESTURL + 'classes/' + id)
                 .then(getComplete)
                 .catch(getFailed);
             
             function getComplete(response) {
-                console.log('DELETE Class succeed');
+                console.log('DELETE class succeed');
             }
             
             function getFailed(error) {
-                console.log('DELETE Class failed' + error.data);
+                console.log('DELETE class failed' + error.data);
             }
         }
     }
