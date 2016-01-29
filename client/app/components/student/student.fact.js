@@ -20,7 +20,7 @@
                 .catch(getFailed);
 
             function getComplete(response) {
-                console.log("GETS students succeed" + response.data);
+                console.log("GETS students succeed");
                 return response.data;
             }
 
@@ -58,8 +58,8 @@
             }
         }
         
-        function updateStudent(Student) {
-            return $http.put(RESTURL + 'students', Student)
+        function updateStudent(student) {
+            return $http.put(RESTURL + 'students', student)
                 .then(getComplete)
                 .catch(getFailed);
             
