@@ -58,10 +58,10 @@ public class BDD_Groupe {
         Connection connection = Database.getDbCon().conn;
 
         String query = "SELECT * FROM "+name_table+" WHERE classe_id = ?";
-
         ArrayList<Groupe> groupeList = new ArrayList<Groupe>();
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, classe_id);
+
         ResultSet rs = stmt.executeQuery();
 
         while(rs.next()) {

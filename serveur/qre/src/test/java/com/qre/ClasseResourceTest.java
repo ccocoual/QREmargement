@@ -1,25 +1,37 @@
 package com.qre;
 
+import com.google.gson.Gson;
+import model.Classe;
+import org.apache.http.HttpEntity;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
+import utils.InputStreamToString;
+import utils.ResponseObject;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static org.junit.Assert.assertEquals;
+import java.io.IOException;
+
+import static org.junit.Assert.*;
 
 public class ClasseResourceTest {
 
     private HttpServer server;
     private WebTarget target;
 
+
+
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         // start the server
         server = Main.startServer();
         // create the client
@@ -32,16 +44,83 @@ public class ClasseResourceTest {
         // c.configuration().enable(new org.glassfish.jersey.media.json.JsonJaxbFeature());
 
         target = c.target(Main.BASE_URI);
+
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         server.stop();
     }
 
     @Test
-    public void testGetAll() {
-        String responseMsg = target.path("classes").request().get(String.class);
+    public void ClasseTest() {
+        /* INITIALISATION */
+        String token_unlimited, libelleTest, libelleTest2, response;
+        Classe classe;
+        int nb_classes_before_insert, nb_classes_after_insert, nb_classes_after_put, nb_classes_after_delete;
 
+        token_unlimited = "test";
+        libelleTest = "testClasse";
+        libelleTest2 = "otherTestClasse";
+        classe = new Classe();
+        /* ****************** */
+
+        /* GET ALL */
+        response = target.path(token_unlimited + "/classes").request().get(String.class);
+        nb_classes_before_insert = new Gson().fromJson(response, Classe[].class).length;
+        /* ****************** */
+
+        /* INSERT */
+        classe.setLibelle(libelleTest);
+        // verifie que l'id est bien null
+        assertEquals(0, classe.getId());
+        response = target.path(token_unlimited+"/classes").request().post(Entity.entity(classe, MediaType.APPLICATION_JSON_TYPE)).readEntity(String.class);
+        classe = new Gson().fromJson(response, Classe.class);
+        // verifie que l'id est different de null
+        assertTrue(classe.getId() != 0);
+        // verifie que les libelle correspondent
+        assertEquals(libelleTest, classe.getLibelle());
+        response = target.path(token_unlimited+"/classes").request().get(String.class);
+        nb_classes_after_insert = new Gson().fromJson(response, Classe[].class).length;
+        // verifie qu'on a une ecriture supplémentaire dans la bdd
+        assertEquals(nb_classes_before_insert+1, nb_classes_after_insert);
+        /* ****************** */
+
+        /* GET BY ID */
+        int old_id = classe.getId();
+        String old_libelle = classe.getLibelle();
+        response = target.path(token_unlimited+"/classes/"+classe.getId()).request().get(String.class);
+        classe = new Gson().fromJson(response, Classe.class);
+        // verifie que les id correspondent
+        assertEquals(old_id, classe.getId());
+        // verifie que les libelles correspondent
+        assertEquals(old_libelle, classe.getLibelle());
+        /* ****************** */
+
+        /* PUT */
+        old_id = classe.getId();
+        classe.setLibelle(libelleTest2);
+        response = target.path(token_unlimited+"/classes/"+classe.getId()).request().put(Entity.entity(classe, MediaType.APPLICATION_JSON_TYPE)).readEntity(String.class);
+        classe = new Gson().fromJson(response, Classe.class);
+        // verifie que les id correspondent toujours
+        assertEquals(old_id, classe.getId());
+        // verifie que le libelle a été mis à jour
+        assertEquals(libelleTest2, classe.getLibelle());
+        response = target.path(token_unlimited+"/classes").request().get(String.class);
+        nb_classes_after_put = new Gson().fromJson(response, Classe[].class).length;
+        // verifie qu'on a toujours le meme nombre d'ecriture en bdd
+        assertEquals(nb_classes_after_insert, nb_classes_after_put);
+        /* ****************** */
+
+        /* DELETE */
+        response = target.path(token_unlimited+"/classes/"+classe.getId()).request().delete().readEntity(String.class);
+        ResponseObject result = new Gson().fromJson(response, ResponseObject.class);
+        // verifie que le serveur renvoie bien un message success
+        assertEquals("success", result.getStatus());
+        response = target.path(token_unlimited+"/classes").request().get(String.class);
+        nb_classes_after_delete = new Gson().fromJson(response, Classe[].class).length;
+        // verifie qu'on a le meme nombre d'ecriture en bdd qu'avant l'insertion
+        assertEquals(nb_classes_before_insert, nb_classes_after_delete);
+        /* ****************** */
     }
 }

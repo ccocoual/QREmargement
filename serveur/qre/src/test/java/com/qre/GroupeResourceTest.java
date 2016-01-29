@@ -1,0 +1,145 @@
+package com.qre;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import model.Classe;
+import model.Groupe;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runners.MethodSorters;
+import utils.ResponseObject;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class GroupeResourceTest {
+
+    private HttpServer server;
+    private WebTarget target;
+
+
+
+    @Before
+    public void setUp() {
+        // start the server
+        server = Main.startServer();
+        // create the client
+        Client c = ClientBuilder.newClient();
+
+        // uncomment the following line if you want to enable
+        // support for JSON in the client (you also have to uncomment
+        // dependency on jersey-media-json module in pom.xml and Main.startServer())
+        // --
+        // c.configuration().enable(new org.glassfish.jersey.media.json.JsonJaxbFeature());
+
+        target = c.target(Main.BASE_URI);
+
+    }
+
+    @After
+    public void tearDown() {
+        server.stop();
+    }
+
+    @Test
+    public void GroupeTest() {
+        /* INITIALISATION */
+        String token_unlimited, libelleTest, libelleTest2, response;
+        Classe classe;
+        Groupe groupe;
+        int nb_groupes_before_insert, nb_groupes_after_insert, nb_groupes_after_put, nb_groupes_after_delete;
+
+        token_unlimited = "test";
+        libelleTest = "testGroupe";
+        libelleTest2 = "otherTestGroupe";
+
+        classe = new Classe();
+        classe.setLibelle("testClasse");
+
+        response = target.path(token_unlimited+"/classes").request().post(Entity.entity(classe, MediaType.APPLICATION_JSON_TYPE)).readEntity(String.class);
+        classe = new Gson().fromJson(response, Classe.class);
+
+        groupe = new Groupe();
+        /* ****************** */
+
+        /* GET ALL */
+        response = target.path(token_unlimited + "/groupes").request().get(String.class);
+        nb_groupes_before_insert = new Gson().fromJson(response, Groupe[].class).length;
+        /* ****************** */
+
+        /* INSERT */
+        groupe.setLibelle(libelleTest);
+        groupe.setClasse_id(classe.getId());
+        // verifie que l'id est bien null
+        assertEquals(0, groupe.getId());
+        response = target.path(token_unlimited+"/groupes").request().post(Entity.entity(groupe, MediaType.APPLICATION_JSON_TYPE)).readEntity(String.class);
+        groupe = new Gson().fromJson(response, Groupe.class);
+        // verifie que l'id est different de null
+        assertTrue(groupe.getId() != 0);
+        // verifie que les libelle correspondent
+        assertEquals(libelleTest, groupe.getLibelle());
+        response = target.path(token_unlimited+"/groupes").request().get(String.class);
+        nb_groupes_after_insert = new Gson().fromJson(response, Groupe[].class).length;
+        // verifie qu'on a une ecriture supplémentaire dans la bdd
+        assertEquals(nb_groupes_before_insert+1, nb_groupes_after_insert);
+        /* ****************** */
+
+        /* GET BY ID */
+        int old_id = groupe.getId();
+        String old_libelle = groupe.getLibelle();
+        response = target.path(token_unlimited+"/groupes/"+groupe.getId()).request().get(String.class);
+        groupe = new Gson().fromJson(response, Groupe.class);
+        // verifie que les id correspondent
+        assertEquals(old_id, groupe.getId());
+        // verifie que les libelles correspondent
+        assertEquals(old_libelle, groupe.getLibelle());
+        /* ****************** */
+
+        /* GET GROUPES BY CLASSE_ID */
+        response = target.path(token_unlimited+"/classes/"+classe.getId()+"/groupes").request().get(String.class);
+        Type type = new TypeToken<List<Groupe>>(){}.getType();
+        List<Groupe> groupes = new Gson().fromJson(response, type);
+        assertEquals(groupe.getId(), groupes.get(0).getId());
+        /* ****************** */
+
+        /* PUT */
+        old_id = groupe.getId();
+        groupe.setLibelle(libelleTest2);
+        response = target.path(token_unlimited+"/groupes/"+groupe.getId()).request().put(Entity.entity(groupe, MediaType.APPLICATION_JSON_TYPE)).readEntity(String.class);
+        groupe = new Gson().fromJson(response, Groupe.class);
+        // verifie que les id correspondent toujours
+        assertEquals(old_id, groupe.getId());
+        // verifie que le libelle a été mis à jour
+        assertEquals(libelleTest2, groupe.getLibelle());
+        response = target.path(token_unlimited+"/groupes").request().get(String.class);
+        nb_groupes_after_put = new Gson().fromJson(response, Groupe[].class).length;
+        // verifie qu'on a toujours le meme nombre d'ecriture en bdd
+        assertEquals(nb_groupes_after_insert, nb_groupes_after_put);
+        /* ****************** */
+
+        /* DELETE */
+        response = target.path(token_unlimited+"/groupes/"+groupe.getId()).request().delete().readEntity(String.class);
+        ResponseObject result = new Gson().fromJson(response, ResponseObject.class);
+        // verifie que le serveur renvoie bien un message success
+        assertEquals("success", result.getStatus());
+        response = target.path(token_unlimited+"/groupes").request().get(String.class);
+        nb_groupes_after_delete = new Gson().fromJson(response, Groupe[].class).length;
+        // verifie qu'on a le meme nombre d'ecriture en bdd qu'avant l'insertion
+        assertEquals(nb_groupes_before_insert, nb_groupes_after_delete);
+        target.path(token_unlimited+"/classes/"+classe.getId()).request().delete().readEntity(String.class);
+        /* ****************** */
+    }
+}

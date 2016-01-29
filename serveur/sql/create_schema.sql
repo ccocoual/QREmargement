@@ -49,7 +49,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `qre`.`groupe` ;
 
 CREATE TABLE IF NOT EXISTS `qre`.`groupe` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `libelle` VARCHAR(255) NULL,
   `classe_id` INT NOT NULL,
   PRIMARY KEY (`id`, `classe_id`),
@@ -67,7 +67,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `qre`.`etudiant` ;
 
 CREATE TABLE IF NOT EXISTS `qre`.`etudiant` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(255) NULL,
   `prenom` VARCHAR(255) NULL,
   `email` VARCHAR(255) NULL,
@@ -91,7 +91,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `qre`.`matiere` ;
 
 CREATE TABLE IF NOT EXISTS `qre`.`matiere` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `libelle` VARCHAR(255) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -103,7 +103,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `qre`.`professeur` ;
 
 CREATE TABLE IF NOT EXISTS `qre`.`professeur` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(255) NULL,
   `prenom` VARCHAR(255) NULL,
   `email` VARCHAR(255) NULL,
@@ -119,7 +119,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `qre`.`emargement` ;
 
 CREATE TABLE IF NOT EXISTS `qre`.`emargement` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `date` DATETIME NOT NULL,
   `url_generated` VARCHAR(255) NOT NULL,
   `type_cours` ENUM('CM', 'TD', 'TP') NULL,

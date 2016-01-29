@@ -1,0 +1,187 @@
+package com.qre;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import model.Classe;
+import model.Etudiant;
+import model.Groupe;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runners.MethodSorters;
+import utils.ResponseObject;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class EtudiantResourceTest {
+
+    private HttpServer server;
+    private WebTarget target;
+
+
+
+    @Before
+    public void setUp() {
+        // start the server
+        server = Main.startServer();
+        // create the client
+        Client c = ClientBuilder.newClient();
+
+        // uncomment the following line if you want to enable
+        // support for JSON in the client (you also have to uncomment
+        // dependency on jersey-media-json module in pom.xml and Main.startServer())
+        // --
+        // c.configuration().enable(new org.glassfish.jersey.media.json.JsonJaxbFeature());
+
+        target = c.target(Main.BASE_URI);
+
+    }
+
+    @After
+    public void tearDown() {
+        server.stop();
+    }
+
+    @Test
+    public void GroupeTest() {
+        /* INITIALISATION */
+        String token_unlimited, nomTest, prenomTest, numEtuTest, emailTest, emailTest2, response;
+        Classe classe;
+        Groupe groupe;
+        Etudiant etudiant;
+        int nb_etudiants_before_insert, nb_etudiants_after_insert, nb_etudiants_after_put, nb_etudiants_after_delete;
+
+        token_unlimited = "test";
+        nomTest = "nomTest";
+        prenomTest = "prenomTest";
+        numEtuTest = "15001234";
+        emailTest = "nomTest.prenomTest@email.fr";
+        emailTest2 = "nomTest.prenomTest.1@email.fr";
+        etudiant = new Etudiant();
+
+        classe = new Classe();
+        classe.setLibelle("testClasse");
+        response = target.path(token_unlimited+"/classes").request().post(Entity.entity(classe, MediaType.APPLICATION_JSON_TYPE)).readEntity(String.class);
+        classe = new Gson().fromJson(response, Classe.class);
+
+        groupe = new Groupe();
+        groupe.setLibelle("testGroupe");
+        groupe.setClasse_id(classe.getId());
+        response = target.path(token_unlimited+"/groupes").request().post(Entity.entity(groupe, MediaType.APPLICATION_JSON_TYPE)).readEntity(String.class);
+        groupe = new Gson().fromJson(response, Groupe.class);
+        /* ****************** */
+
+        /* GET ALL */
+        response = target.path(token_unlimited + "/etudiants").request().get(String.class);
+        nb_etudiants_before_insert = new Gson().fromJson(response, Etudiant[].class).length;
+        /* ****************** */
+
+        /* INSERT */
+        etudiant.setNom(nomTest);
+        etudiant.setPrenom(prenomTest);
+        etudiant.setEmail(emailTest);
+        etudiant.setNum_etu(numEtuTest);
+        etudiant.setGroupe_id(groupe.getId());
+        etudiant.setClasse_id(classe.getId());
+
+        // verifie que l'id est bien null
+        assertEquals(0, etudiant.getId());
+        response = target.path(token_unlimited+"/etudiants").request().post(Entity.entity(etudiant, MediaType.APPLICATION_JSON_TYPE)).readEntity(String.class);
+        etudiant = new Gson().fromJson(response, Etudiant.class);
+        // verifie que l'id est different de null
+        assertTrue(etudiant.getId() != 0);
+        // verifie que les champs correspondent
+        assertEquals(nomTest, etudiant.getNom());
+        assertEquals(prenomTest, etudiant.getPrenom());
+        assertEquals(emailTest, etudiant.getEmail());
+        assertEquals(numEtuTest, etudiant.getNum_etu());
+        response = target.path(token_unlimited+"/etudiants").request().get(String.class);
+        nb_etudiants_after_insert = new Gson().fromJson(response, Etudiant[].class).length;
+        // verifie qu'on a une ecriture supplémentaire dans la bdd
+        assertEquals(nb_etudiants_before_insert+1, nb_etudiants_after_insert);
+        /* ****************** */
+
+        /* GET BY ID */
+        int old_id = etudiant.getId();
+        String old_email = etudiant.getEmail();
+        response = target.path(token_unlimited+"/etudiants/"+etudiant.getId()).request().get(String.class);
+        etudiant = new Gson().fromJson(response, Etudiant.class);
+        // verifie que les id correspondent
+        assertEquals(old_id, etudiant.getId());
+        // verifie que les libelles correspondent
+        assertEquals(old_email, etudiant.getEmail());
+        /* ****************** */
+
+        /* GET BY NUMETU */
+        response = target.path(token_unlimited+"/etudiants/num_etu/"+etudiant.getNum_etu()).request().get(String.class);
+        etudiant = new Gson().fromJson(response, Etudiant.class);
+        // verifie que les id correspondent
+        assertEquals(old_id, etudiant.getId());
+        // verifie que les libelles correspondent
+        assertEquals(old_email, etudiant.getEmail());
+        /* ****************** */
+
+        /* GET ETUDIANTS BY GROUPE_ID */
+        response = target.path(token_unlimited+"/groupes/"+groupe.getId()+"/etudiants").request().get(String.class);
+        Type type = new TypeToken<List<Etudiant>>(){}.getType();
+        List<Etudiant> etudiants = new Gson().fromJson(response, type);
+        // verifie que l'etudiant est bien dans la liste du groupe
+        assertEquals(etudiant.getId(), etudiants.get(0).getId());
+        /* ****************** */
+
+        /* GET ETUDIANTS BY CLASSE_ID */
+        response = target.path(token_unlimited+"/classes/"+classe.getId()+"/groupes").request().get(String.class);
+        type = new TypeToken<List<Groupe>>(){}.getType();
+        List<Groupe> groupes = new Gson().fromJson(response, type);
+        etudiants = new ArrayList<Etudiant>();
+        for(Groupe gs : groupes){
+            response = target.path(token_unlimited+"/groupes/"+gs.getId()+"/etudiants").request().get(String.class);
+            type = new TypeToken<List<Etudiant>>(){}.getType();
+            List<Etudiant> es = new Gson().fromJson(response, type);
+            etudiants.addAll(es);
+        }
+        // verifie que l'etudiant est bien dans la liste d'etudiants de la classe
+        assertEquals(etudiant.getId(), etudiants.get(0).getId());
+        /* ****************** */
+
+        /* PUT */
+        old_id = etudiant.getId();
+        etudiant.setEmail(emailTest2);
+        response = target.path(token_unlimited+"/etudiants/"+etudiant.getId()).request().put(Entity.entity(etudiant, MediaType.APPLICATION_JSON_TYPE)).readEntity(String.class);
+        etudiant = new Gson().fromJson(response, Etudiant.class);
+        // verifie que les id correspondent toujours
+        assertEquals(old_id, etudiant.getId());
+        // verifie que le libelle a été mis à jour
+        assertEquals(emailTest2, etudiant.getEmail());
+        response = target.path(token_unlimited+"/etudiants").request().get(String.class);
+        nb_etudiants_after_put = new Gson().fromJson(response, Etudiant[].class).length;
+        // verifie qu'on a toujours le meme nombre d'ecriture en bdd
+        assertEquals(nb_etudiants_after_insert, nb_etudiants_after_put);
+        /* ****************** */
+
+        /* DELETE */
+        response = target.path(token_unlimited+"/etudiants/"+etudiant.getId()).request().delete().readEntity(String.class);
+        ResponseObject result = new Gson().fromJson(response, ResponseObject.class);
+        // verifie que le serveur renvoie bien un message success
+        assertEquals("success", result.getStatus());
+        response = target.path(token_unlimited+"/etudiants").request().get(String.class);
+        nb_etudiants_after_delete = new Gson().fromJson(response, Groupe[].class).length;
+        // verifie qu'on a le meme nombre d'ecriture en bdd qu'avant l'insertion
+        assertEquals(nb_etudiants_before_insert, nb_etudiants_after_delete);
+        target.path(token_unlimited+"/groupes/"+groupe.getId()).request().delete().readEntity(String.class);
+        target.path(token_unlimited+"/classes/"+classe.getId()).request().delete().readEntity(String.class);
+        /* ****************** */
+    }
+}
