@@ -30,7 +30,7 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
      //Routes pour les vues relatives aux promotions
     $stateProvider
         .state('class', {
-            name: "Cours",
+            name: "Classes",
             url: '/class',
             //abstract:true,
             controller: 'ClassCtrl',
@@ -38,10 +38,12 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: "./app/components/class/class.tpl.html"
         })
         .state('class.list', {
-            url: '/list'
+            url: '/list',
+            templateUrl: "./app/components/class/class.list.tpl.html"
         })
         .state('class.create', {
-            url: '/create'
+            url: '/create',
+            templateUrl: "./app/components/class/class.create.tpl.html"
         });
 
     //Routes pour les vues relatives aux étudiants
