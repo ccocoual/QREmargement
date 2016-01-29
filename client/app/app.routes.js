@@ -44,6 +44,10 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
         .state('class.create', {
             url: '/create',
             templateUrl: "./app/components/class/class.create.tpl.html"
+        })
+        .state('class.group_list', {
+            url: '/:classid/groups',
+            templateUrl: "./app/components/class/class.group_list.tpl.html"
         });
 
     //Routes pour les vues relatives aux étudiants

@@ -6,8 +6,9 @@
             </thead>
             <tbody ng-repeat="cla in class.classes">
                 <tr>
-                    <td class="col-md-8">{{cla.libelle}}</td>
-                    <td class="col-md-4">
+                    <td class="col-md-6">{{cla.libelle}}</td>
+                    <td class="col-md-6">
+                        <a class="btn btn-small btn-primary" href="#" role="button" ui-sref="class.group_list({classid: cla.id})"><i class="fa fa-users"></i></a>
                         <a class="btn btn-small btn-danger" href="#" role="button" ng-click=""><i class="fa fa-trash"></i></a>
                         <a class="btn btn-small btn-warning" href="#" role="button" ng-click=""><i class="fa fa-pencil-square-o"></i></a>
                     </td>
