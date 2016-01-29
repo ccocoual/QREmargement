@@ -26,6 +26,23 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
         .state('lesson.create', {
             url: '/create'
         });
+    
+     //Routes pour les vues relatives aux promotions
+    $stateProvider
+        .state('class', {
+            name: "Cours",
+            url: '/class',
+            //abstract:true,
+            controller: 'ClassCtrl',
+            controllerAs: 'classCtrl',
+            templateUrl: "./app/components/class/class.tpl.html"
+        })
+        .state('class.list', {
+            url: '/list'
+        })
+        .state('class.create', {
+            url: '/create'
+        });
 
     //Routes pour les vues relatives aux étudiants
     $stateProvider
