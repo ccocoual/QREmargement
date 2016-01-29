@@ -45,7 +45,6 @@
         }
 
         function createStudent(student) {
-            console.log(student);
             return $http.post(RESTURL + 'students', student)
                 .then(getComplete)
                 .catch(getFailed);
