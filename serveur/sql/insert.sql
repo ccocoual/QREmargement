@@ -35,9 +35,9 @@ INSERT INTO `qre`.`emargement`(`id`, `date`, `url_generated`, `type_cours`, `mat
 (1, '2016-01-20 11:22:33','ezlkffsjekf','CM', 1, 1),
 (2, '2016-01-21 11:22:33','klzlkefnz','TD', 2, 1);
 
-INSERT INTO `qre`.`emargement_has_groupe`(`groupe_id`, `classe_id`, `emargement_id`, `matiere_id`, `professeur_id`) VALUES 
-(1, 1, 1, 1, 1),
-(2, 1, 2, 2, 1);
+INSERT INTO `qre`.`emargement_has_groupe`(`groupe_id`, `emargement_id`) VALUES 
+(1, 1),
+(2, 2);
 
 INSERT INTO `qre`.`signature`(`emargement_id`, `etudiant_id`, `signee`, `date`) VALUES 
 (1, 1, 0, '0000-00-00 00:00:00'),
