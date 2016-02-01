@@ -19,40 +19,20 @@
       "id": 2
     },
     {
-      "group_id": "",
-      "classe_id": "",
-      "num_etu": 1123435135,
-      "nom": "zdqzd",
-      "prenom": "qzldk",
-      "email": "qzdqzdqzd",
+      "num_etu": 13009586,
+      "nom": "Martin",
+      "prenom": "Jean-Pierre",
+      "email": "jmartin@gmail.com",
+      "classe_id": 3,
       "id": 3
     },
     {
-      "group_id": "",
-      "classe_id": "",
-      "num_etu": 1342423212,
-      "nom": "dQZDQZD",
-      "prenom": "dQZDdqzd",
-      "email": "qdqzdQD",
+      "num_etu": 14559600,
+      "nom": "Mangin",
+      "prenom": "Stéphane",
+      "email": "smangin@gmai.com",
+      "classe_id": 2,
       "id": 4
-    },
-    {
-      "group_id": "",
-      "classe_id": "",
-      "num_etu": "1D",
-      "nom": "DZQD",
-      "prenom": "qD",
-      "email": "QDZ",
-      "id": 5
-    },
-    {
-      "group_id": "",
-      "classe_id": "",
-      "num_etu": "DQZDdzdq",
-      "nom": "dQZDzd",
-      "prenom": "ZDQZD",
-      "email": "qdQZD",
-      "id": 6
     }
   ],
   "emargements": [
@@ -75,6 +55,46 @@
       "url_generated": "ezlkffsjekf",
       "type": "TD",
       "matiere": 2
+    }
+  ],
+  "subjects": [
+    {
+      "id": 1,
+      "libelle": "PRG"
+    },
+    {
+      "id": 2,
+      "libelle": "SYR"
+    },
+    {
+      "id": 3,
+      "libelle": "CG"
+    }
+  ],
+  "classes": [
+    {
+      "id": 1,
+      "libelle": "MIAGE"
+    },
+    {
+      "id": 2,
+      "libelle": "GL"
+    },
+    {
+      "id": 3,
+      "libelle": "MITIC"
+    }
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "libelle": "SIMPL",
+      "classe_id": 1
+    },
+    {
+      "id": 2,
+      "libelle": "SIAD",
+      "classe_id": 1
     }
   ]
 }

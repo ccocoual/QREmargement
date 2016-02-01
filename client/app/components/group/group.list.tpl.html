@@ -1,0 +1,14 @@
+<div class="row" ng-init="group.getGroups()">
+    <div class="col-md-4 col-md-offset-4">
+        <table class="table">
+            <thead>
+                <th>Libellé</th>
+            </thead>
+            <tbody ng-repeat="grp in group.groups">
+                <tr>
+                    <td class="col-md-6">{{grp.libelle}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
