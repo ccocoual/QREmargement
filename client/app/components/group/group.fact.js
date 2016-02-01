@@ -15,7 +15,7 @@
         return factory;
         
         function getGroups(id) {
-            return $http.get(RESTURL + 'groups?classe_id=' + id)
+            return $http.get(RESTURL + 'classes/' + id + '/groupes')
                 .then(getComplete)
                 .catch(getFailed);
 
