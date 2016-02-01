@@ -1,94 +1,94 @@
 (function () {
     'use strict';
 
-    qrApp.factory('LessonFactory', LessonFactory);
+    qrApp.factory('EmargementFactory', EmargementFactory);
 
-    function LessonFactory($http, RESTURL) {
+    function EmargementFactory($http, RESTURL) {
 
         var factory = {
-            getLessons: getLessons,
-            getLesson: getLesson,
-            createLesson: createLesson,
-            updateLesson: updateLesson,
-            removeLesson: removeLesson,
+            getEmargements: getEmargements,
+            getEmargement: getEmargement,
+            createEmargement: createEmargement,
+            updateEmargement: updateEmargement,
+            removeEmargement: removeEmargement,
             getUrlGenerated: getUrlGenerated
         };
         return factory;
         
-        function getLessons() {
-            return $http.get(RESTURL + 'lessons')
+        function getEmargements() {
+            return $http.get(RESTURL + 'emargements')
                 .then(getComplete)
                 .catch(getFailed);
 
             function getComplete(response) {
-                console.log('GETS lessons succeed');
+                console.log('GETS emargements succeed');
                 return response.data;
             }
 
             function getFailed(error) {
-                console.log('GETS lessons failed' + error.data);
+                console.log('GETS emargements failed' + error.data);
             }
         }
         
-        function getLesson(id) {
-            return $http.get(RESTURL + 'lessons/' + id)
+        function getEmargement(id) {
+            return $http.get(RESTURL + 'emargements/' + id)
                 .then(getComplete)
                 .catch(getFailed);
 
             function getComplete(response) {
-                console.log('GET lesson succeed');
+                console.log('GET emargement succeed');
                 return response.data;
             }
 
             function getFailed(error) {
-                console.log('GET lesson failed .' + error.data);
+                console.log('GET emargement failed .' + error.data);
             }
         }  
 
-        function createLesson(lesson) {
-            return $http.post(RESTURL + 'lessons', lesson)
+        function createEmargement(emargement) {
+            return $http.post(RESTURL + 'emargement', emargement)
                 .then(getComplete)
                 .catch(getFailed);
 
             function getComplete(response) {
-                console.log('POST lesson succeed');
+                console.log('POST emargement succeed');
             }
 
             function getFailed(error) {
-                console.log('POST lesson failed' + error.data);
+                console.log('POST emargement failed' + error.data);
             }
         }
         
-        function updateLesson(lesson) {
-            return $http.put(RESTURL + 'lessons', lesson)
+        function updateEmargement(emargement) {
+            return $http.put(RESTURL + 'emargements', emargement)
                 .then(getComplete)
                 .catch(getFailed);
             
             function getComplete(response) {
-                console.log('PUT lesson succeed');
+                console.log('PUT emargement succeed');
             }
             
             function getFailed(error) {
-                console.log('PUT lesson failed' + error.data);
+                console.log('PUT emargement failed' + error.data);
             }
         }
         
-        function removeLesson(id) {
-            return $http.delete(RESTURL + 'lessons/' + id)
+        function removeEmargement(id) {
+            return $http.delete(RESTURL + 'emargements/' + id)
                 .then(getComplete)
                 .catch(getFailed);
             
             function getComplete(response) {
-                console.log('DELETE lesson succeed');
+                console.log('DELETE emargement succeed');
             }
             
             function getFailed(error) {
-                console.log('DELETE lesson failed' + error.data);
+                console.log('DELETE emargement failed' + error.data);
             }
         }
         
         function getUrlGenerated(id) {
-            return $http.get(RESTURL + 'lessons/' + id)
+            return $http.get(RESTURL + 'emargements/' + id)
                 .then(getComplete)
                 .catch(getFailed);
 

@@ -12,19 +12,25 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
 
     //Routes pour les vues relatives aux cours
     $stateProvider
-        .state('lesson', {
-            name: "Cours",
-            url: '/lesson',
+        .state('emargement', {
+            name: "Emargement",
+            url: '/emargement',
             //abstract:true,
-            controller: 'LessonCtrl',
-            controllerAs: 'lesson',
-            templateUrl: "./app/components/lesson/lesson.tpl.html"
+            controller: 'EmargementCtrl',
+            controllerAs: 'emargement',
+            templateUrl: "./app/components/emargement/emargement.tpl.html"
         })
-        .state('lesson.list', {
-            url: '/list'
+        .state('emargement.list', {
+            url: '/list',
+            templateUrl: "./app/components/emargement/emargement.list.tpl.html"
         })
-        .state('lesson.create', {
-            url: '/create'
+        .state('emargement.create', {
+            url: '/create',
+            templateUrl: "./app/components/emargement/emargement.create.tpl.html"
+        })
+        .state('emargement.actual', {
+            url: '/:emargementid/actual',
+            templateUrl: "./app/components/emargement/emargement.actual.tpl.html"
         });
     
      //Routes pour les vues relatives aux promotions

@@ -67,7 +67,14 @@
       "date": "2030-01-20 11:22:33",
       "url_generated": "ezlkffsjekf",
       "type": "CM",
-      "matière": 1
+      "matiere": 1
+    },
+    {
+      "id": 2,
+      "date": "2020-01-20 10:12:53",
+      "url_generated": "ezlkffsjekf",
+      "type": "TD",
+      "matiere": 2
     }
   ]
 }

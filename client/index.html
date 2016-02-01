@@ -19,6 +19,7 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="bower_components/AdminLTE/dist/css/skins/skin-black.min.css">
     <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css">
+    <link rel="stylesheet" href="bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css">
 </head>
 
 <body class="hold-transition skin-black sidebar-mini fixed">
@@ -26,12 +27,6 @@
         <navbar></navbar>
         <sidebar></sidebar>
         <div class="content-wrapper">
-            <section class="content-header">
-                <h1>
-                    TODO
-                    <small>Control panel</small>
-                </h1>
-            </section>
             <section class="content">
                 <div ui-view></div>
             </section>
@@ -41,12 +36,6 @@
     <!-- AngularJS -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-
-    <!-- Librairies -->
-    <script src="bower_components/qrcode-generator/js/qrcode.js"></script>
-    <script src="bower_components/angular-qrcode/angular-qrcode.js"></script>
-    <script src="bower_components/Chart.js/Chart.js"></script>
-    <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
 
     <!-- App -->
     <script src="app/app.module.js"></script>
@@ -64,8 +53,8 @@
     <script src="app/components/class/class.fact.js"></script>
     
     <!-- Lesson Component -->
-    <script src="app/components/lesson/lesson.ctrl.js"></script>
-    <script src="app/components/lesson/lesson.fact.js"></script>
+    <script src="app/components/emargement/emargement.ctrl.js"></script>
+    <script src="app/components/emargement/emargement.fact.js"></script>
 
     <!-- Statistic Component -->
     <script src="app/components/statistic/statistic.ctrl.js"></script>
@@ -93,5 +82,13 @@
     <script src="bower_components/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <!-- AdminLTE App -->
     <script src="bower_components/AdminLTE/dist/js/app.min.js"></script>
+
+    <!-- Librairies -->
+    <script src="bower_components/qrcode-generator/js/qrcode.js"></script>
+    <script src="bower_components/angular-qrcode/angular-qrcode.js"></script>
+    <script src="bower_components/Chart.js/Chart.js"></script>
+    <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
+    <script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+    <script src="bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch.js"></script>
 </body>
 </html>
