@@ -87,6 +87,7 @@ public class ClasseResource {
 
             ArrayList<Groupe> groupes = BDD_Groupe.getByClassId(id);
             String json = new Gson().toJson(groupes);
+
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
             Logger.getInstance().err(e.getMessage());

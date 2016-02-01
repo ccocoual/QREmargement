@@ -1,0 +1,121 @@
+package com.qre;
+
+import com.google.gson.Gson;
+import model.Classe;
+import model.Matiere;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import utils.ResponseObject;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class MatiereResourceTest {
+
+    private HttpServer server;
+    private WebTarget target;
+
+
+
+    @Before
+    public void setUp() {
+        // start the server
+        server = Main.startServer();
+        // create the client
+        Client c = ClientBuilder.newClient();
+
+        // uncomment the following line if you want to enable
+        // support for JSON in the client (you also have to uncomment
+        // dependency on jersey-media-json module in pom.xml and Main.startServer())
+        // --
+        // c.configuration().enable(new org.glassfish.jersey.media.json.JsonJaxbFeature());
+
+        target = c.target(Main.BASE_URI);
+
+    }
+
+    @After
+    public void tearDown() {
+        server.stop();
+    }
+
+    @Test
+    public void MatiereTest() {
+        /* INITIALISATION */
+        String token_unlimited, libelleTest, libelleTest2, response;
+        Matiere matiere;
+        int nb_matieres_before_insert, nb_matieres_after_insert, nb_matieres_after_put, nb_matieres_after_delete;
+
+        token_unlimited = "test";
+        libelleTest = "testMatiere";
+        libelleTest2 = "otherTestMatiere";
+        matiere = new Matiere();
+        /* ****************** */
+
+        /* GET ALL */
+        response = target.path(token_unlimited + "/matieres").request().get(String.class);
+        nb_matieres_before_insert = new Gson().fromJson(response, Matiere[].class).length;
+        /* ****************** */
+
+        /* INSERT */
+        matiere.setLibelle(libelleTest);
+        // verifie que l'id est bien null
+        assertEquals(0, matiere.getId());
+        response = target.path(token_unlimited+"/matieres").request().post(Entity.entity(matiere, MediaType.APPLICATION_JSON_TYPE)).readEntity(String.class);
+        matiere = new Gson().fromJson(response, Matiere.class);
+        // verifie que l'id est different de null
+        assertTrue(matiere.getId() != 0);
+        // verifie que les libelle correspondent
+        assertEquals(libelleTest, matiere.getLibelle());
+        response = target.path(token_unlimited+"/classes").request().get(String.class);
+        nb_matieres_after_insert = new Gson().fromJson(response, Matiere[].class).length;
+        // verifie qu'on a une ecriture supplémentaire dans la bdd
+        assertEquals(nb_matieres_before_insert+1, nb_matieres_after_insert);
+        /* ****************** */
+
+        /* GET BY ID */
+        int old_id = matiere.getId();
+        String old_libelle = matiere.getLibelle();
+        response = target.path(token_unlimited+"/matieres/"+matiere.getId()).request().get(String.class);
+        matiere = new Gson().fromJson(response, Matiere.class);
+        // verifie que les id correspondent
+        assertEquals(old_id, matiere.getId());
+        // verifie que les libelles correspondent
+        assertEquals(old_libelle, matiere.getLibelle());
+        /* ****************** */
+
+        /* PUT */
+        old_id = matiere.getId();
+        matiere.setLibelle(libelleTest2);
+        response = target.path(token_unlimited+"/matieres/"+matiere.getId()).request().put(Entity.entity(matiere, MediaType.APPLICATION_JSON_TYPE)).readEntity(String.class);
+        matiere = new Gson().fromJson(response, Matiere.class);
+        // verifie que les id correspondent toujours
+        assertEquals(old_id, matiere.getId());
+        // verifie que le libelle a été mis à jour
+        assertEquals(libelleTest2, matiere.getLibelle());
+        response = target.path(token_unlimited+"/matieres").request().get(String.class);
+        nb_matieres_after_put = new Gson().fromJson(response, Matiere[].class).length;
+        // verifie qu'on a toujours le meme nombre d'ecriture en bdd
+        assertEquals(nb_matieres_after_insert, nb_matieres_after_put);
+        /* ****************** */
+
+        /* DELETE */
+        response = target.path(token_unlimited+"/matieres/"+matiere.getId()).request().delete().readEntity(String.class);
+        ResponseObject result = new Gson().fromJson(response, ResponseObject.class);
+        // verifie que le serveur renvoie bien un message success
+        assertEquals("success", result.getStatus());
+        response = target.path(token_unlimited+"/matieres").request().get(String.class);
+        nb_matieres_after_delete = new Gson().fromJson(response, Matiere[].class).length;
+        // verifie qu'on a le meme nombre d'ecriture en bdd qu'avant l'insertion
+        assertEquals(nb_matieres_before_insert, nb_matieres_after_delete);
+        /* ****************** */
+    }
+}

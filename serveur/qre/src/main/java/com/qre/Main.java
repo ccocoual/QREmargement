@@ -26,6 +26,9 @@ public class Main {
         // in com.qre package
         final ResourceConfig rc = new ResourceConfig().packages("com.qre");
 
+        if(OSValidator.isWindows() || OSValidator.isMac()){
+            BASE_URI = "http://localhost:8000/";
+        }
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);

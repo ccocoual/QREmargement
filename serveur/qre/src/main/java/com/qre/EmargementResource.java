@@ -47,7 +47,8 @@ public class EmargementResource {
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public Response getEmargementById(@PathParam("token") String token){
+    public Response getEmargementById(@PathParam("token") String token,
+                                      @PathParam("id") int emargement_id){
         try {
             Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
             if(authentication == null){
@@ -57,10 +58,10 @@ public class EmargementResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            String json = new Gson().toJson(BDD_Emargement.getAll(professeur_id));
+            String json = new Gson().toJson(BDD_Emargement.getById(emargement_id, professeur_id));
             return Response.status(Response.Status.OK).entity(json).build();
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             Logger.getInstance().err(e.getMessage());
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
@@ -113,10 +114,10 @@ public class EmargementResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            Etudiant etudiant = new Gson().fromJson(data, Etudiant.class);
+            Emargement emargement = new Gson().fromJson(data, Emargement.class);
 
-            if(BDD_Etudiant.update(etudiant)){
-                String json = new Gson().toJson(etudiant);
+            if(BDD_Emargement.update(emargement, professeur_id)){
+                String json = new Gson().toJson(emargement);
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {
                 String json = new ResponseObject("error", "nextURL",  "Etudiant updating has failed").toJSON();
