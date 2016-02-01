@@ -3,7 +3,8 @@
 var qrApp = angular.module("QRApp", [
     "ui.router",
     "monospaced.qrcode",
-    "chart.js"
+    "chart.js",
+    "frapontillo.bootstrap-switch"
 
 ]);
 

@@ -12,19 +12,25 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
 
     //Routes pour les vues relatives aux cours
     $stateProvider
-        .state('lesson', {
-            name: "Cours",
-            url: '/lesson',
+        .state('emargement', {
+            name: "Emargement",
+            url: '/emargement',
             //abstract:true,
-            controller: 'LessonCtrl',
-            controllerAs: 'lesson',
-            templateUrl: "./app/components/lesson/lesson.tpl.html"
+            controller: 'EmargementCtrl',
+            controllerAs: 'emargement',
+            templateUrl: "./app/components/emargement/emargement.tpl.html"
         })
-        .state('lesson.list', {
-            url: '/list'
+        .state('emargement.list', {
+            url: '/list',
+            templateUrl: "./app/components/emargement/emargement.list.tpl.html"
         })
-        .state('lesson.create', {
-            url: '/create'
+        .state('emargement.create', {
+            url: '/create',
+            templateUrl: "./app/components/emargement/emargement.create.tpl.html"
+        })
+        .state('emargement.actual', {
+            url: '/:emargementid/actual',
+            templateUrl: "./app/components/emargement/emargement.actual.tpl.html"
         });
     
      //Routes pour les vues relatives aux promotions
@@ -45,10 +51,36 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/create',
             templateUrl: "./app/components/class/class.create.tpl.html"
         })
-        .state('class.group_list', {
-            url: '/:classid/groups',
-            templateUrl: "./app/components/class/class.group_list.tpl.html"
+        .state('class.groups', {
+            url:':classid/groups',
+            controller: 'GroupCtrl',
+            controllerAs: 'group',
+            templateUrl: "./app/components/group/group.tpl.html"
+        })
+        .state('class.groups.list', {
+            url:'/list',
+            templateUrl: "./app/components/group/group.list.tpl.html"
         });
+    
+         // Routes pour les vues relatives aux groupes d'une classe
+//        $stateProvider
+//            .state('group', {
+//                name: "Groupes",
+//                url: '/group',
+//                //abstract:true,
+//                controller: 'GroupCtrl',
+//                controllerAs: 'group',
+//                templateUrl: "./app/components/group/group.tpl.html",
+//                resolve:{
+//                    classid: ['$stateParams', function($stateParams){
+//                        return $stateParams.classid;
+//                    }]
+//                }
+//            })
+//            .state('group.list', {
+//                url: '/:classid',
+//                templateUrl: "./app/components/group/group.list.tpl.html"
+//            });
 
     //Routes pour les vues relatives aux étudiants
     $stateProvider
