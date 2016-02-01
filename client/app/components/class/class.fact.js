@@ -10,8 +10,7 @@
             getClass: getClass,
             createClass: createClass,
             updateClass: updateClass,
-            removeClass: removeClass,
-            getClassGroups: getClassGroups
+            removeClass: removeClass
         };
         return factory;
         
@@ -84,22 +83,6 @@
             
             function getFailed(error) {
                 console.log('DELETE class failed' + error.data);
-            }
-        }
-        
-        function getClassGroups(id) {
-            console.log(id);
-            return $http.get(RESTURL + 'groups?classe_id=' + id)
-                .then(getComplete)
-                .catch(getFailed);
-
-            function getComplete(response) {
-                console.log('GETS groups succeed');
-                return response.data;
-            }
-
-            function getFailed(error) {
-                console.log('GETS groups failed' + error.data);
             }
         }
     }

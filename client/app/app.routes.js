@@ -45,10 +45,36 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/create',
             templateUrl: "./app/components/class/class.create.tpl.html"
         })
-        .state('class.group_list', {
-            url: '/:classid/groups',
-            templateUrl: "./app/components/class/class.group_list.tpl.html"
+        .state('class.groups', {
+            url:':classid/groups',
+            controller: 'GroupCtrl',
+            controllerAs: 'group',
+            templateUrl: "./app/components/group/group.tpl.html"
+        })
+        .state('class.groups.list', {
+            url:'/list',
+            templateUrl: "./app/components/group/group.list.tpl.html"
         });
+    
+         // Routes pour les vues relatives aux groupes d'une classe
+//        $stateProvider
+//            .state('group', {
+//                name: "Groupes",
+//                url: '/group',
+//                //abstract:true,
+//                controller: 'GroupCtrl',
+//                controllerAs: 'group',
+//                templateUrl: "./app/components/group/group.tpl.html",
+//                resolve:{
+//                    classid: ['$stateParams', function($stateParams){
+//                        return $stateParams.classid;
+//                    }]
+//                }
+//            })
+//            .state('group.list', {
+//                url: '/:classid',
+//                templateUrl: "./app/components/group/group.list.tpl.html"
+//            });
 
     //Routes pour les vues relatives aux étudiants
     $stateProvider
