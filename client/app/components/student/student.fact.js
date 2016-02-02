@@ -15,7 +15,7 @@
         return factory;
 
         function getStudents() {
-            return $http.get(RESTURL + 'students')
+            return $http.get(RESTURL + 'etudiants')
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -30,7 +30,7 @@
         }  
         
         function getStudent(id) {
-            return $http.get(RESTURL + 'students/' + id)
+            return $http.get(RESTURL + 'etudiants/' + id)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -44,8 +44,8 @@
             }
         }
 
-        function createStudent(student) {
-            return $http.post(RESTURL + 'students', student)
+        function createStudent(student) { console.log(student);
+            return $http.post(RESTURL + 'etudiants', student)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -54,12 +54,12 @@
             }
 
             function getFailed(error) {
-                console.log('POST student for create.' + error.data);
+                console.log('POST student failed.' + error.data);
             }
         }
         
         function updateStudent(student) {
-            return $http.put(RESTURL + 'students', student)
+            return $http.put(RESTURL + 'etudiants', student)
                 .then(getComplete)
                 .catch(getFailed);
             
@@ -73,7 +73,7 @@
         }
         
         function removeStudent(id) {
-            return $http.delete(RESTURL + 'students/' + id)
+            return $http.delete(RESTURL + 'etudiants/' + id)
                 .then(getComplete)
                 .catch(getFailed);
             
