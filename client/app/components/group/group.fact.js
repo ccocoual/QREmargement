@@ -8,6 +8,7 @@
         var factory = {
             getGroups: getGroups,
             getGroup: getGroup,
+            getStudentsByGroup: getStudentsByGroup,
             createGroup: createGroup,
             updateGroup: updateGroup,
             removeGroup: removeGroup
@@ -83,6 +84,20 @@
             
             function getFailed(error) {
                 console.log('DELETE group failed' + error.data);
+            }
+        }
+
+        function getStudentsByGroup(id) {
+            return $http.get(RESTURL + 'groups/' + id + '/etudiants')
+                .then(getComplete)
+                .catch(getFailed);
+
+            function getComplete(response) {
+                console.log('GET students by group succeed');
+            }
+
+            function getFailed(error) {
+                console.log('GET students by group  failed' + error.data);
             }
         }
     }
