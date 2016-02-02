@@ -5,6 +5,7 @@ package com.qre;
  */
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import database.BDD_Authentication;
 import database.BDD_Emargement;
 import database.BDD_Etudiant;
@@ -17,6 +18,7 @@ import utils.ResponseObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
+import java.text.DateFormat;
 
 
 @Path("/{token}/emargements")
@@ -34,7 +36,8 @@ public class EmargementResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            String json = new Gson().toJson(BDD_Emargement.getAll(professeur_id));
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+            String json = gson.toJson(BDD_Emargement.getAll(professeur_id));
             return Response.status(Response.Status.OK).entity(json).build();
 
         } catch (SQLException e) {
@@ -58,7 +61,8 @@ public class EmargementResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            String json = new Gson().toJson(BDD_Emargement.getById(emargement_id, professeur_id));
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+            String json = gson.toJson(BDD_Emargement.getById(emargement_id, professeur_id));
             return Response.status(Response.Status.OK).entity(json).build();
 
         } catch (Exception e) {
@@ -85,7 +89,8 @@ public class EmargementResource {
             Emargement emargement = new Gson().fromJson(data, Emargement.class);
 
             if(BDD_Emargement.insert(emargement, professeur_id)){
-                String json = new Gson().toJson(emargement);
+                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                String json = gson.toJson(emargement);
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {
                 String json = new ResponseObject("error", "nextURL",  "Etudiant inserting has failed").toJSON();
@@ -117,7 +122,8 @@ public class EmargementResource {
             Emargement emargement = new Gson().fromJson(data, Emargement.class);
 
             if(BDD_Emargement.update(emargement, professeur_id)){
-                String json = new Gson().toJson(emargement);
+                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                String json = gson.toJson(emargement);
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {
                 String json = new ResponseObject("error", "nextURL",  "Etudiant updating has failed").toJSON();
