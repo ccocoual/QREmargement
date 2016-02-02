@@ -41,7 +41,6 @@ public class QrcodeResource {
                 return Response.status(Response.Status.NOT_ACCEPTABLE).entity(json).build();
             }
 
-
             etudiant = BDD_Etudiant.checkAuth(login, password);
             if (etudiant == null){
                 String json = new ResponseObject("error", "NEXTURL", "Login and password don't match").toJSON();
@@ -59,7 +58,7 @@ public class QrcodeResource {
         }
 
         String json = new Gson().toJson(etudiant);
-        return Response.ok().entity(json).build();
+        return Response.status(Response.Status.OK).entity(json).build();
     }
 
     @POST
