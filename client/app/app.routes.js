@@ -6,10 +6,17 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
         .state('home', {
             url: '/',
             controller: 'HomeCtrl',
-            templateUrl: "./app/components/home/home.tpl.html"
+            templateUrl: './app/components/home/home.tpl.html'
         });
 
-
+    $stateProvider
+        .state('auth_student', {
+            url: '/authentification/etudiant',
+            controller: 'AuthCtrl',
+            controllerAs: 'auth',
+            templateUrl: './app/shared/authentication/auth.form.tpl.html'
+        });
+    
     //Routes pour les vues relatives aux cours
     $stateProvider
         .state('emargement', {
@@ -91,5 +98,4 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
              controller: 'StatisticCtrl',
              templateUrl: "./app/components/statistic/statistic.tpl.html"
         });
-
 });

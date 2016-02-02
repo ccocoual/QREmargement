@@ -22,14 +22,15 @@
         };
 
         vm.getEmargementActual = function() {
-            console.log($state.current);
             EmargementFactory.getEmargement($state.params.emargementid)
                 .then(function(data) {
                     vm.actualEmargement = data;
-                    console.log(data);
+
                     GroupFactory.getStudentsByGroup(data.groupes[0].id)
-                        .then(function(data) {
-                            vm.actualStudents = data;
+                        .then(function(datastudents) {
+                            console.log(datastudents);
+                            vm.actualStudents = datastudents;
+                            console.log(datastudents);
                             return vm.actualStudents;
                         });
                 });

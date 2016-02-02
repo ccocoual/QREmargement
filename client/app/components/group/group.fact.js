@@ -88,7 +88,7 @@
         }
 
         function getStudentsByGroup(id) {
-            return $http.get(RESTURL + 'groups/' + id + '/etudiants')
+            return $http.get(RESTURL + 'groupes/' + id + '/etudiants')
                 .then(getComplete)
                 .catch(getFailed);
 

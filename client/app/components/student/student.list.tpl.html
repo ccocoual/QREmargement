@@ -1,10 +1,11 @@
 <div class="row" ng-init="student.getStudents()">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-10 col-md-offset-1">
         <table class="table">
             <thead>
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>Identifiant</th>
+                <th>Email</th>
                 <th>Actions</th>
             </thead>
             <tbody ng-repeat="stud in student.students">
@@ -12,6 +13,7 @@
                     <td>{{stud.nom}}</td>
                     <td>{{stud.prenom}}</td>
                     <td>{{stud.num_etu}}</td>
+                    <td>{{stud.email}}</td>
                     <td><a class="btn btn-small btn-danger" href="#" role="button" ng-click="student.removeStudent(stud.id)"><i class="glyphicon glyphicon-remove-sign"></i></a></td>
                 </tr>
             </tbody>
