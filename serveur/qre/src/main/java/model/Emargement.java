@@ -1,8 +1,6 @@
 package model;
 
 
-import java.lang.reflect.Array;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -41,9 +39,7 @@ public class Emargement {
         this.id = id;
     }
 
-    public Timestamp getDate() {
-        return date;
-    }
+    public Timestamp getDate() { return date; }
 
     public void setDate(Timestamp date) {
         this.date = date;
