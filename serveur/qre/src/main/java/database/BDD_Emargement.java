@@ -45,7 +45,6 @@ public class BDD_Emargement {
             Emargement emargement = new Emargement();
             emargement.setId(emargement_id);
             emargement.setDate(rs.getTimestamp("date"));
-            emargement.setUrl_generated(rs.getString("url_generated"));
             emargement.setType_cours(rs.getString("type_cours"));
             emargement.setMatiere_id(rs.getInt("matiere_id"));
             emargement.setProfesseur_id(rs.getInt("professeur_id"));
@@ -87,48 +86,6 @@ public class BDD_Emargement {
             emargement = new Emargement();
             emargement.setId(emargement_id);
             emargement.setDate(rs.getTimestamp("date"));
-            emargement.setUrl_generated(rs.getString("url_generated"));
-            emargement.setType_cours(rs.getString("type_cours"));
-            emargement.setMatiere_id(rs.getInt("matiere_id"));
-            emargement.setProfesseur_id(rs.getInt("professeur_id"));
-            emargement.setGroupes(groupes);
-        }
-
-        return emargement;
-    }
-
-    public static Emargement getByURL(String url_generated) throws SQLException {
-        Connection connection = Database.getDbCon().conn;
-
-        String query = "SELECT * FROM "+name_table+" WHERE url_generated = ?";
-
-        PreparedStatement stmt = connection.prepareStatement(query);
-        stmt.setString(1, url_generated);
-        ResultSet rs = stmt.executeQuery();
-
-        Emargement emargement = null;
-        if (rs.isBeforeFirst()){
-            rs.first();
-
-            int emargement_id = rs.getInt("id");
-            query = "SELECT * FROM "+join_table_groupe+" eg JOIN "+groupe_table+" g ON eg.groupe_id=g.id WHERE emargement_id= ?";
-            PreparedStatement stmt_bis = connection.prepareStatement(query);
-            stmt_bis.setInt(1, emargement_id);
-            ResultSet rs_bit = stmt_bis.executeQuery();
-
-            ArrayList<Groupe> groupes = new ArrayList<Groupe>();
-            while(rs_bit.next()) {
-                Groupe groupe = new Groupe();
-                groupe.setId(rs_bit.getInt("id"));
-                groupe.setLibelle(rs_bit.getString("libelle"));
-                groupe.setClasse_id(rs_bit.getInt("classe_id"));
-                groupes.add(groupe);
-            }
-
-            emargement = new Emargement();
-            emargement.setId(emargement_id);
-            emargement.setDate(rs.getTimestamp("date"));
-            emargement.setUrl_generated(rs.getString("url_generated"));
             emargement.setType_cours(rs.getString("type_cours"));
             emargement.setMatiere_id(rs.getInt("matiere_id"));
             emargement.setProfesseur_id(rs.getInt("professeur_id"));
@@ -169,7 +126,6 @@ public class BDD_Emargement {
             Emargement emargement = new Emargement();
             emargement.setId(rs.getInt("id"));
             emargement.setDate(rs.getTimestamp("date"));
-            emargement.setUrl_generated(rs.getString("url_generated"));
             emargement.setType_cours(rs.getString("type_cours"));
             emargement.setMatiere_id(rs.getInt("matiere_id"));
             emargement.setProfesseur_id(rs.getInt("professeur_id"));
@@ -211,7 +167,6 @@ public class BDD_Emargement {
             Emargement emargement = new Emargement();
             emargement.setId(rs.getInt("Emargement.id"));
             emargement.setDate(rs.getTimestamp("date"));
-            emargement.setUrl_generated(rs.getString("url_generated"));
             emargement.setType_cours(rs.getString("type_cours"));
             emargement.setMatiere_id(rs.getInt("matiere_id"));
             emargement.setProfesseur_id(rs.getInt("professeur_id"));
@@ -253,7 +208,6 @@ public class BDD_Emargement {
             Emargement emargement = new Emargement();
             emargement.setId(emargement_id);
             emargement.setDate(rs.getTimestamp("date"));
-            emargement.setUrl_generated(rs.getString("url_generated"));
             emargement.setType_cours(rs.getString("type_cours"));
             emargement.setMatiere_id(rs.getInt("matiere_id"));
             emargement.setProfesseur_id(rs.getInt("professeur_id"));
@@ -279,14 +233,13 @@ public class BDD_Emargement {
     public static boolean insert(Emargement emargement, int professeur_id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "INSERT INTO "+name_table+" (date, url_generated, type_cours, matiere_id, professeur_id) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO "+name_table+" (date, type_cours, matiere_id, professeur_id) VALUES (?, ?, ?, ?, ?)";
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setTimestamp(1, emargement.getDate());
-        stmt.setString(2, emargement.getUrl_generated());
-        stmt.setString(3, emargement.getType_cours());
-        stmt.setInt(4, emargement.getMatiere_id());
-        stmt.setInt(5, professeur_id);
+        stmt.setString(2, emargement.getType_cours());
+        stmt.setInt(3, emargement.getMatiere_id());
+        stmt.setInt(4, professeur_id);
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0) {
@@ -294,7 +247,7 @@ public class BDD_Emargement {
             if (generatedKeys.next()) {
                 emargement.setId(generatedKeys.getInt(1));
             } else {
-                throw new SQLException("Creating user failed, no ID obtained.");
+                throw new SQLException("Creating emargement failed, no ID obtained.");
             }
 
             for (Groupe groupe : emargement.getGroupes()) {
@@ -314,15 +267,14 @@ public class BDD_Emargement {
     public static boolean update(Emargement emargement, int professeur_id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "UPDATE "+name_table+" SET date= ?, url_generated= ?, type_cours= ?, matiere_id= ? WHERE id= ? AND professeur_id=?";
+        String query = "UPDATE "+name_table+" SET date= ?, type_cours= ?, matiere_id= ? WHERE id= ? AND professeur_id=?";
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setTimestamp(1, emargement.getDate());
-        stmt.setString(2, emargement.getUrl_generated());
-        stmt.setString(3, emargement.getType_cours());
-        stmt.setInt(4, emargement.getMatiere_id());
-        stmt.setInt(5, emargement.getId());
-        stmt.setInt(6, professeur_id);
+        stmt.setString(2, emargement.getType_cours());
+        stmt.setInt(3, emargement.getMatiere_id());
+        stmt.setInt(4, emargement.getId());
+        stmt.setInt(5, professeur_id);
         int rowsUpdated = stmt.executeUpdate();
 
         query = "DELETE FROM "+join_table_groupe+" WHERE emargement_id = ?";

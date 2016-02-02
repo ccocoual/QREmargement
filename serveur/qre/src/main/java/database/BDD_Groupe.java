@@ -90,6 +90,8 @@ public class BDD_Groupe {
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()){
                 groupe.setId(generatedKeys.getInt(1));
+            } else {
+                throw new SQLException("Creating groupe failed, no ID obtained.");
             }
             return true;
         }
