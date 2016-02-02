@@ -1,38 +1,50 @@
 <div class="row" ng-init="emargement.getEmargementActual()">
     <div class="col-md-4">
-        <div class="row">
-            <div class="col-md-12">
-                <qrcode data="{{emargement.actualEmargement.url_generated}}" size="300"></qrcode>
-                {{emargement.actualEmargement.url_generated}}
+        <div class="box">
+            <div class="box-header"></div>
+            <div class="box-body">
+                <div class="col-md-12 text-center">
+                    <qrcode data="{{emargement.actualEmargement.url_generated}}" size="300"></qrcode>
+                    <span class="label label-primary">{{emargement.actualEmargement.url_generated}}</span>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12" data-ng-init="emargement.getNbSignatures()">
-                <canvas class="chart chart-pie" chart-data="emargement.nbSignatures" chart-labels="emargement.nbSignaturesLabels">
-                </canvas>
+        <div class="box">
+            <div class="box-header"></div>
+            <div class="box-body">
+                <div class="col-md-12" data-ng-init="emargement.getNbSignatures()">
+                    <canvas class="chart chart-pie" chart-data="emargement.nbSignatures" chart-labels="emargement.nbSignaturesLabels">
+                    </canvas>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-8">
-        <table class="table">
-            <thead>
-                <th>Etudiant</th>
-            </thead>
-            <tbody ng-repeat="student in emargement.students">
-            <tr>
-                <td class="col-md-10">{{ student.lastname }} {{ student.firstname }}</td>
-                <td class="col-md-2">
-                    <input
-                            bs-switch
-                            ng-model="isSelected"
-                            type="checkbox"
-                            switch-on-text="Présent"
-                            switch-off-text="Absent"
-                            ng-true-value="'yep'"
-                            ng-false-value="'nope'">
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="col-md-8" ng-init="">
+        <div class="box">
+            <div class="box-header"></div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <thead>
+                        <th>Etudiant</th>
+                        <th>Groupe</th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="student in emargement.actualStudents">
+                        <td class="col-md-10">{{ student.lastname }} {{ student.firstname }}</td>
+                        <td class="col-md-2">
+                            <!--<input
+                                    bs-switch
+                                    ng-model="isSelected"
+                                    type="checkbox"
+                                    switch-on-text="Présent"
+                                    switch-off-text="Absent"
+                                    ng-true-value="'yep'"
+                                    ng-false-value="'nope'">-->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

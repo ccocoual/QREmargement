@@ -1,25 +1,39 @@
 <div class="row" ng-init="emargement.getEmargements()">
     <div class="col-md-12">
-        <table class="table">
-            <thead>
-                <th>Matière</th>
-                <th>Type</th>
-                <th>Date</th>
-                <th>URL</th>
-            </thead>
-            <tbody ng-repeat="emar in emargement.emargements">
-            <tr>
-                <td class="col-md-2">{{emar.matiere}}</td>
-                <td class="col-md-2">{{emar.type}}</td>
-                <td class="col-md-2">{{emar.date | date : 'dd/MM/yyyy @ HH:mm'}}</td>
-                <td class="col-md-2">{{emar.url_generated}}</td>
-                <td class="col-md-4">
-                    <a class="btn btn-small btn-primary" href="#" role="button" ui-sref="emargement.actual({emargementid: emar.id})"><i class="fa fa-calendar"></i></a>
-                    <a class="btn btn-small btn-danger" href="#" role="button" ng-click=""><i class="fa fa-trash"></i></a>
-                    <a class="btn btn-small btn-warning" href="#" role="button" ng-click=""><i class="fa fa-pencil-square-o"></i></a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="box">
+            <div class="box-header"></div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <thead>
+                        <th class="text-center">Matière</th>
+                        <th class="text-center">Type</th>
+                        <th class="text-center">Promotion</th>
+                        <th class="text-center">Groupe</th>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">URL</th>
+                        <th class="text-center">Action</th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="emar in emargement.emargements">
+                        <td class="col-md-1 text-center" ng-init="subject = emargement.getMatiereLabel(emar.matiere_id)">{{subject.libelle}}</td>
+                        <td class="col-md-1 text-center">{{emar.type_cours}}</td>
+                        <td class="col-md-2 text-center">{{emar.promotion}}</td>
+                        <td class="col-md-1 text-center">
+                            <p ng-repeat="gr in emar.groupes">
+                                {{gr.libelle}}
+                            </p>
+                        </td>
+                        <td class="col-md-3 text-center">{{emar.date | date : 'dd/MM/yyyy @ HH:mm'}}</td>
+                        <td class="col-md-2 text-center">{{emar.url_generated}}</td>
+                        <td class="col-md-2 text-center">
+                            <a class="btn btn-small btn-primary" href="#" role="button" ui-sref="emargement.actual({emargementid: emar.id})"><i class="fa fa-calendar"></i></a>
+                            <a class="btn btn-small btn-danger" href="#" role="button" ng-click=""><i class="fa fa-trash"></i></a>
+                            <a class="btn btn-small btn-warning" href="#" role="button" ng-click=""><i class="fa fa-pencil-square-o"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
