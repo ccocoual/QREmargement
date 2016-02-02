@@ -152,6 +152,8 @@ public class BDD_Etudiant {
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()){
                 etudiant.setId(generatedKeys.getInt(1));
+            } else {
+                throw new SQLException("Creating etudiant failed, no ID obtained.");
             }
             return true;
         }

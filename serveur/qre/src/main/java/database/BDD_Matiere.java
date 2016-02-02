@@ -68,6 +68,8 @@ public class BDD_Matiere {
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()){
                 matiere.setId(generatedKeys.getInt(1));
+            } else {
+                throw new SQLException("Creating matiere failed, no ID obtained.");
             }
             return true;
         }

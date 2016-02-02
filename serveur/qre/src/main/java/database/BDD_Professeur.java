@@ -98,6 +98,8 @@ public class BDD_Professeur {
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()){
                 professeur.setId(generatedKeys.getInt(1));
+            } else {
+                throw new SQLException("Creating professeur failed, no ID obtained.");
             }
             return true;
         }
