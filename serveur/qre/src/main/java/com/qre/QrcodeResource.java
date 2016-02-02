@@ -29,13 +29,13 @@ public class QrcodeResource {
         Etudiant etudiant;
         try {
             JsonObject jobj = new Gson().fromJson(data, JsonObject.class);
-            String login = jobj.get("email").toString();
+            String login = jobj.get("email").getAsString();
             if(login == null || login.isEmpty()){
                 String json = new ResponseObject("error", "NEXTURL", "Login not acceptable").toJSON();
                 return Response.status(Response.Status.NOT_ACCEPTABLE).entity(json).build();
             }
 
-            String password = jobj.get("num_etu").toString();
+            String password = jobj.get("num_etu").getAsString();
             if(password == null || password.isEmpty()){
                 String json = new ResponseObject("error", "NEXTURL", "Password not acceptable").toJSON();
                 return Response.status(Response.Status.NOT_ACCEPTABLE).entity(json).build();
