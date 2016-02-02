@@ -37,7 +37,7 @@ public class BDD_Matiere {
     public static Matiere getById(int id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "SELECT * FROM ? WHERE id = ?";
+        String query = "SELECT * FROM "+name_table+" WHERE id = ?";
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, name_table);
