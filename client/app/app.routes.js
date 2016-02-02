@@ -91,5 +91,4 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
              controller: 'StatisticCtrl',
              templateUrl: "./app/components/statistic/statistic.tpl.html"
         });
-
 });
