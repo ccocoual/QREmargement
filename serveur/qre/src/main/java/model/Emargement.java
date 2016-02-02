@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class Emargement {
     private int id;
     private Timestamp date;
-    private String url_generated;
     private String type_cours;
     private int matiere_id;
     private int professeur_id;
@@ -19,16 +18,6 @@ public class Emargement {
 
     public Emargement() {
         groupes = new ArrayList<Groupe>();
-    }
-
-    public Emargement(int id, Timestamp date, String url_generated, Type_cours type_cours, int matiere_id, ArrayList<Groupe> groupes) {
-        super();
-        this.id = id;
-        this.date = date;
-        this.url_generated = url_generated;
-        this.type_cours = type_cours.toString();
-        this.matiere_id = matiere_id;
-        this.groupes = groupes;
     }
 
     public int getId() {
@@ -43,14 +32,6 @@ public class Emargement {
 
     public void setDate(Timestamp date) {
         this.date = date;
-    }
-
-    public String getUrl_generated() {
-        return url_generated;
-    }
-
-    public void setUrl_generated(String url_generated) {
-        this.url_generated = url_generated;
     }
 
     public String getType_cours() {
@@ -93,7 +74,6 @@ public class Emargement {
     public String toString() {
         String str = "Emargement [id=" + id
                 + ", date=" + date
-                + ", url_generated=" + url_generated
                 + ", type_cours=" + type_cours
                 + ", matiere_id=" + matiere_id
                 + ", professeur_id=" + professeur_id

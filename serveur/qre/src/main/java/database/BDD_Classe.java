@@ -82,6 +82,8 @@ public class BDD_Classe {
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()){
                 classe.setId(generatedKeys.getInt(1));
+            } else {
+                throw new SQLException("Creating classe failed, no ID obtained.");
             }
             return true;
         }

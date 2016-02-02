@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import database.BDD_Authentication;
 import database.BDD_Emargement;
 import database.BDD_Etudiant;
+import database.BDD_Signature;
 import model.Authentication;
 import model.Emargement;
 import model.Etudiant;
@@ -63,6 +64,34 @@ public class EmargementResource {
 
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
             String json = gson.toJson(BDD_Emargement.getById(emargement_id, professeur_id));
+            return Response.status(Response.Status.OK).entity(json).build();
+
+        } catch (Exception e) {
+            Logger.getInstance().err(e.getMessage());
+            String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
+        }
+    }
+
+    @GET
+    @Path("/{id}/signatures")
+    @Produces("application/json")
+    public Response getSignaturesByEmargementById(@PathParam("token") String token,
+                                                  @PathParam("id") int emargement_id){
+        try {
+            Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
+            if(authentication == null){
+                String json = new ResponseObject("error", "nextURL", "Token invalid or expired").toJSON();
+                return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
+            }
+
+            int professeur_id = authentication.getProfesseur_id();
+
+            // Leve une exception si acces non autorisé
+            BDD_Emargement.getById(emargement_id, professeur_id);
+
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+            String json = gson.toJson(BDD_Signature.getByEmargementId(emargement_id));
             return Response.status(Response.Status.OK).entity(json).build();
 
         } catch (Exception e) {

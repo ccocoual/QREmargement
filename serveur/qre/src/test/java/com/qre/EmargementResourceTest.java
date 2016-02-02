@@ -123,7 +123,6 @@ public class EmargementResourceTest {
         date = new Timestamp(cal.getTime().getTime());
 
         emargement.setDate(date);
-        emargement.setUrl_generated(url_generated);
         emargement.setType_cours(type_cours);
         emargement.setMatiere_id(matiere.getId());
         emargement.setProfesseur_id(professeur_id);
@@ -136,7 +135,6 @@ public class EmargementResourceTest {
         // verifie que l'id est different de null
         assertTrue(emargement.getId() != 0);
         // verifie que les champs correspondent
-        assertEquals(url_generated, emargement.getUrl_generated());
         assertEquals(type_cours, emargement.getType_cours());
         assertEquals(professeur_id,emargement.getProfesseur_id());
         response = target.path(token_unlimited+"/emargements").request().get(String.class);
