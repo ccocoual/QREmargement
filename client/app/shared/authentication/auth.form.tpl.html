@@ -1,0 +1,27 @@
+    <div class="login-box">
+        <div class="login-logo">
+            Authentification
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Connectez-vous pour vous émmarger</p>
+            <form role="form">
+                <div class="form-group has-feedback">
+                    <input type="email" class="form-control" placeholder="Email" ng-model="auth.credentials.email">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" placeholder="Numéro étudiant" ng-model="auth.credentials.num_etu">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 col-xs-offset-4">
+                        <button class="btn btn-primary btn-block btn-flat" ng-click="auth.authentication()">Sign In</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+
