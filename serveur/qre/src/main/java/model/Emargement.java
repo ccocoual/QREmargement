@@ -8,6 +8,7 @@ public class Emargement {
     private int id;
     private Timestamp date;
     private String type_cours;
+    private String libelle_matiere;
     private int matiere_id;
     private int professeur_id;
     private ArrayList<Groupe> groupes;
@@ -40,6 +41,14 @@ public class Emargement {
 
     public void setType_cours(String type_cours) {
         this.type_cours = type_cours.toString();
+    }
+
+    public String getLibelle_matiere() {
+        return libelle_matiere;
+    }
+
+    public void setLibelle_matiere(String libelle_matiere) {
+        this.libelle_matiere = libelle_matiere;
     }
 
     public int getMatiere_id() {
