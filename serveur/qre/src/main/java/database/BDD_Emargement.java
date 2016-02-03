@@ -18,7 +18,7 @@ public class BDD_Emargement {
     public static ArrayList<Emargement> getAll(int professeur_id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "SELECT * FROM "+name_table+" e JOIN matiere m ON m.id = e.matiere_id WHERE professeur_id= ?";
+        String query = "SELECT * FROM "+name_table+" e JOIN matiere m ON m.id = e.matiere_id WHERE e.professeur_id= ?";
 
         ArrayList<Emargement> emargementList = new ArrayList<Emargement>();
 
@@ -36,7 +36,7 @@ public class BDD_Emargement {
             ArrayList<Groupe> groupes = new ArrayList<Groupe>();
             while(rs_bit.next()) {
                 Groupe groupe = new Groupe();
-                groupe.setId(rs_bit.getInt("id"));
+                groupe.setId(rs_bit.getInt("g.id"));
                 groupe.setLibelle(rs_bit.getString("libelle"));
                 groupe.setClasse_id(rs_bit.getInt("classe_id"));
                 groupes.add(groupe);
@@ -58,7 +58,7 @@ public class BDD_Emargement {
     public static Emargement getById(int id, int professeur_id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "SELECT * FROM "+name_table+" e JOIN matiere m ON m.id = e.matiere_id WHERE id = ? AND professeur_id= ?";
+        String query = "SELECT * FROM "+name_table+" e JOIN matiere m ON m.id = e.matiere_id WHERE e.id = ? AND e.professeur_id= ?";
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
