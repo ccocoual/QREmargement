@@ -36,8 +36,11 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: "./app/components/emargement/emargement.create.tpl.html"
         })
         .state('emargement.actual', {
-            url: '/:emargementid/actual',
-            templateUrl: "./app/components/emargement/emargement.actual.tpl.html"
+            url: '/:emargementid/actual?{groupes:json}',
+            templateUrl: "./app/components/emargement/emargement.actual.tpl.html",
+            params:{
+                groupes: {array:true}
+            }
         });
     
      //Routes pour les vues relatives aux promotions

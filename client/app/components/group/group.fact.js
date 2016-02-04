@@ -94,6 +94,7 @@
 
             function getComplete(response) {
                 console.log('GET students by group succeed');
+                return response.data;
             }
 
             function getFailed(error) {

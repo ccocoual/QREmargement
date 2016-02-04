@@ -3,20 +3,19 @@
 
     qrApp.controller('EmargementCtrl', EmargementCtrl);
 
-    EmargementCtrl.$inject = ['EmargementFactory', 'GroupFactory', 'SubjectFactory', '$state', '$stateParams'];
+    EmargementCtrl.$inject = ['EmargementFactory', 'GroupFactory', 'SubjectFactory', '$state', '$scope'];
 
-    function EmargementCtrl(EmargementFactory, GroupFactory, SubjectFactory, $state, $stateParams) {
+    function EmargementCtrl(EmargementFactory, GroupFactory, SubjectFactory, $state, $scope) {
         var vm = this;
         vm.emargements = [];
         vm.actualEmargement = [];
-        vm.actualStudents = [];
+        vm.actualGroupsStudents = [];
         vm.qrCodeUrl = "";
 
         vm.getEmargements = function(){
             return EmargementFactory.getEmargements()
                 .then(function(data) {
                     vm.emargements = data;
-                    console.log(data);
                     return vm.emargements;
                 });
         };
@@ -25,27 +24,22 @@
             EmargementFactory.getEmargement($state.params.emargementid)
                 .then(function(data) {
                     vm.actualEmargement = data;
-
-                    GroupFactory.getStudentsByGroup(data.groupes[0].id)
-                        .then(function(datastudents) {
-                            console.log(datastudents);
-                            vm.actualStudents = datastudents;
-                            console.log(datastudents);
-                            return vm.actualStudents;
-                        });
+                    console.log(data);
                 });
-
         }
 
-        /*vm.getStudentsByGroup = function() {
-            console.log(vm.actualEmargement);
-            return GroupFactory.getStudentsByGroup(vm.actualEmargement.)
-                .then(function(data) {
-                    vm.actualStudents = data;
-                    return vm.actualStudents;
-                });
-
-        }*/
+        vm.getStudentsByGroup = function() {
+            var gr = $state.params.groupes;
+            for(var i=0 ; i<gr.length ; i++){
+                GroupFactory.getStudentsByGroup(gr[i].id)
+                    .then(function(datastudents){
+                        for(var j=0 ; j<datastudents.length ; j++){
+                            datastudents[j].isPresent = false;
+                        }
+                        vm.actualGroupsStudents.push(datastudents);
+                    });
+            }
+        }
 
         vm.getQRCodeURL = function(id) {
             return EmargementFactory.getUrlGenerated(id)
@@ -58,16 +52,24 @@
         vm.getNbSignatures = function getNbSignatures(){
             vm.nbSignatures = [12,1];
             vm.nbSignaturesLabels = ["Présents", "Absents"];
-            //console.log(vm.nbSignatures);
         }
 
         vm.getMatiereLabel = function getMatiereLabel(matiereid){
-            return SubjectFactory.getSubject(matiereid)
+            SubjectFactory.getSubject(matiereid)
                 .then(function(data){
-                    console.log(data);
                     return data;
                 });
         }
 
+
+        $scope.$watch(
+            function watchStudents( scope ) {
+                return( vm.actualGroupsStudents );
+            },
+            function handleStudentsChange( newValue, oldValue ) {
+                console.log( newValue );
+            },
+            true
+        );
     }
 })();
