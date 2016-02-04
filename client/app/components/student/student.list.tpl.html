@@ -1,22 +1,29 @@
 <div class="row" ng-init="student.getStudents()">
     <div class="col-md-10 col-md-offset-1">
-        <table class="table">
-            <thead>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Identifiant</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </thead>
-            <tbody ng-repeat="stud in student.students">
-                <tr>
-                    <td>{{stud.nom}}</td>
-                    <td>{{stud.prenom}}</td>
-                    <td>{{stud.num_etu}}</td>
-                    <td>{{stud.email}}</td>
-                    <td><a class="btn btn-small btn-danger" href="#" role="button" ng-click="student.removeStudent(stud.id)"><i class="glyphicon glyphicon-remove-sign"></i></a></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Liste des promotions</h3>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover text-center">
+                    <thead>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Identifiant</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </thead>
+                    <tbody ng-repeat="stud in student.students">
+                        <tr>
+                            <td>{{stud.nom}}</td>
+                            <td>{{stud.prenom}}</td>
+                            <td>{{stud.num_etu}}</td>
+                            <td>{{stud.email}}</td>
+                            <td><a class="btn btn-small btn-danger" href="#" role="button" ng-click="student.removeStudent(stud.id)"><i class="glyphicon glyphicon-remove-sign"></i></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

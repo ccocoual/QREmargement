@@ -1,19 +1,27 @@
 <div class="row" ng-init="class.getClasses()">
-    <div class="col-md-4 col-md-offset-4">
-        <table class="table">
-            <thead>
-                <th>Libellé</th>
-            </thead>
-            <tbody ng-repeat="cla in class.classes">
-                <tr>
-                    <td class="col-md-6">{{cla.libelle}}</td>
-                    <td class="col-md-6">
-                        <a class="btn btn-small btn-primary" href="#" role="button" ui-sref="class.groups.list({classid: cla.id})"><i class="fa fa-users"></i></a>
-                        <a class="btn btn-small btn-danger" href="#" role="button" ng-click=""><i class="fa fa-trash"></i></a>
-                        <a class="btn btn-small btn-warning" href="#" role="button" ng-click=""><i class="fa fa-pencil-square-o"></i></a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="col-md-6 col-md-offset-3">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Liste des promotions</h3>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover text-center">
+                    <thead>
+                        <th>Libellé</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody ng-repeat="cla in class.classes">
+                        <tr>
+                            <td class="col-md-6">{{cla.libelle}}</td>
+                            <td class="col-md-6">
+                                <a class="btn btn-small btn-primary" href="#" role="button" ui-sref="class.groups.list({classid: cla.id})"><i class="fa fa-users"></i></a>
+                                <a class="btn btn-small btn-danger" href="#" role="button" ng-click=""><i class="fa fa-trash"></i></a>
+                                <a class="btn btn-small btn-warning" href="#" role="button" ng-click=""><i class="fa fa-pencil-square-o"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

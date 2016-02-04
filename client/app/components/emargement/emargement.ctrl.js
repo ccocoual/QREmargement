@@ -3,14 +3,14 @@
 
     qrApp.controller('EmargementCtrl', EmargementCtrl);
 
-    EmargementCtrl.$inject = ['EmargementFactory', 'GroupFactory', 'SubjectFactory', '$state', '$scope'];
+    EmargementCtrl.$inject = ['EmargementFactory', 'GroupFactory', 'SubjectFactory', '$state', '$scope', 'RESTURL'];
 
-    function EmargementCtrl(EmargementFactory, GroupFactory, SubjectFactory, $state, $scope) {
+    function EmargementCtrl(EmargementFactory, GroupFactory, SubjectFactory, $state, $scope, RESTURL) {
         var vm = this;
         vm.emargements = [];
         vm.actualEmargement = [];
         vm.actualGroupsStudents = [];
-        vm.qrCodeUrl = "";
+        vm.qrCodeUrl = RESTURL + "qrcode/flash/";
 
         vm.getEmargements = function(){
             return EmargementFactory.getEmargements()
@@ -24,7 +24,6 @@
             EmargementFactory.getEmargement($state.params.emargementid)
                 .then(function(data) {
                     vm.actualEmargement = data;
-                    console.log(data);
                 });
         }
 
@@ -49,8 +48,23 @@
                 });
         }
 
-        vm.getNbSignatures = function getNbSignatures(){
-            vm.nbSignatures = [12,1];
+        vm.updateSignatures = function updateSignatures(){
+            var nbSignTrue = 0;
+            var nbSignFalse = 0;
+            var nbTotal = 0;
+            if(vm.actualGroupsStudents.length > 0) {
+                for (var gr in vm.actualGroupsStudents) {
+                    console.log(vm.actualGroupsStudents[gr]);
+                    for (var stud in vm.actualGroupsStudents[gr]) {
+                        if (vm.actualGroupsStudents[gr][stud].isPresent && stud != "$$hashKey") {
+                            nbSignTrue++;
+                        } else if(!vm.actualGroupsStudents[gr][stud].isPresent  && stud != "$$hashKey") {
+                            nbSignFalse++;
+                        }
+                    }
+                }
+            }
+            vm.nbSignatures = [nbSignTrue,nbSignFalse];
             vm.nbSignaturesLabels = ["Présents", "Absents"];
         }
 
@@ -67,7 +81,10 @@
                 return( vm.actualGroupsStudents );
             },
             function handleStudentsChange( newValue, oldValue ) {
-                console.log( newValue );
+                //TODO Envoyer la requête de signature de l'étudiant pour la feuille
+                //TODO Mettre à jour le comptage des signatures
+                vm.updateSignatures();
+                //console.log( newValue );
             },
             true
         );

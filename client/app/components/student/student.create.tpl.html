@@ -1,34 +1,41 @@
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
-        <form role="form">
-        <div class="form-group">
-            <label for="number">Numéro étudiant</label>
-            <input type="text" class="form-control" id="number" ng-model="student.newStudent.num_etu">
-        </div>
-        <div class="form-group">
-            <label for="lastname">Nom</label>
-            <input type="text" class="form-control" id="lastname" ng-model="student.newStudent.nom">
-        </div>
-        <div class="form-group">
-            <label for="firstname">Prénom</label>
-            <input type="text" class="form-control" id="firstname" ng-model="student.newStudent.prenom">
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" class="form-control" id="email" ng-model="student.newStudent.email">
-        </div>
-        <div ng-controller="ClassCtrl as class">
-            <div class="form-group" ng-init="class.getClasses()">
-                <label for="email">Promotion</label>
-                <select class="form-control" ng-options="class_stu.id as class_stu.libelle for class_stu in class.classes" ng-change="class.getGroups(student.newStudent.classe_id)" ng-model="student.newStudent.classe_id"></select>
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Liste des promotions</h3>
             </div>
-            <div class="form-group" ng-show="student.newStudent.classe_id">
-                <label for="email">Groupe</label>
-                <select class="form-control" ng-options="group.id as group.libelle for group in class.groups" ng-model="student.newStudent.groupe_id"></select>
-            </div>  
+            <div class="box-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="number">Numéro étudiant</label>
+                        <input type="text" class="form-control" id="number" ng-model="student.newStudent.num_etu">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">Nom</label>
+                        <input type="text" class="form-control" id="lastname" ng-model="student.newStudent.nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname">Prénom</label>
+                        <input type="text" class="form-control" id="firstname" ng-model="student.newStudent.prenom">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email" ng-model="student.newStudent.email">
+                    </div>
+                    <div ng-controller="ClassCtrl as class">
+                        <div class="form-group" ng-init="class.getClasses()">
+                            <label for="email">Promotion</label>
+                            <select class="form-control" ng-options="class_stu.id as class_stu.libelle for class_stu in class.classes" ng-change="class.getGroups(student.newStudent.classe_id)" ng-model="student.newStudent.classe_id"></select>
+                        </div>
+                        <div class="form-group" ng-show="student.newStudent.classe_id">
+                            <label for="email">Groupe</label>
+                            <select class="form-control" ng-options="group.id as group.libelle for group in class.groups" ng-model="student.newStudent.groupe_id"></select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success" ng-click="student.createStudent()">Créer</button>
+                </form>
+            </div>
         </div>
-        <button type="button" class="btn btn-success" ng-click="student.createStudent()">Créer</button>
-    </form>
     </div>
 </div>
 

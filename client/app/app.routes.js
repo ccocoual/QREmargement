@@ -6,6 +6,7 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
         .state('home', {
             url: '/',
             controller: 'HomeCtrl',
+            controllerAs: 'home',
             templateUrl: './app/components/home/home.tpl.html'
         });
 
@@ -92,6 +93,20 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
         .state('student.create', {
             url: '/create',
             templateUrl: "./app/components/student/student.create.tpl.html"
+        });
+
+    //Routes pour la gestion des scans de QRCode
+    $stateProvider
+        .state('qrcode', {
+            url: '/qrcode',
+            controller: 'QRCodeCtrl',
+            abstract:true,
+            controllerAs: 'qrcode',
+            templateUrl: "./app/components/qrcode/qrcode.tpl.html"
+        })
+        .state('qrcode.flash', {
+            url: '/flash/:qrcodeid',
+            templateUrl: "./app/components/qrcode/qrcode.flash.tpl.html"
         });
 
     //Routes pour les vues relatives aux statistiques

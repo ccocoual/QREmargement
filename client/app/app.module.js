@@ -8,7 +8,6 @@ var qrApp = angular.module("QRApp", [
 
 ]);
 
-
 qrApp.config(['ChartJsProvider', function (ChartJsProvider) {
     ChartJsProvider.setOptions({
         colours: ['#4abebc', '#f54b50'],
