@@ -3,6 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon-qrcode.ico" />
+    <!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon-qrcode.ico" /><![endif]-->
+
 
     <title>QREmargement</title>
     <!-- Tell the browser to be responsive to screen width -->
@@ -17,14 +20,15 @@
     <link rel="stylesheet" href="bower_components/AdminLTE/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="bower_components/AdminLTE/dist/css/skins/skin-black.min.css">
+    <link rel="stylesheet" href="bower_components/AdminLTE/dist/css/skins/skin-red.min.css">
     <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css">
     <link rel="stylesheet" href="bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css">
+    <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
 
     <link rel="stylesheet" href="assets/style/main.css">
 </head>
 
-<body class="hold-transition skin-black sidebar-mini fixed">
+<body class="hold-transition skin-red sidebar-mini fixed">
     <div class="wrapper">
         <navbar></navbar>
         <sidebar></sidebar>
@@ -43,6 +47,8 @@
     <!-- AngularJS -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
     <!-- App -->
     <script src="app/app.module.js"></script>
@@ -76,6 +82,7 @@
 
     <!-- Subject Component -->
     <script src="app/components/subject/subject.fact.js"></script>
+    <script src="app/components/subject/subject.ctrl.js"></script>
 
     <!-- QRCode Component -->
     <script src="app/components/qrcode/qrcode.ctrl.js"></script>
@@ -87,6 +94,8 @@
     <script src="app/shared/sidebar/sidebar.dir.js"></script>
     <script src="app/shared/sidebar/sidebar.ctrl.js"></script>
 
+    <!-- Angular Modal -->
+    <script src="app/shared/modalqrcode/modalqrcode.ctrl.js"></script>
 
     <!------------------------- AdminLTE ------------------------->
 
@@ -108,5 +117,6 @@
     <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
     <script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
     <script src="bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
 </body>
 </html>

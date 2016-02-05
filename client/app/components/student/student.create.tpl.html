@@ -2,7 +2,7 @@
     <div class="col-md-6 col-md-offset-3">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Liste des promotions</h3>
+                <h3 class="box-title">Création d'un étudiant</h3>
             </div>
             <div class="box-body">
                 <form role="form">
@@ -24,12 +24,12 @@
                     </div>
                     <div ng-controller="ClassCtrl as class">
                         <div class="form-group" ng-init="class.getClasses()">
-                            <label for="email">Promotion</label>
-                            <select class="form-control" ng-options="class_stu.id as class_stu.libelle for class_stu in class.classes" ng-change="class.getGroups(student.newStudent.classe_id)" ng-model="student.newStudent.classe_id"></select>
+                            <label for="promotion">Promotion</label>
+                            <select class="form-control" id="promotion" ng-options="class_stu.id as class_stu.libelle for class_stu in class.classes" ng-change="class.getGroups(student.newStudent.classe_id)" ng-model="student.newStudent.classe_id"></select>
                         </div>
                         <div class="form-group" ng-show="student.newStudent.classe_id">
-                            <label for="email">Groupe</label>
-                            <select class="form-control" ng-options="group.id as group.libelle for group in class.groups" ng-model="student.newStudent.groupe_id"></select>
+                            <label for="groupe">Groupe</label>
+                            <select class="form-control" id="groupe" ng-options="group.id as group.libelle for group in class.groups" ng-model="student.newStudent.groupe_id"></select>
                         </div>
                     </div>
                     <button type="button" class="btn btn-success" ng-click="student.createStudent()">Créer</button>

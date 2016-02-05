@@ -1,1 +1,31 @@
-<h2>Create</h2>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Création d'une feuille d'émargement</h3>
+            </div>
+            <div class="box-body">
+                <form role="form">
+                    <div class="row">
+                        <div class="form-group col-md-8" ng-init="emargement.getSubjects()">
+                            <label for="matiere">Matière</label>
+                            <select class="form-control" id="matiere" ng-options="subs.matiere_id as subs.libelle for subs in subject.subjects" ng-model="emargement.newEmargement.matiere_id" required></select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="type_cours">Type de cours</label>
+                            <select class="form-control" id="type_cours" ng-model="emargement.newEmargement.type_cours" required>
+                                <option ng-repeat="type in emargement.typesCours" value="type">{{type}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="date-debut">Date de début du cours</label>
+                        <input class="form-control" type="datetime-local" id="date-debut" ng-model="emargement.newEmargement.date" min="{{minDatetimeLocal | date : 'dd/MM/yyyy HH:mm'}}" required>
+                    </div>
+                    <button type="button" class="btn btn-success" ng-click="emargement.createEmargement()">Créer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

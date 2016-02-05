@@ -4,8 +4,9 @@ var qrApp = angular.module("QRApp", [
     "ui.router",
     "monospaced.qrcode",
     "chart.js",
-    "frapontillo.bootstrap-switch"
-
+    "frapontillo.bootstrap-switch",
+    "ngCookies",
+    "ui.bootstrap"
 ]);
 
 qrApp.config(['ChartJsProvider', function (ChartJsProvider) {

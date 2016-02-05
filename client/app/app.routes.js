@@ -23,7 +23,6 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
         .state('emargement', {
             name: "Emargement",
             url: '/emargement',
-            //abstract:true,
             controller: 'EmargementCtrl',
             controllerAs: 'emargement',
             templateUrl: "./app/components/emargement/emargement.tpl.html"

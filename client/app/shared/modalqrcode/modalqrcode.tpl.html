@@ -1,0 +1,9 @@
+<div class="modal-header">
+    <h3 class="modal-title text-center">{{ qrCodeUrl }}</h3>
+</div>
+<div class="modal-body text-center">
+    <qrcode data="{{qrCodeUrl}}" size="600"></qrcode><br/>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="close()">Close</button>
+</div>

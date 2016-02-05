@@ -12,7 +12,7 @@
         return factory;
 
         function isConnected() {
-            // regarder les coockies
+            // regarder les cookies
         }
         
         function authentication(credentials) { console.log(credentials);

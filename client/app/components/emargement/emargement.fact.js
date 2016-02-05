@@ -11,7 +11,8 @@
             createEmargement: createEmargement,
             updateEmargement: updateEmargement,
             removeEmargement: removeEmargement,
-            getUrlGenerated: getUrlGenerated
+            getUrlGenerated: getUrlGenerated,
+            getSignaturesByEmargementId: getSignaturesByEmargementId
         };
         return factory;
         
@@ -99,6 +100,21 @@
 
             function getFailed(error) {
                 console.log('GET UrlGenerated failed' + error.data);
+            }
+        }
+
+        function getSignaturesByEmargementId(id){
+            return $http.get(RESTURL + 'emargements/' + id + "/signatures")
+                .then(getComplete)
+                .catch(getFailed);
+
+            function getComplete(response) {
+                console.log('GET Signatures by emargement id succeed');
+                return response.data;
+            }
+
+            function getFailed(error) {
+                console.log('GET Signatures by emargement id failed' + error.data);
             }
         }
     }

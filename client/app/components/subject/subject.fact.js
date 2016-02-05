@@ -25,6 +25,7 @@
             }
 
             function getFailed(error) {
+                console.log(error);
                 console.log('GETS subject failed' + error.data);
             }
         }
