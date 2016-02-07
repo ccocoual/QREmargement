@@ -1,3 +1,14 @@
-<div ng-init="qrcode.QrCodeSigning()">
-    Hello
+<div class="row" ng-init="qrcode.QrCodeSigning()">
+    <div class="col-md-6 col-md-offset-3">
+        <h2 class="text-center">Emargement</h2>
+    </div>
+</div>
+<div class="row" ng-show="qrcode.emargementInfo">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+        <span class="text-center">
+            <i class="fa fa-check-circle fa-5x green-icon"></i>
+        </span><br/>
+        <h3>Vous avez signé la feuille d'émargement pour le {{ qrcode.emargementInfo.type_cours }} de {{ qrcode.emargementInfo.matiere.libelle }} avec {{ qrcode.emargementInfo.professeur.prenom }} {{ qrcode.emargementInfo.professeur.nom }}</h3>
+
+    </div>
 </div>
