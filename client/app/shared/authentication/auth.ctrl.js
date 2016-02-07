@@ -16,14 +16,15 @@
                     console.log(data);
                     if (data != undefined) {
                         $cookies.remove('qre_cookie');
+                        $cookies.put('qre_cookie', data.id);
                         if($state.params.qrcodeid != null){
-                            $state.go('qrcode.flash',{"qrcodeid":$state.params.qrcodeid});
-                            toastr.success("Vous êtes bien authentifié",data.prenom+" "+data.nom)
+                            toastr.success("Vous êtes bien authentifié",data.prenom+" "+data.nom);
+                            $state.go('qrcode.flash',{"qrcodeid":$state.params.qrcodeid, "studentid":data.id});
                         }else{
                             $state.go('auth_success',{"student":data});
                         }
                     }else{
-                        toastr.error("Une erreur est survenue, veuillez rééssayer ultérieurement")
+                        toastr.error("Une erreur est survenue, veuillez rééssayer ultérieurement");
                     }
                 });
         }

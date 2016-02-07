@@ -24,7 +24,7 @@ qrApp.config(function(toastrConfig) {
         allowHtml: false,
         closeButton: true,
         closeHtml: '<button>&times;</button>',
-        extendedTimeOut: 1000,
+        extendedTimeOut: 700,
         iconClasses: {
             error: 'toast-error',
             info: 'toast-info',
