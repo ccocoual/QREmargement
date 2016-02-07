@@ -6,7 +6,8 @@ var qrApp = angular.module("QRApp", [
     "chart.js",
     "frapontillo.bootstrap-switch",
     "ngCookies",
-    "ui.bootstrap"
+    "ui.bootstrap",
+    "angularjs-dropdown-multiselect"
 ]);
 
 qrApp.config(['ChartJsProvider', function (ChartJsProvider) {

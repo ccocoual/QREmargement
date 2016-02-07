@@ -9,7 +9,7 @@
                     <div class="row">
                         <div class="form-group col-md-8" ng-init="emargement.getSubjects()">
                             <label for="matiere">Matière</label>
-                            <select class="form-control" id="matiere" ng-options="subs.matiere_id as subs.libelle for subs in subject.subjects" ng-model="emargement.newEmargement.matiere_id" required></select>
+                            <select class="form-control" id="matiere" ng-options="subs.matiere_id as subs.libelle for subs in emargement.subjects" ng-model="emargement.newEmargement.matiere_id" required></select>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="type_cours">Type de cours</label>
@@ -21,6 +21,11 @@
                     <div class="form-group">
                         <label for="date-debut">Date de début du cours</label>
                         <input class="form-control" type="datetime-local" id="date-debut" ng-model="emargement.newEmargement.date" min="{{minDatetimeLocal | date : 'dd/MM/yyyy HH:mm'}}" required>
+                    </div>
+                    <div class="form-group" ng-init="emargement.getClassGroupes()">
+                        <label for="groupes">Groupes participant au cours</label>
+                        <div ng-dropdown-multiselect="" id="groupes" options="emargement.classesGroups" selected-model="emargement.classesGroupsSelected" extra-settings="emargement.multiSelectSettings" group-by="classlabel"></div>
+                        {{emargement.classesGroups}}
                     </div>
                     <button type="button" class="btn btn-success" ng-click="emargement.createEmargement()">Créer</button>
                 </form>
