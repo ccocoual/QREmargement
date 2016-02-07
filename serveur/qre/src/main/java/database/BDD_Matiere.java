@@ -26,7 +26,6 @@ public class BDD_Matiere {
             Matiere matiere = new Matiere();
             matiere.setId(rs.getInt("id"));
             matiere.setLibelle(rs.getString("libelle"));
-            matiere.setId(rs.getInt("classe_id"));
             matiereList.add(matiere);
         }
 
