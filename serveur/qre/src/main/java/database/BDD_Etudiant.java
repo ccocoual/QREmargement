@@ -191,7 +191,7 @@ public class BDD_Etudiant {
     public static Etudiant checkAuth(String login, String password) throws SQLException, ParseException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "SELECT * FROM "+ etudiant_table+ "e " +
+        String query = "SELECT * FROM "+ etudiant_table+ " e " +
                 "JOIN "+classe_table+" c ON c.id = e.classe_id " +
                 "JOIN "+groupe_table+" g ON g.id = e.groupe_id " +
                 "WHERE email = ? AND num_etu = ?";
