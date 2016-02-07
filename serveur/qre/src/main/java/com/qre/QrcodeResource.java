@@ -2,16 +2,16 @@ package com.qre;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import database.*;
-import model.Emargement;
+import database.BDD_Etudiant;
+import database.BDD_Signature;
 import model.Etudiant;
-import model.Groupe;
 import model.Signature;
 import utils.Logger;
 import utils.ResponseObject;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -26,9 +26,9 @@ public class QrcodeResource {
     @Path("/authentication_etudiant")
     @Consumes("application/json")
     public Response AuthEtudiant(String data){
-        Etudiant etudiant;
         try {
             JsonObject jobj = new Gson().fromJson(data, JsonObject.class);
+
             String login = jobj.get("email").getAsString();
             if(login == null || login.isEmpty()){
                 String json = new ResponseObject("error", "NEXTURL", "Login not acceptable").toJSON();
@@ -41,11 +41,14 @@ public class QrcodeResource {
                 return Response.status(Response.Status.NOT_ACCEPTABLE).entity(json).build();
             }
 
-            etudiant = BDD_Etudiant.checkAuth(login, password);
+            Etudiant etudiant = BDD_Etudiant.checkAuth(login, password);
             if (etudiant == null){
                 String json = new ResponseObject("error", "NEXTURL", "Login and password don't match").toJSON();
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
             }
+
+            String json = new Gson().toJson(etudiant);
+            return Response.status(Response.Status.OK).entity(json).build();
 
         } catch (SQLException e) {
             Logger.getInstance().err(e.getMessage());
@@ -56,9 +59,6 @@ public class QrcodeResource {
             String json = new ResponseObject("error", "nextURL",  e.getMessage()).toJSON();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
         }
-
-        String json = new Gson().toJson(etudiant);
-        return Response.status(Response.Status.OK).entity(json).build();
     }
 
     @POST

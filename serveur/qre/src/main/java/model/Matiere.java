@@ -6,12 +6,6 @@ public class Matiere {
 
     public Matiere() {}
 
-    public Matiere(int id, String libelle) {
-        super();
-        this.id = id;
-        this.libelle = libelle;
-    }
-
     public int getId() {
         return id;
     }

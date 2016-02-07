@@ -18,15 +18,6 @@ public class Professeur {
 
     public Professeur() {}
 
-    public Professeur(int id, String nom, String prenom, String email, String password) {
-        super();
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.email = email;
-        this.password = password;
-    }
-
     public int getId() {
         return id;
     }

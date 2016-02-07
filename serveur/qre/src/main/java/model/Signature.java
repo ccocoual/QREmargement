@@ -1,39 +1,30 @@
 package model;
 
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Signature {
-    private int emargement_id;
-    private int etudiant_id;
+    private Emargement emargement;
+    private Etudiant etudiant;
     private Timestamp date;
     private boolean signee;
 
     public Signature() {}
 
-    public Signature(int emargement_id, int etudiant_id, Timestamp date, boolean signee) {
-        super();
-        this.emargement_id = emargement_id;
-        this.etudiant_id = etudiant_id;
-        this.date = date;
-        this.signee = signee;
+    public Emargement getEmargement() {
+        return emargement;
     }
 
-    public int getEmargement_id() {
-        return emargement_id;
+    public void setEmargement(Emargement emargement) {
+        this.emargement = emargement;
     }
 
-    public void setEmargement_id(int emargement_id) {
-        this.emargement_id = emargement_id;
+    public Etudiant getEtudiant() {
+        return etudiant;
     }
 
-    public int getEtudiant_id() {
-        return etudiant_id;
-    }
-
-    public void setEtudiant_id(int etudiant_id) {
-        this.etudiant_id = etudiant_id;
+    public void setEtudiant(Etudiant etudiant) {
+        this.etudiant = etudiant;
     }
 
     public Timestamp getDate() {
@@ -54,8 +45,8 @@ public class Signature {
 
     @Override
     public String toString() {
-        return "Signature [emargement_id=" + emargement_id
-                + ", etudiant_id=" + etudiant_id
+        return "Signature [emargement=\n\t" + emargement.toString()
+                + ", etudiant=\n\t" + etudiant.toString()
                 + ", date=" + date
                 + ", signe=" + signee + "]";
     }

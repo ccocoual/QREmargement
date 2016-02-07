@@ -1,5 +1,7 @@
 package database;
 
+import model.Classe;
+import model.Etudiant;
 import model.Groupe;
 
 import java.sql.Connection;
@@ -11,23 +13,47 @@ import java.util.ArrayList;
 public class BDD_Groupe {
 
 
-    private static String name_table = "groupe";
+    private static String groupe_table = "groupe";
+    private static String classe_table = "classe";
+    private static String etudiant_table = "etudiant";
 
     public static ArrayList<Groupe> getAll() throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "SELECT * FROM "+name_table;
+        String query = "SELECT * FROM "+ groupe_table+ " g " +
+                "JOIN "+classe_table+" c ON c.id = g.classe_id " +
+                "JOIN "+etudiant_table+" e ON e.groupe_id = g.id";
 
         ArrayList<Groupe> groupeList = new ArrayList<Groupe>();
         PreparedStatement stmt = connection.prepareStatement(query);
         ResultSet rs = stmt.executeQuery();
 
+        Groupe last_groupe = null;
         while(rs.next()) {
-            Groupe groupe = new Groupe();
-            groupe.setId(rs.getInt("id"));
-            groupe.setLibelle(rs.getString("libelle"));
-            groupe.setId(rs.getInt("classe_id"));
-            groupeList.add(groupe);
+            int groupe_id = rs.getInt("g.id");
+            if(last_groupe == null || last_groupe.getId() != groupe_id) {
+                if(last_groupe != null) groupeList.add(last_groupe);
+                last_groupe = new Groupe();
+                last_groupe.setId(groupe_id);
+                last_groupe.setLibelle(rs.getString("g.libelle"));
+
+                Classe classe = new Classe();
+                classe.setId(rs.getInt("c.id"));
+                classe.setLibelle(rs.getString("c.libelle"));
+                last_groupe.setClasse(classe);
+            }
+            Etudiant etudiant = new Etudiant();
+            etudiant.setId(rs.getInt("e.id"));
+            etudiant.setNom(rs.getString("e.nom"));
+            etudiant.setPrenom(rs.getString("e.prenom"));
+            etudiant.setEmail(rs.getString("e.email"));
+            etudiant.setNum_etu(rs.getString("e.num_etu"));
+
+            last_groupe.addEtudiant(etudiant);
+
+            if(rs.isLast()){
+                groupeList.add(last_groupe);
+            }
         }
 
         return groupeList;
@@ -36,53 +62,48 @@ public class BDD_Groupe {
     public static Groupe getById(int id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "SELECT * FROM "+name_table+" WHERE id = ?";
+        String query = "SELECT * FROM "+ groupe_table+ " g " +
+                "JOIN "+classe_table+" c ON c.id = g.classe_id " +
+                "JOIN "+etudiant_table+" e ON e.groupe_id = g.id "+
+                "WHERE g.id = ?";
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
         ResultSet rs = stmt.executeQuery();
 
-        Groupe  groupe = null;
-        if (rs.isBeforeFirst()) {
-            rs.first();
-            groupe = new Groupe();
-            groupe.setId(rs.getInt("id"));
-            groupe.setLibelle(rs.getString("libelle"));
-            groupe.setClasse_id(rs.getInt("classe_id"));
+        Groupe groupe = null;
+        while(rs.next()) {
+            if(groupe == null) {
+                groupe = new Groupe();
+                groupe.setId(rs.getInt("g.id"));
+                groupe.setLibelle(rs.getString("g.libelle"));
+
+                Classe classe = new Classe();
+                classe.setId(rs.getInt("c.id"));
+                classe.setLibelle(rs.getString("c.libelle"));
+                groupe.setClasse(classe);
+            }
+            Etudiant etudiant = new Etudiant();
+            etudiant.setId(rs.getInt("e.id"));
+            etudiant.setNom(rs.getString("e.nom"));
+            etudiant.setPrenom(rs.getString("e.prenom"));
+            etudiant.setEmail(rs.getString("e.email"));
+            etudiant.setNum_etu(rs.getString("e.num_etu"));
+
+            groupe.addEtudiant(etudiant);
         }
 
         return groupe;
     }
 
-    public static ArrayList<Groupe> getByClassId(int classe_id) throws SQLException {
-        Connection connection = Database.getDbCon().conn;
-
-        String query = "SELECT * FROM "+name_table+" WHERE classe_id = ?";
-        ArrayList<Groupe> groupeList = new ArrayList<Groupe>();
-        PreparedStatement stmt = connection.prepareStatement(query);
-        stmt.setInt(1, classe_id);
-
-        ResultSet rs = stmt.executeQuery();
-
-        while(rs.next()) {
-            Groupe groupe = new Groupe();
-            groupe.setId(rs.getInt("id"));
-            groupe.setLibelle(rs.getString("libelle"));
-            groupe.setClasse_id(rs.getInt("classe_id"));
-            groupeList.add(groupe);
-        }
-
-        return groupeList;
-    }
-
     public static boolean insert(Groupe groupe) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "INSERT INTO "+name_table+" (libelle, classe_id) VALUES (?, ?)";
+        String query = "INSERT INTO "+ groupe_table +" (libelle, classe_id) VALUES (?, ?)";
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, groupe.getLibelle());
-        stmt.setInt(2, groupe.getClasse_id());
+        stmt.setInt(2, groupe.getClasse().getId());
 
         int rowsUpdated = stmt.executeUpdate();
 
@@ -102,11 +123,11 @@ public class BDD_Groupe {
     public static boolean update(Groupe groupe) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "UPDATE "+name_table+" SET libelle= ?, classe_id= ? WHERE id= ?";
+        String query = "UPDATE "+ groupe_table +" SET libelle= ?, classe_id= ? WHERE id= ?";
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, groupe.getLibelle());
-        stmt.setInt(2, groupe.getClasse_id());
+        stmt.setInt(2, groupe.getClasse().getId());
         stmt.setInt(3, groupe.getId());
 
         int rowsUpdated = stmt.executeUpdate();
@@ -121,7 +142,7 @@ public class BDD_Groupe {
     public static boolean delete(int id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "DELETE FROM "+name_table+" WHERE id = ?";
+        String query = "DELETE FROM "+ groupe_table +" WHERE id = ?";
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);

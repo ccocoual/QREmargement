@@ -42,10 +42,10 @@ public class MatiereResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/{matiere_id}")
     @Produces("application/json")
     public Response getMatiereById(@PathParam("token") String token,
-                                   @PathParam("id") int id){
+                                   @PathParam("matiere_id") int matiere_id){
         try {
             Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
             if(authentication == null){
@@ -55,9 +55,9 @@ public class MatiereResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            Matiere matiere = BDD_Matiere.getById(id);
+            Matiere matiere = BDD_Matiere.getById(matiere_id);
             if (matiere == null){
-                String json = new ResponseObject("error", "NEXTURL", "Etudiant with id:"+id+" not found").toJSON();
+                String json = new ResponseObject("error", "NEXTURL", "Etudiant with id:"+matiere_id+" not found").toJSON();
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
             }
             String json = new Gson().toJson(matiere);
@@ -100,11 +100,11 @@ public class MatiereResource {
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/{matiere_id}")
     @Consumes("application/json")
     @Produces("application/json")
     public Response updateMatiere( @PathParam("token") String token,
-                                   @PathParam("id") int id,
+                                   @PathParam("matiere_id") int matiere_id,
                                  String data){
         try {
             Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
@@ -132,11 +132,11 @@ public class MatiereResource {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/{matiere_id}")
     @Consumes("application/json")
     @Produces("application/json")
     public Response deleteMatiere(@PathParam("token") String token,
-                                 @PathParam("id") int id){
+                                 @PathParam("matiere_id") int matiere_id){
         try {
             Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
             if(authentication == null){
@@ -146,7 +146,7 @@ public class MatiereResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            if(BDD_Matiere.delete(id)){
+            if(BDD_Matiere.delete(matiere_id)){
                 String json = new ResponseObject("success", "nextURL",  "Groupe has been deleted with succes").toJSON();
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {

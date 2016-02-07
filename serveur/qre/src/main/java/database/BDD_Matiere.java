@@ -20,7 +20,6 @@ public class BDD_Matiere {
 
         ArrayList<Matiere> matiereList = new ArrayList<Matiere>();
         PreparedStatement stmt = connection.prepareStatement(query);
-        stmt.setString(1, name_table);
         ResultSet rs = stmt.executeQuery();
 
         while(rs.next()) {

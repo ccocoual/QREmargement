@@ -1,29 +1,15 @@
 package model;
 
-import java.sql.Date;
-
 public class Etudiant {
     private int id;
     private String nom;
     private String prenom;
     private String email;
-    private Date date_naiss;
     private String num_etu;
-    private int groupe_id;
-    private int classe_id;
+    private Groupe groupe;
+    private Classe classe;
 
     public Etudiant() {}
-
-    public Etudiant(int id, String nom, String prenom, String email, String num_etu, int groupe_id, int classe_id) {
-        super();
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.email = email;
-        this.num_etu = num_etu;
-        this.groupe_id = groupe_id;
-        this.classe_id = classe_id;
-    }
 
     public int getId() {
         return id;
@@ -65,20 +51,20 @@ public class Etudiant {
         this.num_etu = num_etu;
     }
 
-    public int getGroupe_id() {
-        return groupe_id;
+    public Groupe getGroupe() {
+        return groupe;
     }
 
-    public void setGroupe_id(int groupe_id) {
-        this.groupe_id = groupe_id;
+    public void setGroupe(Groupe groupe) {
+        this.groupe = groupe;
     }
 
-    public int getClasse_id() {
-        return classe_id;
+    public Classe getClasse() {
+        return classe;
     }
 
-    public void setClasse_id(int classe_id) {
-        this.classe_id = classe_id;
+    public void setClasse(Classe classe) {
+        this.classe = classe;
     }
 
     @Override
@@ -87,10 +73,10 @@ public class Etudiant {
                 + ", nom=" + nom
                 + ", prenom=" + prenom
                 + ", email=" + email
-                + ", date_naiss=" + date_naiss
                 + ", num_etu=" + nom
-                + ", groupe_id=" + groupe_id
-                + ", classe_id=" + classe_id + "]";
+                + ", groupe=\n\t" + groupe.toString()
+                + ", classe_id=\n\t" + classe.toString()
+                + "]";
     }
 
 }
