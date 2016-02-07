@@ -1,15 +1,15 @@
 package ldap;
 
-import java.util.List;
-import javax.naming.Name;
-import javax.naming.directory.Attributes;
-
 import org.springframework.ldap.core.AttributesMapper;
 import org.springframework.ldap.core.DistinguishedName;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.filter.AndFilter;
 import org.springframework.ldap.filter.EqualsFilter;
 import org.springframework.ldap.filter.LikeFilter;
+
+import javax.naming.Name;
+import javax.naming.directory.Attributes;
+import java.util.List;
 
 public class PersonDao {
     private LdapTemplate ldapTemplate;

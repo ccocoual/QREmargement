@@ -6,7 +6,6 @@ package com.qre;
 
 import com.google.gson.Gson;
 import database.BDD_Authentication;
-import database.BDD_Etudiant;
 import database.BDD_Groupe;
 import model.Authentication;
 import model.Etudiant;
@@ -43,10 +42,10 @@ public class GroupeResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/{groupe_id}")
     @Produces("application/json")
     public Response getGroupeById(@PathParam("token") String token,
-                                  @PathParam("id") int id){
+                                  @PathParam("groupe_id") int groupe_id){
         try {
             Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
             if(authentication == null){
@@ -54,9 +53,9 @@ public class GroupeResource {
                 return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
             }
 
-            Groupe groupe = BDD_Groupe.getById(id);
+            Groupe groupe = BDD_Groupe.getById(groupe_id);
             if (groupe == null){
-                String json = new ResponseObject("error", "NEXTURL", "Classe with id:"+id+" not found").toJSON();
+                String json = new ResponseObject("error", "NEXTURL", "Classe with id:"+groupe_id+" not found").toJSON();
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
             }
             String json = new Gson().toJson(groupe);
@@ -69,10 +68,10 @@ public class GroupeResource {
     }
 
     @GET
-    @Path("/{id}/etudiants")
+    @Path("/{groupe_id}/etudiants")
     @Produces("application/json")
     public Response getEtudiantsByGroupe(@PathParam("token") String token,
-                                         @PathParam("id") int id){
+                                         @PathParam("groupe_id") int groupe_id){
         try {
             Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
             if(authentication == null){
@@ -82,7 +81,7 @@ public class GroupeResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            ArrayList<Etudiant> etudiants = BDD_Etudiant.getByGroupeId(id);
+            ArrayList<Etudiant> etudiants = BDD_Groupe.getById(groupe_id).getEtudiants();
             String json = new Gson().toJson(etudiants);
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
@@ -123,11 +122,11 @@ public class GroupeResource {
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/{groupe_id}")
     @Consumes("application/json")
     @Produces("application/json")
     public Response updateGroupe(@PathParam("token") String token,
-                                 @PathParam("id") int id,
+                                 @PathParam("groupe_id") int groupe_id,
                                  String data){
         try {
             Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
@@ -155,11 +154,11 @@ public class GroupeResource {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/{groupe_id}")
     @Consumes("application/json")
     @Produces("application/json")
     public Response deleteGroupe(@PathParam("token") String token,
-                                 @PathParam("id") int id){
+                                 @PathParam("groupe_id") int groupe_id){
         try {
             Authentication authentication = BDD_Authentication.isValidTokenAndUpdateIfTrue(token);
             if(authentication == null){
@@ -169,7 +168,7 @@ public class GroupeResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            if(BDD_Groupe.delete(id)){
+            if(BDD_Groupe.delete(groupe_id)){
                 String json = new ResponseObject("success", "nextURL",  "Groupe has been deleted with succes").toJSON();
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {

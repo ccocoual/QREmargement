@@ -1,7 +1,6 @@
 package database;
 
 import model.Authentication;
-import model.Emargement;
 
 import java.sql.*;
 import java.util.Calendar;

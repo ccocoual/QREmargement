@@ -3,23 +3,22 @@ package model;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Emargement {
     private int id;
     private Timestamp date;
     private String type_cours;
-    private String libelle_matiere;
-    private int matiere_id;
-    private int professeur_id;
+    private Matiere matiere;
+    private Professeur professeur;
     private ArrayList<Groupe> groupes;
+    private ArrayList<Signature> signatures;
 
     public enum Type_cours {
         CM, TD, TP
     }
 
-    public Emargement() {
-        groupes = new ArrayList<Groupe>();
-    }
+    public Emargement() { }
 
     public int getId() {
         return id;
@@ -43,28 +42,20 @@ public class Emargement {
         this.type_cours = type_cours.toString();
     }
 
-    public String getLibelle_matiere() {
-        return libelle_matiere;
+    public Matiere getMatiere() {
+        return matiere;
     }
 
-    public void setLibelle_matiere(String libelle_matiere) {
-        this.libelle_matiere = libelle_matiere;
+    public void setMatiere(Matiere matiere) {
+        this.matiere = matiere;
     }
 
-    public int getMatiere_id() {
-        return matiere_id;
+    public Professeur getProfesseur() {
+        return professeur;
     }
 
-    public void setMatiere_id(int matiere_id) {
-        this.matiere_id = matiere_id;
-    }
-
-    public int getProfesseur_id() {
-        return professeur_id;
-    }
-
-    public void setProfesseur_id(int professeur_id) {
-        this.professeur_id = professeur_id;
+    public void setProfesseur(Professeur professeur) {
+        this.professeur = professeur;
     }
 
     public void setGroupes(ArrayList<Groupe> groupes){
@@ -76,7 +67,25 @@ public class Emargement {
     }
 
     public void addGroupe(Groupe groupe){
+        if(groupes == null) groupes = new ArrayList<Groupe>();
         groupes.add(groupe);
+    }
+
+    public ArrayList<Signature> getSignatures() {
+        return signatures;
+    }
+
+    public void setSignatures(ArrayList<Signature> signatures) {
+        this.signatures = signatures;
+    }
+
+    public void addSignature(Signature signature){
+        if(signatures == null) signatures = new ArrayList<Signature>();
+        signatures.add(signature);
+    }
+
+    public boolean containsEmargement(final List<Emargement> list){
+        return list.stream().filter(o -> String.valueOf(o.getId()).equals(String.valueOf(this.id))).findFirst().isPresent();
     }
 
     @Override
@@ -84,11 +93,15 @@ public class Emargement {
         String str = "Emargement [id=" + id
                 + ", date=" + date
                 + ", type_cours=" + type_cours
-                + ", matiere_id=" + matiere_id
-                + ", professeur_id=" + professeur_id
+                + ", matiere=\n\t" + matiere.toString()
+                + ", professeur=\n\t" + professeur.toString()
                 + ", groupes= \n";
         for(Groupe groupe : groupes){
             str += "\t"+groupe.toString()+"\n";
+        }
+        str += ", signatures= \n";
+        for(Signature signature : signatures){
+            str += "\t"+signature.toString()+"\n";
         }
         str += "]";
         return str;

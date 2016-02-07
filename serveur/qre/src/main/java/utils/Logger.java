@@ -1,14 +1,10 @@
 package utils;
 
-import java.io.*;
+import database.Database;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import database.Database;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 
 /**

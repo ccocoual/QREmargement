@@ -15,7 +15,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.*;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 @Path("/api")
@@ -23,14 +22,19 @@ public class APIResource {
 
     @GET
     @Produces({MediaType.TEXT_HTML})
-    public InputStream api() throws FileNotFoundException {
-        return new FileInputStream(new File(getClass().getClassLoader().getResource("api.html").getFile()));
+    public InputStream api(){
+        try {
+            return new FileInputStream(new File(getClass().getClassLoader().getResource("api.html").getFile()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @GET
     @Path("/logs")
     @Produces({MediaType.TEXT_HTML})
-    public String logs() throws FileNotFoundException {
+    public String logs(){
 
         Document doc = null;
         try {
@@ -45,23 +49,30 @@ public class APIResource {
             for (Logger.Log log : logs) {
                 Element tr = tbody.appendElement("tr").addClass(log.getType_log());
 
-                Element tdType = tr.appendElement("td").addClass("type").text(log.getType_log());
-                Element tdDate = tr.appendElement("td").addClass("date").text(log.getDate().toString());
-                Element tdMessage = tr.appendElement("td").addClass("message").text(log.getMessage());
+                tr.appendElement("td").addClass("type").text(log.getType_log());
+                tr.appendElement("td").addClass("date").text(log.getDate().toString());
+                tr.appendElement("td").addClass("message").text(log.getMessage());
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return doc.html();
+        if (doc != null) {
+            return doc.html();
+        }
+
+        return null;
     }
 
     @GET
     @Path("/models")
     @Produces({MediaType.TEXT_HTML})
-    public InputStream model() throws FileNotFoundException {
-        return new FileInputStream(new File(getClass().getClassLoader().getResource("models.html").getFile()));
+    public InputStream model(){
+        try {
+            return new FileInputStream(new File(getClass().getClassLoader().getResource("models.html").getFile()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

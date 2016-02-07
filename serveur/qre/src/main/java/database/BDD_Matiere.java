@@ -20,14 +20,12 @@ public class BDD_Matiere {
 
         ArrayList<Matiere> matiereList = new ArrayList<Matiere>();
         PreparedStatement stmt = connection.prepareStatement(query);
-        stmt.setString(1, name_table);
         ResultSet rs = stmt.executeQuery();
 
         while(rs.next()) {
             Matiere matiere = new Matiere();
             matiere.setId(rs.getInt("id"));
             matiere.setLibelle(rs.getString("libelle"));
-            matiere.setId(rs.getInt("classe_id"));
             matiereList.add(matiere);
         }
 

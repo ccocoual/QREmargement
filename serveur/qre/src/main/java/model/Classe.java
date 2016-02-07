@@ -1,16 +1,13 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Classe {
     private int id;
     private String libelle;
+    private ArrayList<Groupe> groupes;
 
-    public Classe() {}
-
-    public Classe(int id, String libelle) {
-        super();
-        this.id = id;
-        this.libelle = libelle;
-    }
+    public Classe() { }
 
     public int getId() {
         return id;
@@ -28,10 +25,30 @@ public class Classe {
         this.libelle = libelle;
     }
 
+    public void setGroupes(ArrayList<Groupe> groupes){
+        this.groupes = groupes;
+    }
+
+    public ArrayList<Groupe> getGroupes(){
+        return groupes;
+    }
+
+    public void addGroupe(Groupe groupe){
+        if(groupes == null) groupes = new ArrayList<Groupe>();
+        groupes.add(groupe);
+    }
+
     @Override
     public String toString() {
-        return "Classe [id=" + id
-                + ", libelle=" + libelle + "]";
+        String str = "Classe [id=" + id
+            + ", libelle=" + libelle
+            + ", groupes= \n";
+        for(Groupe groupe : groupes){
+            str += "\t"+groupe.toString()+"\n";
+        }
+        str += "]";
+
+        return str;
     }
 
 }

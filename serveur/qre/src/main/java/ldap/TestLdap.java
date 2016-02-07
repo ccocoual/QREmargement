@@ -1,8 +1,9 @@
 package ldap;
 
-import java.util.List;
 import org.springframework.ldap.core.ContextSource;
 import org.springframework.ldap.core.LdapTemplate;
+
+import java.util.List;
 public class TestLdap {
     /** Retrieve a Kurt Person from ldap server and display Kurt in
      Standard Out */

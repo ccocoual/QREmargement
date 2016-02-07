@@ -1,17 +1,14 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Groupe {
     private int id;
     private String libelle;
-    private int classe_id;
+    private Classe classe;
+    private ArrayList<Etudiant> etudiants;
 
-    public Groupe() {}
-
-    public Groupe(int id, String libelle, int classe_id) {
-        super();
-        this.id = id;
-        this.libelle = libelle;
-        this.classe_id = classe_id;
+    public Groupe(){
     }
 
     public int getId() {
@@ -30,19 +27,38 @@ public class Groupe {
         this.libelle = libelle;
     }
 
-    public int getClasse_id() {
-        return classe_id;
+    public Classe getClasse() {
+        return classe;
     }
 
-    public void setClasse_id(int classe_id) {
-        this.classe_id = classe_id;
+    public void setClasse(Classe classe) {
+        this.classe = classe;
+    }
+
+    public void setEtudiants(ArrayList<Etudiant> etudiants){
+        this.etudiants = etudiants;
+    }
+
+    public ArrayList<Etudiant> getEtudiants(){
+        return etudiants;
+    }
+
+    public void addEtudiant(Etudiant etudiant){
+        if(etudiants == null) etudiants = new ArrayList<Etudiant>();
+        etudiants.add(etudiant);
     }
 
     @Override
     public String toString() {
-        return "Groupe [id=" + id
+        String str = "Groupe [id=" + id
                 + ", libelle=" + libelle
-                + ", classe_id=" + classe_id + "]";
+                + ", classe=\n\t" + classe.toString()
+                + ", etudiants=";
+        for(Etudiant etudiant : etudiants){
+            str += "\t"+etudiant.toString()+"\n";
+        }
+        str += "]";
+        return str;
     }
 
 }

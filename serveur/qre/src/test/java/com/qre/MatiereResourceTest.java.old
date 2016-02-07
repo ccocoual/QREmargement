@@ -1,7 +1,6 @@
 package com.qre;
 
 import com.google.gson.Gson;
-import model.Classe;
 import model.Matiere;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
