@@ -3,10 +3,10 @@
 
     qrApp.controller('HomeCtrl', HomeCtrl);
 
-    HomeCtrl.$inject = ['RESTURL'];
+    HomeCtrl.$inject = ['WEBAPPURL'];
 
-    function HomeCtrl(RESTURL) {
+    function HomeCtrl(WEBAPPURL) {
         var vm = this;
-        vm.authenticationUrl = "http://localhost:8888/client/#/authentification/etudiant";
+        vm.authenticationUrl = WEBAPPURL+"authentification/etudiant";
     }
 })();

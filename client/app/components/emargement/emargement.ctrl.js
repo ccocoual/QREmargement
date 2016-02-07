@@ -278,7 +278,7 @@
             if($state.current.name == "emargement.actual") {
                 vm.getSignaturesByEmargementId();
             }
-        }, 1000, 1);
+        }, 1000);
 
     }
 })();
