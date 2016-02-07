@@ -7,6 +7,6 @@
 
     function HomeCtrl(RESTURL) {
         var vm = this;
-        vm.authenticationUrl = RESTURL + "authentification/etudiant";
+        vm.authenticationUrl = "http://localhost:8888/client/#/authentification/etudiant";
     }
 })();

@@ -16,6 +16,12 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             controller: 'AuthCtrl',
             controllerAs: 'auth',
             templateUrl: './app/shared/authentication/auth.form.tpl.html'
+        })
+        .state('auth_success', {
+            url: '/authentification/succes',
+            controller: 'AuthCtrl',
+            controllerAs: 'auth',
+            templateUrl: './app/shared/authentication/auth.ok.tpl.html'
         });
     
     //Routes pour les vues relatives aux cours
