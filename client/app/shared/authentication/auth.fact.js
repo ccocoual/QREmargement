@@ -26,7 +26,12 @@
 
             function getComplete(response) {
                 console.log('POST authentication succeed');
-                $cookies.put('qre_cookie', response.data.id);
+                if (response.data.id != undefined) {     
+                    $cookies.put('qre_cookie', response.data.id);
+                    return response.data;
+                } else  {
+                    console.log(response);
+                }
             }
 
             function getFailed(error) {
