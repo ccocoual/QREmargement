@@ -20,7 +20,7 @@ public class BDD_Etudiant {
     public static ArrayList<Etudiant> getAll() throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "SELECT * FROM "+ etudiant_table+ "e " +
+        String query = "SELECT * FROM "+ etudiant_table+ " e " +
                 "JOIN "+classe_table+" c ON c.id = e.classe_id " +
                 "JOIN "+groupe_table+" g ON g.id = e.groupe_id";
 
@@ -55,7 +55,7 @@ public class BDD_Etudiant {
     public static Etudiant getById(int id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "SELECT * FROM "+ etudiant_table+ "e " +
+        String query = "SELECT * FROM "+ etudiant_table+ " e " +
                 "JOIN "+classe_table+" c ON c.id = e.classe_id " +
                 "JOIN "+groupe_table+" g ON g.id = e.groupe_id " +
                 "WHERE e.id = ?";
@@ -90,7 +90,7 @@ public class BDD_Etudiant {
     public static Etudiant getByNumEtu(String num_etu) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "SELECT * FROM "+ etudiant_table+ "e " +
+        String query = "SELECT * FROM "+ etudiant_table+ " e " +
                 "JOIN "+classe_table+" c ON c.id = e.classe_id " +
                 "JOIN "+groupe_table+" g ON g.id = e.groupe_id " +
                 "WHERE e.num_etu = ?";
