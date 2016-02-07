@@ -3,7 +3,7 @@
 
     qrApp.factory('AuthFactory', AuthFactory);
 
-    function AuthFactory($http, RESTURL) {
+    function AuthFactory($http, RESTURL, $cookies) {
 
         var factory = {
             isConnected: isConnected,
@@ -12,16 +12,21 @@
         return factory;
 
         function isConnected() {
-            // regarder les cookies
+            if ($cookies.get('qre_cookie') != undefined) {
+                $state.go('cnx_student');
+            } else {
+                $state.go('auth_student');
+            }
         }
         
-        function authentication(credentials) { console.log(credentials);
-            return $http.post(RESTURL + 'qrcode/authentication_etudiant', credentials)
+        function authentication(credentials) {
+            return $http.post('http://148.60.11.185:8080/' + 'qrcode/authentication_etudiant', credentials)
                 .then(getComplete)
                 .catch(getFailed);
 
             function getComplete(response) {
                 console.log('POST authentication succeed');
+                $cookies.put('qre_cookie', response.data.id);
             }
 
             function getFailed(error) {
