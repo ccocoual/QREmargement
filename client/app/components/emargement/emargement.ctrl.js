@@ -40,6 +40,7 @@
          * Récupère la feuille d'émargement actuelle grâce à l'id passé en paramètre de l'url
          */
         vm.getEmargementActual = function() {
+            vm.actualEmargement = [];
             EmargementFactory.getEmargement($state.params.emargementid)
                 .then(function(data) {
                     vm.actualEmargement = data;
@@ -51,6 +52,7 @@
          * Récupère la liste des étudiants par groupe
          */
         vm.getStudentsByGroup = function() {
+            vm.actualGroupsStudents = [];
             var gr = $state.params.groupes;
             for(var i=0 ; i<gr.length ; i++){
                 GroupFactory.getStudentsByGroup(gr[i].id)
@@ -71,11 +73,16 @@
          * @return Objet contenant l'identifiant de l'étudiant modifié et le nouvel état de sa signature
          */
         function getStudentSign(newStudList, oldStudList){
-            for(var gr in oldStudList){
-                for(var stud in oldStudList[gr]){
-                    if (stud != "$$hashKey") {
-                        if(oldStudList[gr][stud].id == newStudList[gr][stud].id && oldStudList[gr][stud].isPresent != newStudList[gr][stud].isPresent){
-                            return { "etudiant_id":newStudList[gr][stud].id, "signee":newStudList[gr][stud].isPresent};
+            if(newStudList.length > 0 && oldStudList.length > 0) {
+                for (var gr in oldStudList) {
+                    for (var stud in oldStudList[gr]) {
+                        if (stud != "$$hashKey") {
+                            if (oldStudList[gr][stud].id == newStudList[gr][stud].id && oldStudList[gr][stud].isPresent != newStudList[gr][stud].isPresent) {
+                                return {
+                                    "etudiant_id": newStudList[gr][stud].id,
+                                    "signee": newStudList[gr][stud].isPresent
+                                };
+                            }
                         }
                     }
                 }
@@ -83,10 +90,15 @@
             return null;
         }
 
+        /**
+         * Signature manuelle de la feuille d'émargement
+         * @param oldStudList
+         * @param newStudList
+         */
         vm.setStudentSign = function(oldStudList, newStudList){
             var tmpSignature = getStudentSign(oldStudList, newStudList);
             if(tmpSignature != null){
-                //EmargementFactory.signEmargement($state.params.emargementid, tmpSignature).then(function(data){});
+                EmargementFactory.signEmargement($state.params.emargementid, tmpSignature).then(function(data){});
             }
         }
 
@@ -96,9 +108,9 @@
         vm.getSignaturesByEmargementId = function(){
             EmargementFactory.getSignaturesByEmargementId($state.params.emargementid)
                 .then(function(data){
-                    if(data.length > 0) {
-                        for (var signature in data) {
-                            vm.setActualGroupsStudentsSign(data[signature].etudiant_id, data[signature].signee);
+                    if(data.signatures.length > 0) {
+                        for (var signature in data.signatures) {
+                            vm.setActualGroupsStudentsSign(data.signatures[signature].etudiant.id, data.signatures[signature].signee);
                         }
                     }
                 });
@@ -114,8 +126,10 @@
             if(vm.actualGroupsStudents.length > 0) {
                 for (var gr in vm.actualGroupsStudents) {
                     for (var stud in vm.actualGroupsStudents[gr]) {
-                        if(vm.actualGroupsStudents[gr][stud].id == studentId){
-                            vm.actualGroupsStudents[gr][stud].isPresent = sign;
+                        if(stud != "$$hashKey") {
+                            if (vm.actualGroupsStudents[gr][stud].id == studentId) {
+                                vm.actualGroupsStudents[gr][stud].isPresent = sign;
+                            }
                         }
                     }
                 }
@@ -243,25 +257,28 @@
         //----Appel de fonction à la modification d'une variable
         //----Appel de fonction à intervalle régulier
 
-        if($state.current.name == "emargement.actual") {
-            /**
-             * Vérification de la signature manuelle par le professeur
-             */
-            $scope.$watch(
-                function watchStudents( scope ) {
-                    return( vm.actualGroupsStudents );
-                },
-                function handleStudentsChange( newValue, oldValue ) {
+
+        /**
+         * Vérification de la signature manuelle par le professeur
+         */
+        $scope.$watch(
+            function watchStudents( scope ) {
+                return( vm.actualGroupsStudents );
+            },
+            function handleStudentsChange( newValue, oldValue ) {
+                if($state.current.name == "emargement.actual") {
                     vm.setStudentSign(newValue, oldValue);
                     updateSignaturesChart();
-                },
-                true
-            );
+                }
+            },
+            true
+        );
 
-            $interval(function () {
+        $interval(function () {
+            if($state.current.name == "emargement.actual") {
                 vm.getSignaturesByEmargementId();
-            }, 1000, 1);
-        }
+            }
+        }, 1000, 1);
 
     }
 })();
