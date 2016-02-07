@@ -1,5 +1,14 @@
 <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        Vous êtes maintenant connecté, veuillez scanner le QRCode lié au cours pour valider votre présence.
+    <div class="col-md-6 col-md-offset-3">
+        <h2 class="text-center">Authentification réussie</h2>
+    </div>
+</div>
+<div class="row" ng-init="auth.authenticationSuccess()">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+        <span class="text-center">
+            <i class="fa fa-check-circle fa-5x green-icon"></i>
+        </span><br/>
+        <h3><strong>{{ auth.student.prenom }} {{ auth.student.nom }}</strong> ,vous êtes maintenant connecté.</h3>
+
     </div>
 </div>

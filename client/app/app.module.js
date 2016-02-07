@@ -7,7 +7,9 @@ var qrApp = angular.module("QRApp", [
     "frapontillo.bootstrap-switch",
     "ngCookies",
     "ui.bootstrap",
-    "angularjs-dropdown-multiselect"
+    "angularjs-dropdown-multiselect",
+    "ngAnimate",
+    "toastr"
 ]);
 
 qrApp.config(['ChartJsProvider', function (ChartJsProvider) {
@@ -16,3 +18,31 @@ qrApp.config(['ChartJsProvider', function (ChartJsProvider) {
         responsive: true
     })
 }]);
+
+qrApp.config(function(toastrConfig) {
+    angular.extend(toastrConfig, {
+        allowHtml: false,
+        closeButton: true,
+        closeHtml: '<button>&times;</button>',
+        extendedTimeOut: 1000,
+        iconClasses: {
+            error: 'toast-error',
+            info: 'toast-info',
+            success: 'toast-success',
+            warning: 'toast-warning'
+        },
+        messageClass: 'toast-message',
+        onHidden: null,
+        onShown: null,
+        onTap: null,
+        progressBar: true,
+        tapToDismiss: true,
+        templates: {
+            toast: 'directives/toast/toast.html',
+            progressbar: 'directives/progressbar/progressbar.html'
+        },
+        timeOut: 5000,
+        titleClass: 'toast-title',
+        toastClass: 'toast'
+    });
+});

@@ -3,9 +3,9 @@
 
     qrApp.controller('EmargementCtrl', EmargementCtrl);
 
-    EmargementCtrl.$inject = ['EmargementFactory', 'ClassFactory', 'GroupFactory', 'SubjectFactory', '$state', '$scope', '$interval', '$uibModal', 'WEBAPPURL'];
+    EmargementCtrl.$inject = ['EmargementFactory', 'ClassFactory', 'GroupFactory', 'SubjectFactory', '$state', '$scope', '$interval', '$uibModal', 'toastr', 'WEBAPPURL'];
 
-    function EmargementCtrl(EmargementFactory, ClassFactory, GroupFactory, SubjectFactory, $state, $scope, $interval, $uibModal, WEBAPPURL) {
+    function EmargementCtrl(EmargementFactory, ClassFactory, GroupFactory, SubjectFactory, $state, $scope, $interval, $uibModal, toastr, WEBAPPURL) {
         var vm = this;
         vm.typesCours = ["CM", "TD", "TP"];
         vm.emargements = [];
@@ -64,11 +64,30 @@
         }
 
         /**
-         * Signature manuelle de la feuille d'émargement par un étudiant
-         * @param studentId étudiant ayant signé
+         * PRIVATE
+         * Trouve l'étudiant pour lequel la signature a été modifiée manuellement
+         * @param oldStudList Liste des étudiants avant la modification
+         * @param newStudList Liste des étudiants après la modification
+         * @return Objet contenant l'identifiant de l'étudiant modifié et le nouvel état de sa signature
          */
-        vm.studentSign = function(studentId){
+        function getStudentSign(newStudList, oldStudList){
+            for(var gr in oldStudList){
+                for(var stud in oldStudList[gr]){
+                    if (stud != "$$hashKey") {
+                        if(oldStudList[gr][stud].id == newStudList[gr][stud].id && oldStudList[gr][stud].isPresent != newStudList[gr][stud].isPresent){
+                            return { "etudiant_id":newStudList[gr][stud].id, "signee":newStudList[gr][stud].isPresent};
+                        }
+                    }
+                }
+            }
+            return null;
+        }
 
+        vm.setStudentSign = function(oldStudList, newStudList){
+            var tmpSignature = getStudentSign(oldStudList, newStudList);
+            if(tmpSignature != null){
+                //EmargementFactory.signEmargement($state.params.emargementid, tmpSignature).then(function(data){});
+            }
         }
 
         /**
@@ -79,7 +98,7 @@
                 .then(function(data){
                     if(data.length > 0) {
                         for (var signature in data) {
-                            vm.actualGroupsStudentsSign(data[signature].etudiant_id, data[signature].signee);
+                            vm.setActualGroupsStudentsSign(data[signature].etudiant_id, data[signature].signee);
                         }
                     }
                 });
@@ -91,8 +110,7 @@
          * @param studentId Etudiant à mettre à jour
          * @param sign Etat de la signature
          */
-
-        vm.actualGroupsStudentsSign = function(studentId, sign){
+        vm.setActualGroupsStudentsSign = function(studentId, sign){
             if(vm.actualGroupsStudents.length > 0) {
                 for (var gr in vm.actualGroupsStudents) {
                     for (var stud in vm.actualGroupsStudents[gr]) {
@@ -105,9 +123,28 @@
         }
 
         /**
+         * PRIVATE
+         * Retourne l'état de la signature de l'étudiant passé en paramètre
+         * @param studentId Etudiant dont on veut connaitre l'état de la signature
+         * @returns {boolean|*} Etat de la signature
+         */
+        function getActualGroupsStudentsSign(studentId){
+            if(vm.actualGroupsStudents.length > 0) {
+                for (var gr in vm.actualGroupsStudents) {
+                    for (var stud in vm.actualGroupsStudents[gr]) {
+                        if(vm.actualGroupsStudents[gr][stud].id == studentId){
+                            return vm.actualGroupsStudents[gr][stud].isPresent;
+                        }
+                    }
+                }
+            }
+        }
+
+        /**
+         * PRIVATE
          * Met à jour le graphique des signatures en temps réel
          */
-        vm.updateSignaturesChart = function updateSignaturesChart(){
+        function updateSignaturesChart(){
             var nbSignTrue = 0;
             var nbSignFalse = 0;
             if(vm.actualGroupsStudents.length > 0) {
@@ -201,18 +238,6 @@
             externalIdProp: 'myCustomPropertyForTheObject'
         };
 
-        var ex = [
-            {
-                id: 1,
-                label: "David",
-                gender: 'M'
-            }, {
-                id: 2,
-                label: "Jhon",
-                gender: 'M'
-            }
-        ];
-
 
 
         //----Appel de fonction à la modification d'une variable
@@ -227,15 +252,14 @@
                     return( vm.actualGroupsStudents );
                 },
                 function handleStudentsChange( newValue, oldValue ) {
-                    //TODO Envoyer la requête de signature de l'étudiant pour la feuille
-                    vm.updateSignaturesChart();
+                    vm.setStudentSign(newValue, oldValue);
+                    updateSignaturesChart();
                 },
                 true
             );
 
             $interval(function () {
                 vm.getSignaturesByEmargementId();
-
             }, 1000, 1);
         }
 

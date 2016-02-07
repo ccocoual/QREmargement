@@ -12,7 +12,8 @@
             updateEmargement: updateEmargement,
             removeEmargement: removeEmargement,
             getUrlGenerated: getUrlGenerated,
-            getSignaturesByEmargementId: getSignaturesByEmargementId
+            getSignaturesByEmargementId: getSignaturesByEmargementId,
+            signEmargement: signEmargement
         };
         return factory;
         
@@ -115,6 +116,20 @@
 
             function getFailed(error) {
                 console.log('GET Signatures by emargement id failed' + error.data);
+            }
+        }
+
+        function signEmargement(emargementid, data){
+            return $http.put(RESTURL + 'emargements/' + emargementid + "/signatures", data)
+                .then(getComplete)
+                .catch(getFailed);
+
+            function getComplete(response) {
+                console.log('PUT signature for emargement succeed');
+            }
+
+            function getFailed(error) {
+                console.log('PUT signature for emargement failed' + error.data);
             }
         }
     }

@@ -15,13 +15,19 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/authentification/etudiant',
             controller: 'AuthCtrl',
             controllerAs: 'auth',
-            templateUrl: './app/shared/authentication/auth.form.tpl.html'
+            templateUrl: './app/shared/authentication/auth.form.tpl.html',
+            params:{
+                qrcodeid: null
+            }
         })
         .state('auth_success', {
             url: '/authentification/succes',
             controller: 'AuthCtrl',
             controllerAs: 'auth',
-            templateUrl: './app/shared/authentication/auth.ok.tpl.html'
+            templateUrl: './app/shared/authentication/auth.ok.tpl.html',
+            params:{
+                student: null
+            }
         });
     
     //Routes pour les vues relatives aux cours
@@ -105,13 +111,13 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
         .state('qrcode', {
             url: '/qrcode',
             controller: 'QRCodeCtrl',
-            abstract:true,
             controllerAs: 'qrcode',
             templateUrl: "./app/components/qrcode/qrcode.tpl.html"
         })
         .state('qrcode.flash', {
             url: '/flash/:qrcodeid',
-            templateUrl: "./app/components/qrcode/qrcode.flash.tpl.html"
+            templateUrl: "./app/components/qrcode/qrcode.flash.tpl.html",
+
         });
 
     //Routes pour les vues relatives aux statistiques
