@@ -13,7 +13,8 @@
         vm.authentication = function() {
             return AuthFactory.authentication(vm.credentials)
                 .then(function(data) {
-                    if (data.id != undefined) {
+                    console.log(data);
+                    if (data != undefined) {
                         $cookies.remove('qre_cookie');
                         if($state.params.qrcodeid != null){
                             $state.go('qrcode.flash',{"qrcodeid":$state.params.qrcodeid});
@@ -21,6 +22,8 @@
                         }else{
                             $state.go('auth_success',{"student":data});
                         }
+                    }else{
+                        toastr.error("Une erreur est survenue, veuillez rééssayer ultérieurement")
                     }
                 });
         }
