@@ -1,5 +1,8 @@
 package database;
 
+import model.Classe;
+import model.Etudiant;
+import model.Groupe;
 import model.Professeur;
 import utils.EncrypteString;
 
@@ -46,8 +49,7 @@ public class BDD_Professeur {
         ResultSet rs = stmt.executeQuery();
 
         Professeur professeur = null;
-        if (rs.isBeforeFirst()) {
-            rs.first();
+        while(rs.next()) {
             professeur = new Professeur();
             professeur.setId(rs.getInt("id"));
             professeur.setNom(rs.getString("nom"));

@@ -83,6 +83,7 @@ public class BDD_Groupe {
                 classe.setLibelle(rs.getString("c.libelle"));
                 groupe.setClasse(classe);
             }
+
             Etudiant etudiant = new Etudiant();
             etudiant.setId(rs.getInt("e.id"));
             etudiant.setNom(rs.getString("e.nom"));

@@ -1,8 +1,10 @@
 package com.qre;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import database.BDD_Authentication;
+import database.BDD_Classe;
 import database.BDD_Professeur;
 import model.Professeur;
 import utils.Logger;
@@ -11,6 +13,7 @@ import utils.ResponseObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigInteger;
@@ -21,6 +24,7 @@ public class AuthenticationResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response authenticateProfesseur(String data) {
 
         JsonObject jsonObject =  new JsonParser().parse(data).getAsJsonObject();
@@ -42,7 +46,7 @@ public class AuthenticationResource {
             String token = new BigInteger(130, new SecureRandom()).toString(32);
 
             if(BDD_Authentication.insertOrReplaceToken(token, professeur.getId()))
-                return Response.ok(token).build();
+                return Response.status(Response.Status.OK).entity("[ "+  new Gson().toJson(token) + "," +  new Gson().toJson(professeur) + "]").build();
             else
                 return Response.status(Response.Status.NOT_FOUND).build();
 
