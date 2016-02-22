@@ -46,7 +46,7 @@ public class AuthenticationResource {
             String token = new BigInteger(130, new SecureRandom()).toString(32);
 
             if(BDD_Authentication.insertOrReplaceToken(token, professeur.getId()))
-                return Response.status(Response.Status.OK).entity("[ token: "+  new Gson().toJson(token) + ", professeur: " +  new Gson().toJson(professeur) + "]").build();
+                return Response.status(Response.Status.OK).entity("[ "+  new Gson().toJson(token) + "," +  new Gson().toJson(professeur) + "]").build();
             else
                 return Response.status(Response.Status.NOT_FOUND).build();
 
