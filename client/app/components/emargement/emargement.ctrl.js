@@ -3,19 +3,19 @@
 
     qrApp.controller('EmargementCtrl', EmargementCtrl);
 
-    EmargementCtrl.$inject = ['EmargementFactory', 'ClassFactory', 'GroupFactory', 'SubjectFactory', '$state', '$scope', '$interval', '$uibModal', 'toastr', 'WEBAPPURL'];
+    EmargementCtrl.$inject = ['EmargementFactory', 'ClassFactory', 'GroupFactory', 'SubjectFactory', 'ProfessorFactory', '$state', '$filter', '$scope', '$interval', '$uibModal', 'toastr', 'WEBAPPURL'];
 
-    function EmargementCtrl(EmargementFactory, ClassFactory, GroupFactory, SubjectFactory, $state, $scope, $interval, $uibModal, toastr, WEBAPPURL) {
+    function EmargementCtrl(EmargementFactory, ClassFactory, GroupFactory, SubjectFactory, ProfessorFactory, $state, $filter, $scope, $interval, $uibModal, toastr, WEBAPPURL) {
         var vm = this;
         vm.typesCours = ["CM", "TD", "TP"];
         vm.emargements = [];
         vm.subjects = [];
         vm.newEmargement = {};
         vm.newEmargement.date = new Date();
+        vm.newEmargement.groupes = [];
         vm.actualEmargement = [];
         vm.actualGroupsStudents = [];
         vm.qrCodeUrl = "";
-        vm.classes = [];
         vm.classesGroups = [];
         vm.classesGroupsSelected = [];
 
@@ -201,7 +201,17 @@
          * Crée une feuille d'émargement
          */
         vm.createEmargement = function createEmargement(){
+            ProfessorFactory.getProfessor()
+                .then(function (dataprofessor) {
+                    vm.newEmargement.professeur = {};
+                    vm.newEmargement.professeur.id = dataprofessor.id;
+                    console.log(vm.newEmargement);
+                    EmargementFactory.createEmargement(vm.newEmargement).then(function(data){
+                        console.log(data);
+                    })
+                });
 
+            //var tmp = { type_cours: blabla, matiere: {id: X}, professeur: {id : X}, groupes: [ {id : X}, {id : X} ] };
         }
 
         /**
@@ -212,6 +222,7 @@
             return SubjectFactory.getSubjects()
                 .then(function(data) {
                     vm.subjects = data;
+                    console.log(vm.subjects);
                     return vm.subjects;
                 });
         }
@@ -220,38 +231,29 @@
             //Récupération des promotions
             ClassFactory.getClasses()
                 .then(function(dataclasses){
-                    vm.classes = dataclasses;
-                    console.log(vm.classes);
-
-                    //Récupération des groupes pour chaque promotion
-                    for(var cla in vm.classes){
-                        var tmpclassid = vm.classes[cla].id;
-                        console.log(tmpclassid);
-                        GroupFactory.getGroups(vm.classes[cla].id)
-                            .then(function(datagroupes){
-                                var groupes = datagroupes;
-                                for(var gr in groupes){
-                                    var tmp = {};
-                                    tmp.groupid = groupes[gr].id;
-                                    tmp.grouplabel= groupes[gr].libelle;
-                                    tmp.classid = tmpclassid;
-                                    tmp.classlabel = vm.classes[cla].libelle;
-                                    vm.classesGroups.push(tmp);
-                                }
-                            });
+                    var classes = dataclasses;
+                    //Parcours des groupes pour chaque promotion
+                    for(var cla in classes){
+                        var groupes = classes[cla].groupes;
+                        for(var gr in groupes){
+                            var tmp = {};
+                            tmp.id = groupes[gr].id;
+                            tmp.grouplabel= groupes[gr].libelle;
+                            tmp.label = classes[cla].libelle + " - " +groupes[gr].libelle;
+                            tmp.classlabel = classes[cla].libelle;
+                            vm.classesGroups.push(tmp);
+                        }
                     }
                 });
         }
 
+        /**
+         * Paramètres de la directive angular de multiselect
+         */
         vm.multiSelectSettings = {
-            groupByTextProvider: function (groupValue) {
-                return groupValue
-            },
-            displayProp: 'grouplabel',
-            idProp: 'groupid',
-            externalIdProp: 'myCustomPropertyForTheObject'
+            enableSearch: true,
+            scrollable: true
         };
-
 
 
         //----Appel de fonction à la modification d'une variable
