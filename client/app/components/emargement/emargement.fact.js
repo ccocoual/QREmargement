@@ -11,7 +11,7 @@
             createEmargement: createEmargement,
             updateEmargement: updateEmargement,
             removeEmargement: removeEmargement,
-            getUrlGenerated: getUrlGenerated,
+            //getUrlGenerated: getUrlGenerated,
             getSignaturesByEmargementId: getSignaturesByEmargementId,
             signEmargement: signEmargement
         };
@@ -48,7 +48,7 @@
         }  
 
         function createEmargement(emargement) {
-            return $http.post(RESTURL + 'emargement', emargement)
+            return $http.post(RESTURL + 'emargements', emargement)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -89,7 +89,7 @@
             }
         }
         
-        function getUrlGenerated(id) {
+        /**function getUrlGenerated(id) {
             return $http.get(RESTURL + 'emargements/' + id)
                 .then(getComplete)
                 .catch(getFailed);
@@ -102,7 +102,7 @@
             function getFailed(error) {
                 console.log('GET UrlGenerated failed' + error.data);
             }
-        }
+        }*/
 
         function getSignaturesByEmargementId(id){
             return $http.get(RESTURL + 'emargements/' + id + "/signatures")
