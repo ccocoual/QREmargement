@@ -28,7 +28,6 @@
                         <div class="form-group col-md-6" ng-init="emargement.getClassGroupes()">
                             <label for="groupes">Groupes participant au cours</label>
                             <div ng-dropdown-multiselect="" id="groupes" options="emargement.classesGroups" selected-model="emargement.newEmargement.groupes" extra-settings="emargement.multiSelectSettings"></div>
-                            {{emargement.newEmargement}}
                         </div>
                     </div>
                     <button type="button" class="btn btn-success col-md-12" ng-click="emargement.createEmargement()">Créer</button>

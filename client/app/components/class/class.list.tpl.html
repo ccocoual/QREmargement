@@ -10,8 +10,8 @@
                         <th>Libellé</th>
                         <th>Action</th>
                     </thead>
-                    <tbody ng-repeat="cla in class.classes">
-                        <tr>
+                    <tbody>
+                        <tr ng-repeat="cla in class.classes">
                             <td class="col-md-6">{{cla.libelle}}</td>
                             <td class="col-md-6">
                                 <a class="btn btn-small btn-primary" href="#" role="button" ui-sref="class.groups.list({classid: cla.id})"><i class="fa fa-users"></i></a>

@@ -29,9 +29,18 @@
             return EmargementFactory.getEmargements()
                 .then(function(data) {
                     vm.emargements = data;
+                    console.log(data);
                     return vm.emargements;
                 });
         };
+
+        vm.removeEmargement = function(emargementid){
+            EmargementFactory.removeEmargement(emargementid)
+                .then(function(data){
+
+                    vm.getEmargements();
+                });
+        }
 
 
         //----Fonctions liées à une feuille d'émargement
@@ -108,6 +117,7 @@
         vm.getSignaturesByEmargementId = function(){
             EmargementFactory.getSignaturesByEmargementId($state.params.emargementid)
                 .then(function(data){
+                    console.log(data);
                     if(data.signatures.length > 0) {
                         for (var signature in data.signatures) {
                             vm.setActualGroupsStudentsSign(data.signatures[signature].etudiant.id, data.signatures[signature].signee);
@@ -207,7 +217,9 @@
                     vm.newEmargement.professeur.id = dataprofessor.id;
                     console.log(vm.newEmargement);
                     EmargementFactory.createEmargement(vm.newEmargement).then(function(data){
-                        console.log(data);
+                        toastr.success("La feuille d'émargement a bien été créée !", "Feuille d'émargement pour le " + vm.newEmargement.type_cours);
+                        vm.newEmargement = {};
+                        $state.go("emargement.list");
                     })
                 });
 
@@ -251,6 +263,7 @@
          * Paramètres de la directive angular de multiselect
          */
         vm.multiSelectSettings = {
+            externalIdProp: '',
             enableSearch: true,
             scrollable: true
         };
