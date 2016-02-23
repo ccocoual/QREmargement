@@ -159,7 +159,7 @@ public class BDD_Emargement {
     public static boolean insert(Emargement emargement, int professeur_id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "INSERT INTO "+ emargement_table +" (date, type_cours, matiere_id, professeur_id) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO "+ emargement_table +" (date, type_cours, matiere_id, professeur_id) VALUES (?, ?, ?, ?)";
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setTimestamp(1, emargement.getDate());
