@@ -1,5 +1,8 @@
-CREATE TRIGGER `insert_after_emargement_has_groupe` AFTER INSERT ON `emargement_has_groupe`
- FOR EACH ROW BEGIN
+DELIMITER $$
+
+CREATE TRIGGER insert_after_groupe_has_emargement AFTER INSERT ON groupe_has_emargement 
+FOR EACH ROW 
+BEGIN
 DECLARE done INT DEFAULT 0;
 DECLARE signee INT DEFAULT 0;
 DECLARE etudiant_id INT;
@@ -18,4 +21,7 @@ DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
   UNTIL done END REPEAT;
 
   CLOSE cur1;
-END
+
+END $$
+
+DELIMITER ;

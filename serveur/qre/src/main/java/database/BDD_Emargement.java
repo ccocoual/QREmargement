@@ -138,6 +138,7 @@ public class BDD_Emargement {
                 "WHERE em.id = ? "+
                 "AND em.professeur_id = ?";
 
+
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, emargement_id);
         stmt.setInt(2, professeur_id);
