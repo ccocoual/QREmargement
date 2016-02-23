@@ -13,7 +13,7 @@ public class BDD_Emargement {
     private static String emargement_table = "emargement";
     private static String join_table_groupe = "groupe_has_emargement";
     private static String groupe_table = "groupe";
-    private static String classe_table = "groupe";
+    private static String classe_table = "classe";
     private static String professeur_table = "professeur";
     private static String matiere_table = "matiere";
     private static String signature_table = "signature";
