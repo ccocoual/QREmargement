@@ -4,10 +4,12 @@
     qrApp.factory('AuthFactory', AuthFactory);
 
     function AuthFactory($http, SERVURL, $cookies, localStorageService) {
-
+        console.log("resolve factory");
         var factory = {
             isConnected: isConnected,
-            authentication: authentication
+            authentication: authentication,
+            teacherAuth: teacherAuth,
+            isAuthenticated: isAuthenticated
         };
         return factory;
 
