@@ -4,7 +4,6 @@
     qrApp.factory('AuthFactory', AuthFactory);
 
     function AuthFactory($http, SERVURL, $cookies, localStorageService) {
-        console.log("resolve factory");
         var factory = {
             isConnected: isConnected,
             authentication: authentication,
@@ -52,9 +51,8 @@
         }
         
         function isAuthenticated() {
-            console.log("auth.isAuthenticated");
             return !!localStorageService.get.token;
-        };
+        }
     }
 })();
 
