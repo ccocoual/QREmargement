@@ -10,6 +10,7 @@
         vm.credentials = {};
         vm.student = {};
         vm.currentUser = null;
+        vm.teacher_credentials = {};
 
         vm.authentication = function() {
             return AuthFactory.authentication(vm.credentials)
@@ -36,9 +37,9 @@
         }
         
         // Teacher authentication method
-        // vm.credentials are filled in auth.teacher.form.tpl.html
+        // vm.teacher_credentials are filled in auth.teacher.form.tpl.html
         vm.teacherAuth = function() {
-            return AuthFactory.teacherAuth(vm.credentials)
+            return AuthFactory.teacherAuth(vm.teacher_credentials)
                 .then(function(user) {
                     $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                     vm.setCurrentUser(user);
