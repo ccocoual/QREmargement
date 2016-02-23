@@ -49,7 +49,8 @@
                 });
         }
         
-        function isAuthenticated = function () {
+        function isAuthenticated() {
+            console.log("auth.isAuthenticated");
             return !!localStorageService.get.token;
         };
     }
