@@ -46,3 +46,12 @@ qrApp.config(function(toastrConfig) {
         toastClass: 'toast'
     });
 });
+
+qrApp.config(function ($httpProvider) {
+  $httpProvider.interceptors.push([
+    '$injector',
+    function ($injector) {
+      return $injector.get('AuthInterceptor');
+    }
+  ]);
+});
