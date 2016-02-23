@@ -18,7 +18,7 @@ import java.sql.SQLException;
 
 
 @Path("/{token}/matieres")
-public class MatiereResource {
+public class MatiereResource extends OptionsResource {
 
     @GET
     @Produces("application/json")

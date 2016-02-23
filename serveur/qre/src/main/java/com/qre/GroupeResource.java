@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 
 @Path("/{token}/groupes")
-public class GroupeResource {
+public class GroupeResource extends OptionsResource {
 
     @GET
     @Produces("application/json")
