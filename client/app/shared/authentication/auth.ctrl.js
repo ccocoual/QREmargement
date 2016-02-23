@@ -5,10 +5,11 @@
 
     AuthCtrl.$inject = ['AuthFactory', '$state', '$cookies', 'toastr'];
 
-    function AuthCtrl(AuthFactory, $state, $cookies, toastr) {
+    function AuthCtrl(AuthFactory, $state, $cookies, toastr, $rootScope, AUTH_EVENTS) {
         var vm = this;
         vm.credentials = {};
         vm.student = {};
+        vm.currentUser = null;
 
         vm.authentication = function() {
             return AuthFactory.authentication(vm.credentials)
@@ -32,6 +33,22 @@
         vm.authenticationSuccess = function(){
             console.log($state.params.student);
             vm.student = $state.params.student;
+        }
+        
+        // Teacher authentication method
+        // vm.credentials are filled in auth.teacher.form.tpl.html
+        vm.teacherAuth = function() {
+            return AuthFactory.teacherAuth(vm.credentials)
+                .then(function(user) {
+                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    vm.setCurrentUser(user);
+                }, function() {
+                    $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+                });
+        }
+        
+        vm.setCurrentUser = function(user) {
+            vm.currentUser = user;
         }
     }
 })();
