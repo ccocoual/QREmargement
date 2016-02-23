@@ -3,7 +3,7 @@
 
     qrApp.controller('AuthCtrl', AuthCtrl);
 
-    AuthCtrl.$inject = ['AuthFactory', '$state', '$cookies', 'toastr'];
+    AuthCtrl.$inject = ['AuthFactory', '$state', '$cookies', 'toastr', '$rootScope', 'AUTH_EVENTS'];
 
     function AuthCtrl(AuthFactory, $state, $cookies, toastr, $rootScope, AUTH_EVENTS) {
         var vm = this;
