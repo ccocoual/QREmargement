@@ -3,7 +3,7 @@
 
     qrApp.factory('AuthFactory', AuthFactory);
 
-    function AuthFactory($http, RESTURL, $cookies) {
+    function AuthFactory($http, SERVURL, $cookies) {
 
         var factory = {
             isConnected: isConnected,
@@ -20,7 +20,7 @@
         }
         
         function authentication(credentials) {
-            return $http.post('http://148.60.11.185:8080/' + 'qrcode/authentication_etudiant', credentials)
+            return $http.post(SERVURL + 'qrcode/authentication_etudiant', credentials)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -37,6 +37,15 @@
             function getFailed(error) {
                 console.log('POST authentication failed.' + error);
             }
+        }
+        
+        function teacherAuth(credentials) {
+            return $http
+                .post(SERVURL + '/authenticateProfesseur', credentials)
+                .then(function (res) {
+                    // local storage
+                return res.data.user;
+            });
         }
     }
 })();
