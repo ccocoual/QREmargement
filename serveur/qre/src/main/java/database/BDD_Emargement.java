@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class BDD_Emargement {
 
     private static String emargement_table = "emargement";
-    private static String join_table_groupe = "emargement_has_groupe";
+    private static String join_table_groupe = "groupe_has_emargement";
     private static String groupe_table = "groupe";
     private static String professeur_table = "professeur";
     private static String matiere_table = "matiere";
