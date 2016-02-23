@@ -26,7 +26,7 @@ import java.util.Calendar;
 
 
 @Path("/{token}/emargements")
-public class EmargementResource extends OptionsResource{
+public class EmargementResource {
 
     @GET
     @Produces("application/json")

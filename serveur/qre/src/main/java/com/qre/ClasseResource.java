@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 
 @Path("/{token}/classes")
-public class ClasseResource extends OptionsResource{
+public class ClasseResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

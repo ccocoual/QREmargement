@@ -18,7 +18,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 
 @Path("/authentication")
-public class AuthenticationResource extends OptionsResource{
+public class AuthenticationResource{
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 
 @Path("/{token}/professeur")
-public class ProfesseurResource extends OptionsResource {
+public class ProfesseurResource {
 
     @GET
     @Produces("application/json")

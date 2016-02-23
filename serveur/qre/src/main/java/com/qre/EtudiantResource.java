@@ -18,7 +18,7 @@ import java.sql.SQLException;
 
 
 @Path("/{token}/etudiants")
-public class EtudiantResource extends OptionsResource {
+public class EtudiantResource {
 
     @GET
     @Produces("application/json")

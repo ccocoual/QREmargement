@@ -20,7 +20,7 @@ import java.util.Calendar;
 
 
 @Path("/qrcode")
-public class QrcodeResource extends OptionsResource {
+public class QrcodeResource {
 
     @POST
     @Path("/authentication_etudiant")
