@@ -1,4 +1,4 @@
-qrApp.config(function($stateProvider, $urlRouterProvider, $rootScope, AuthFactory) {
+qrApp.config(function($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise("/");
 
@@ -8,11 +8,10 @@ qrApp.config(function($stateProvider, $urlRouterProvider, $rootScope, AuthFactor
             controller: 'HomeCtrl',
             controllerAs: 'home',
             templateUrl: './app/components/home/home.tpl.html',
-            resolve: { 
-                isAuthenticated: function(AuthFactory) {
-                    if (!AuthFactory.isAuthenticated()) {
-                        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-                    }
+            resolve: {
+                isAuthenticated: function (AuthFactory) {
+                    console.log("resolve");
+                    return AutyFactory.isAuthenticated();
                 }
             }
         });
