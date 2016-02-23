@@ -9,6 +9,7 @@ import model.Groupe;
 import utils.Logger;
 import utils.ResponseObject;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -18,7 +19,6 @@ import java.util.ArrayList;
 
 @Path("/{token}/classes")
 public class ClasseResource {
-
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

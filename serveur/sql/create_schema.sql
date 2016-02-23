@@ -164,25 +164,14 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `qre`.`emargement_has_groupe`
+-- Table `qre`.`groupe_has_emargement`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `qre`.`emargement_has_groupe` ;
+DROP TABLE IF EXISTS `qre`.`groupe_has_emargement` ;
 
-CREATE TABLE IF NOT EXISTS `qre`.`emargement_has_groupe` (
+CREATE TABLE groupe_has_emargement (
   `groupe_id` INT NOT NULL,
   `emargement_id` INT NOT NULL,
-  PRIMARY KEY (`groupe_id`, `emargement_id`),
-  CONSTRAINT `fk_Groupe_has_Emargement_Groupe1`
-    FOREIGN KEY (`groupe_id`)
-    REFERENCES `qre`.`groupe` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Groupe_has_Emargement_Emargement1`
-    FOREIGN KEY (`emargement_id`)
-    REFERENCES `qre`.`emargement` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  PRIMARY KEY (`groupe_id`, `emargement_id`));
 
 
 -- -----------------------------------------------------

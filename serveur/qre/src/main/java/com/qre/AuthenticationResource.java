@@ -10,17 +10,15 @@ import model.Professeur;
 import utils.Logger;
 import utils.ResponseObject;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.annotation.security.PermitAll;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
 @Path("/authentication")
-public class AuthenticationResource {
+public class AuthenticationResource{
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

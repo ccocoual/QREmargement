@@ -11,8 +11,9 @@ import java.util.ArrayList;
 public class BDD_Emargement {
 
     private static String emargement_table = "emargement";
-    private static String join_table_groupe = "emargement_has_groupe";
+    private static String join_table_groupe = "groupe_has_emargement";
     private static String groupe_table = "groupe";
+    private static String classe_table = "classe";
     private static String professeur_table = "professeur";
     private static String matiere_table = "matiere";
     private static String signature_table = "signature";
@@ -26,6 +27,7 @@ public class BDD_Emargement {
                 "JOIN "+professeur_table+"  p ON p.id = e.professeur_id " +
                 "JOIN "+join_table_groupe+" j ON j.emargement_id = e.id " +
                 "JOIN "+groupe_table+"      g ON j.groupe_id = g.id " +
+                "JOIN "+classe_table+"      c ON g.classe_id = c.id " +
                 "WHERE e.professeur_id= ?";
 
         ArrayList<Emargement> emargementList = new ArrayList<Emargement>();
@@ -57,9 +59,14 @@ public class BDD_Emargement {
                 emargement.setProfesseur(professeur);
             }
 
+            Classe classe = new Classe();
+            classe.setId(rs.getInt("c.id"));
+            classe.setLibelle(rs.getString("c.libelle"));
+
             Groupe groupe = new Groupe();
             groupe.setId(rs.getInt("g.id"));
             groupe.setLibelle(rs.getString("g.libelle"));
+            groupe.setClasse(classe);
             emargement.addGroupe(groupe);
 
             if(rs.isLast()){
@@ -79,6 +86,7 @@ public class BDD_Emargement {
                 "JOIN "+professeur_table+"  p ON p.id = e.professeur_id " +
                 "JOIN "+join_table_groupe+" j ON j.emargement_id = e.id " +
                 "JOIN "+groupe_table+"      g ON j.groupe_id = g.id " +
+                "JOIN "+classe_table+"      c ON g.classe_id = c.id " +
                 "WHERE e.id = ? "+
                 "AND e.professeur_id = ?";
 
@@ -107,9 +115,14 @@ public class BDD_Emargement {
                 emargement.setProfesseur(professeur);
             }
 
+            Classe classe = new Classe();
+            classe.setId(rs.getInt("c.id"));
+            classe.setLibelle(rs.getString("c.libelle"));
+
             Groupe groupe = new Groupe();
             groupe.setId(rs.getInt("g.id"));
             groupe.setLibelle(rs.getString("g.libelle"));
+            groupe.setClasse(classe);
             emargement.addGroupe(groupe);
 
         }
@@ -159,7 +172,7 @@ public class BDD_Emargement {
     public static boolean insert(Emargement emargement, int professeur_id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "INSERT INTO "+ emargement_table +" (date, type_cours, matiere_id, professeur_id) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO "+ emargement_table +" (date, type_cours, matiere_id, professeur_id) VALUES (?, ?, ?, ?)";
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setTimestamp(1, emargement.getDate());
