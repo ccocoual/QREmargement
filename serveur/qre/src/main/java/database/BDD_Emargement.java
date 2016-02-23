@@ -27,7 +27,7 @@ public class BDD_Emargement {
                 "JOIN "+professeur_table+"  p ON p.id = e.professeur_id " +
                 "JOIN "+join_table_groupe+" j ON j.emargement_id = e.id " +
                 "JOIN "+groupe_table+"      g ON j.groupe_id = g.id " +
-                "JOIN "+classe_table+"      c ON g.groupe_id = c.id " +
+                "JOIN "+classe_table+"      c ON g.classe_id = c.id " +
                 "WHERE e.professeur_id= ?";
 
         ArrayList<Emargement> emargementList = new ArrayList<Emargement>();
@@ -86,7 +86,7 @@ public class BDD_Emargement {
                 "JOIN "+professeur_table+"  p ON p.id = e.professeur_id " +
                 "JOIN "+join_table_groupe+" j ON j.emargement_id = e.id " +
                 "JOIN "+groupe_table+"      g ON j.groupe_id = g.id " +
-                "JOIN "+classe_table+"      c ON g.groupe_id = c.id " +
+                "JOIN "+classe_table+"      c ON g.classe_id = c.id " +
                 "WHERE e.id = ? "+
                 "AND e.professeur_id = ?";
 
