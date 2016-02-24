@@ -34,12 +34,31 @@
                 });
         };
 
-        vm.removeEmargement = function(emargementid){
-            EmargementFactory.removeEmargement(emargementid)
-                .then(function(data){
+        vm.removeEmargement = function(emargement){
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'app/shared/modalremoveEmargement/modalremoveEmargement.tpl.html',
+                controller: 'ModalRemoveEmargementCtrl',
+                controllerAs: 'modalremoveEmargement',
+                size: 'md',
+                resolve: {
+                    emargement: function () {
+                        return emargement;
+                    }
+                }
+            });
 
-                    vm.getEmargements();
-                });
+            modalInstance.result.then(function (emar) {
+                EmargementFactory.removeEmargement(emar.id)
+                    .then(function(data){
+
+                        vm.getEmargements();
+                        toastr.success("Le " + emar.type_cours + " de " + emar.matiere.libelle + " du " + emar.date + " a bien été supprimé.", "Vous avez bien supprimé la feuille d'émargement !");
+                    });
+            }, function () {
+                console.log()
+            });
+
         }
 
 
@@ -217,7 +236,7 @@
                     vm.newEmargement.professeur.id = dataprofessor.id;
                     console.log(vm.newEmargement);
                     EmargementFactory.createEmargement(vm.newEmargement).then(function(data){
-                        toastr.success("La feuille d'émargement a bien été créée !", "Feuille d'émargement pour le " + vm.newEmargement.type_cours);
+                        toastr.success("Feuille d'émargement pour le " + vm.newEmargement.type_cours, "La feuille d'émargement a bien été créée !");
                         vm.newEmargement = {};
                         $state.go("emargement.list");
                     })
