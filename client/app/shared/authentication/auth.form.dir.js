@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     
-    qrApp.directive('loginTeacherDialog', function (AUTH_EVENTS) {
+    qrApp.directive('teacherLoginDialog', function (AUTH_EVENTS) {
         return {
             restrict: 'A',
             template: '<div ng-if="visible" ng-include="\'app/shared/authentication/auth.teacher.form.tpl.html\'">',
