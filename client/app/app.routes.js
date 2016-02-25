@@ -9,9 +9,9 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             controllerAs: 'home',
             templateUrl: './app/components/home/home.tpl.html',
             resolve: {
-                isAuthenticated: function (AuthFactory, $rootScope) {
+                isAuthenticated: function (AuthFactory, $rootScope, AUTH_EVENTS) {
                     if(!AuthFactory.isAuthenticated()) {
-                        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+                        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated, []);
                     }
                 }
             }
