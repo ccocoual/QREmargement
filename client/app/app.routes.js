@@ -54,6 +54,13 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/create',
             templateUrl: "./app/components/emargement/emargement.create.tpl.html"
         })
+        .state('emargement.update', {
+            url: '/update',
+            templateUrl: "./app/components/emargement/emargement.update.tpl.html",
+            params:{
+                emargementToUpdate : {array:true}
+            }
+        })
         .state('emargement.actual', {
             url: '/:emargementid/actual?{groupes:json}',
             templateUrl: "./app/components/emargement/emargement.actual.tpl.html",

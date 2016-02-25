@@ -1,35 +1,31 @@
 <div class="row" ng-init="emargement.getEmargements()">
     <div class="col-md-12">
         <div class="box">
-            <div class="box-header"></div>
-            <div class="box-body table-responsive no-padding">
-                <table class="table table-hover text-center">
-                    <thead>
-                        <th>Matière</th>
-                        <th>Type</th>
-                        <th>Professeur</th>
-                        <th>Promotion / Groupe</th>
-                        <th>Date</th>
-                        <th>Action</th>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="emar in emargement.emargements">
-                        <td class="col-md-1">{{emar.matiere.libelle}}</td>
-                        <td class="col-md-1">{{emar.type_cours}}</td>
-                        <td class="col-md-2">{{emar.professeur.prenom}} {{emar.professeur.nom}}</td>
-                        <td class="col-md-3">
-                            <p ng-repeat="gr in emar.groupes">
-                                {{gr.classe.libelle}} - {{gr.libelle}}
-                            </p>
+            <div class="box-header with-border">
+                <h3 class="box-title">Liste des feuilles d'émargement</h3>
+                <div class="box-tools pull-right">
+                    <a type="button" class="btn btn-box-tool" ui-sref="emargement.create"><i class="fa fa-plus-circle"></i></a>
+                </div>
+            </div>
+            <div class="box-body table-responsive">
+                <table ng-table="emargement.emargementsTableParams" class="table table-hover text-center" >
+                    <tr ng-repeat="emar in $data">
+                        <td data-title="'Matière'">{{emar.matiere.libelle}}</td>
+                        <td data-title="'Type'" >{{emar.type_cours}}</td>
+                        <td data-title="'Professeur'" >{{emar.professeur.prenom}} {{emar.professeur.nom}}</td>
+                        <td data-title="'Promotion - Groupe'" >
+                            <span ng-repeat="gr in emar.groupes">
+                                {{gr.classe.libelle}} - {{gr.libelle}}  <strong>{{$last ? ' ' : '/'}}</strong>
+                            </span>
+
                         </td>
-                        <td class="col-md-3">{{emar.date | date : 'dd/MM/yyyy @ HH:mm'}}</td>
-                        <td class="col-md-2">
+                        <td data-title="'Date'" ><strong>{{emar.date | date : 'dd/MM/yyyy @ HH:mm'}}</strong></td>
+                        <td data-title="'Action'" >
                             <a class="btn btn-small btn-primary" href="#" role="button" ui-sref="emargement.actual({emargementid: emar.id, groupes : emar.groupes})"><i class="fa fa-calendar"></i></a>
                             <a class="btn btn-small btn-danger" role="button" ng-click="emargement.removeEmargement(emar)"><i class="fa fa-trash"></i></a>
-                            <a class="btn btn-small btn-warning" href="#" role="button" ng-click=""><i class="fa fa-pencil-square-o"></i></a>
+                            <a class="btn btn-small btn-warning" href="#" role="button" ui-sref="emargement.update({emargementToUpdate: emar})"><i class="fa fa-pencil-square-o"></i></a>
                         </td>
                     </tr>
-                    </tbody>
                 </table>
             </div>
         </div>

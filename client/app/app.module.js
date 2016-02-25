@@ -10,7 +10,8 @@ var qrApp = angular.module("QRApp", [
     "angularjs-dropdown-multiselect",
     "ngAnimate",
     "toastr",
-    "LocalStorageModule"
+    "LocalStorageModule",
+    "ngTable"
 ]);
 
 qrApp.config(['ChartJsProvider', function (ChartJsProvider) {

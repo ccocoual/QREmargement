@@ -3,9 +3,9 @@
 
     qrApp.controller('EmargementCtrl', EmargementCtrl);
 
-    EmargementCtrl.$inject = ['EmargementFactory', 'ClassFactory', 'GroupFactory', 'SubjectFactory', 'ProfessorFactory', '$state', '$filter', '$scope', '$interval', '$uibModal', 'toastr', 'WEBAPPURL'];
+    EmargementCtrl.$inject = ['EmargementFactory', 'ClassFactory', 'GroupFactory', 'SubjectFactory', 'ProfessorFactory', 'NgTableParams', '$state', '$filter', '$scope', '$interval', '$uibModal', 'toastr', 'WEBAPPURL'];
 
-    function EmargementCtrl(EmargementFactory, ClassFactory, GroupFactory, SubjectFactory, ProfessorFactory, $state, $filter, $scope, $interval, $uibModal, toastr, WEBAPPURL) {
+    function EmargementCtrl(EmargementFactory, ClassFactory, GroupFactory, SubjectFactory, ProfessorFactory, NgTableParams, $state, $filter, $scope, $interval, $uibModal, toastr, WEBAPPURL) {
         var vm = this;
         vm.typesCours = ["CM", "TD", "TP"];
         vm.emargements = [];
@@ -13,11 +13,15 @@
         vm.newEmargement = {};
         vm.newEmargement.date = new Date();
         vm.newEmargement.groupes = [];
+        vm.updatedEmargement = {};
+
         vm.actualEmargement = [];
         vm.actualGroupsStudents = [];
         vm.qrCodeUrl = "";
         vm.classesGroups = [];
         vm.classesGroupsSelected = [];
+        vm.emargementsTableParams = {};
+        vm.actualEmargementTableParams = {};
 
         //----Fonctions liées à la liste de feuilles d'émargement
 
@@ -26,11 +30,25 @@
          * @returns Liste des feuilles d'émargement
          */
         vm.getEmargements = function(){
-            return EmargementFactory.getEmargements()
+            EmargementFactory.getEmargements()
                 .then(function(data) {
                     vm.emargements = data;
-                    console.log(data);
-                    return vm.emargements;
+                    vm.emargementsTableParams = new NgTableParams({
+                        page: 1,            // show first page
+                        count: 15
+
+                    }, {
+                        dataset : vm.emargements,
+                        counts: [],
+                        total: data.length, // length of data
+                        getData: function($defer, params) {
+                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
+                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                            //$scope.reportBillingData = new Date();
+                        }
+                    });
+                    vm.emargementsTableParams.settings().$scope = $scope;
+
                 });
         };
 
@@ -51,16 +69,29 @@
             modalInstance.result.then(function (emar) {
                 EmargementFactory.removeEmargement(emar.id)
                     .then(function(data){
-
                         vm.getEmargements();
                         toastr.success("Le " + emar.type_cours + " de " + emar.matiere.libelle + " du " + emar.date + " a bien été supprimé.", "Vous avez bien supprimé la feuille d'émargement !");
                     });
             }, function () {
-                console.log()
-            });
 
+            });
         }
 
+        /**
+         * Récupère l'émargement à mettre à jour dans les paramètres pour pré-remplir le formulaire
+         */
+        vm.getEmargementUpdate = function(){
+            console.log($state.params.emargementToUpdate);
+            $state.params.emargementToUpdate[0].date = new Date($state.params.emargementToUpdate[0].date);
+            vm.updatedEmargement = $state.params.emargementToUpdate[0];
+        }
+
+        vm.updateEmargement = function(){
+            EmargementFactory.updateEmargement(vm.updatedEmargement)
+                .then(function(dataupdated){
+                    toastr.success("La feuille d'émargement a bien été mise à jour");
+                });
+        }
 
         //----Fonctions liées à une feuille d'émargement
 
@@ -91,6 +122,21 @@
                         vm.actualGroupsStudents.push(datastudents);
                     });
             }
+            vm.actualEmargementTableParams = new NgTableParams({
+                page: 1,            // show first page
+                count: 15
+
+            }, {
+                dataset : vm.actualGroupsStudents,
+                counts: [],
+                total: vm.actualGroupsStudents.length, // length of data
+                getData: function($defer, params) {
+                    var orderedData = params.sorting() ? $filter('orderBy')(vm.actualGroupsStudents, params.orderBy()) : vm.actualGroupsStudents;
+                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                    //$scope.reportBillingData = new Date();
+                }
+            });
+            vm.actualEmargementTableParams.settings().$scope = $scope;
         }
 
         /**
@@ -136,13 +182,13 @@
         vm.getSignaturesByEmargementId = function(){
             EmargementFactory.getSignaturesByEmargementId($state.params.emargementid)
                 .then(function(data){
-                    console.log(data);
                     if(data.signatures.length > 0) {
                         for (var signature in data.signatures) {
                             vm.setActualGroupsStudentsSign(data.signatures[signature].etudiant.id, data.signatures[signature].signee);
                         }
                     }
                 });
+
         }
 
 
@@ -234,7 +280,6 @@
                 .then(function (dataprofessor) {
                     vm.newEmargement.professeur = {};
                     vm.newEmargement.professeur.id = dataprofessor.id;
-                    console.log(vm.newEmargement);
                     EmargementFactory.createEmargement(vm.newEmargement).then(function(data){
                         toastr.success("Feuille d'émargement pour le " + vm.newEmargement.type_cours, "La feuille d'émargement a bien été créée !");
                         vm.newEmargement = {};
@@ -253,7 +298,6 @@
             return SubjectFactory.getSubjects()
                 .then(function(data) {
                     vm.subjects = data;
-                    console.log(vm.subjects);
                     return vm.subjects;
                 });
         }
@@ -286,6 +330,7 @@
             enableSearch: true,
             scrollable: true
         };
+
 
 
         //----Appel de fonction à la modification d'une variable
