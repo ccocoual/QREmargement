@@ -15,7 +15,6 @@
         vm.authentication = function() {
             return AuthFactory.authentication(vm.credentials)
                 .then(function(data) {
-                    console.log(data);
                     if (data != undefined) {
                         $cookies.remove('qre_cookie');
                         $cookies.put('qre_cookie', data.id);
