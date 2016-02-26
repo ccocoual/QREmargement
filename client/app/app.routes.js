@@ -20,10 +20,10 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
 
     $stateProvider
         .state('auth_teacher', {
-            url: '/authentification/enseignant',
+            url: '/auth/enseignant',
             controller: 'AuthCtrl',
             controllerAs: 'auth',
-            templateUrl: '.app/shared/authentication/auth.teacher.form.tpl.html'
+            templateUrl: './app/shared/authentication/auth.teacher.form.tpl.html'
         });
     
     // Student authentication routes
