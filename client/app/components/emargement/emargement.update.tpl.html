@@ -1,0 +1,39 @@
+<div class="row" ng-init="emargement.getEmargementUpdate()">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Mis à jour de la feuille d'émargement</h3>
+            </div>
+            <div class="box-body">
+                <form role="form">
+                    <div class="row">
+                        <div class="form-group col-md-6" ng-init="emargement.getSubjects()">
+                            <label for="matiere">Matière</label>
+                            <select class="form-control" id="matiere" ng-model="emargement.updatedEmargement.matiere.id">
+                                <option ng-repeat="subs in emargement.subjects" value="{{subs.id}}">{{subs.libelle}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="type_cours">Type de cours</label>
+                            <select class="form-control" id="type_cours" ng-model="emargement.updatedEmargement.type_cours" required>
+                                <option ng-repeat="type in emargement.typesCours" value="{{type}}">{{type}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="date-debut">Date de début du cours</label>
+                            <input class="form-control" type="datetime-local" id="date-debut" ng-model="emargement.updatedEmargement.date" placeholder="yyyy-MM-ddTHH:mm:ss" required />
+                        </div>
+                        <div class="form-group col-md-6" ng-init="emargement.getClassGroupes()">
+                            <label for="groupes">Groupes participant au cours</label>
+                            <div ng-dropdown-multiselect="" id="groupes" options="emargement.classesGroups" selected-model="emargement.updatedEmargement.groupes" extra-settings="emargement.multiSelectSettings"></div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success col-md-12" ng-click="emargement.updateEmargement()">Mettre à jour</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
