@@ -1,15 +1,34 @@
 (function () {
 
-qrApp.service('AuthSessionService', function () {
-    this.create = function (current) {
+qrApp.service('AuthSessionService', AuthSessionService);
+    
+function AuthSessionService() {
+    
+    var service = {
+            create: create,
+            destroy: destroy,
+            isConnected: isConnected
+        };
+    return service;
+    
+    var current = null;
+
+    function create(current) {
         this.current = current;
-        return true;
     };
 
-    this.destroy = function () {
+    function destroy() {
         this.current = null;
-        return false;
     };
-})
+
+    function isConnected() {
+        if (this.current == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+}
     
 })();
