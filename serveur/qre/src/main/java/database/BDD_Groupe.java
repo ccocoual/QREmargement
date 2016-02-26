@@ -23,7 +23,7 @@ public class BDD_Groupe {
 
         String query = "SELECT * FROM "+ groupe_table+ " g " +
                 "JOIN "+classe_table+" c ON c.id = g.classe_id " +
-                "JOIN "+etudiant_table+" e ON e.groupe_id = g.id";
+                "LEFT JOIN "+etudiant_table+" e ON e.groupe_id = g.id";
 
         ArrayList<Groupe> groupeList = new ArrayList<Groupe>();
         PreparedStatement stmt = connection.prepareStatement(query);
@@ -65,7 +65,7 @@ public class BDD_Groupe {
 
         String query = "SELECT * FROM "+ groupe_table+ " g " +
                 "JOIN "+classe_table+" c ON c.id = g.classe_id " +
-                "JOIN "+etudiant_table+" e ON e.groupe_id = g.id "+
+                "LEFT JOIN "+etudiant_table+" e ON e.groupe_id = g.id "+
                 "WHERE g.id = ?";
 
         Logger.getInstance().info(query);
