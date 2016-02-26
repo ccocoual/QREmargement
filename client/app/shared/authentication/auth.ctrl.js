@@ -9,7 +9,6 @@
         var vm = this;
         vm.credentials = {};
         vm.student = {};
-        vm.currentUser = null;
         vm.teacher_credentials = {};
 
         vm.authentication = function() {
@@ -40,7 +39,6 @@
         vm.teacherAuth = function() {
             return AuthFactory.teacherAuth(vm.teacher_credentials)
                 .then(function(user) {
-                    console.log(user);
                     AuthSessionService.create(user);
                     $state.go('home');
                 }, function() {
@@ -49,13 +47,10 @@
                 });
         }
         
-        vm.setCurrentUser = function(user) {
-            vm.currentUser = user;
-        }
-        
         vm.teacherLogout = function() {
             AuthSessionService.destroy();
-            return AuthFactory.teacherLogout();
+            AuthFactory.teacherLogout();
+            $state.go("auth_teacher");
         }
     }
 })();
