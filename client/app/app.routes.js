@@ -8,15 +8,25 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             controller: 'HomeCtrl',
             controllerAs: 'home',
             templateUrl: './app/components/home/home.tpl.html',
+            // Check if a teacher is connected, if not broadcast the notAuthenticated event.
             resolve: {
-                isAuthenticated: function (AuthFactory, $rootScope, AUTH_EVENTS) {
-                    if(!AuthFactory.isAuthenticated()) {
-                        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated, []);
-                    }
-                }
+//                isAuthenticated: function (AuthFactory, $rootScope, AUTH_EVENTS) {
+//                    if(!AuthFactory.isAuthenticated()) {
+//                        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+//                    }
+//                }
             }
         });
 
+    $stateProvider
+        .state('auth_teacher', {
+            url: '/authentification/enseignant',
+            controller: 'AuthCtrl',
+            controllerAs: 'auth',
+            templateUrl: '.app/shared/authentication/auth.teacher.form.tpl.html'
+        });
+    
+    // Student authentication routes
     $stateProvider
         .state('auth_student', {
             url: '/authentification/etudiant',
