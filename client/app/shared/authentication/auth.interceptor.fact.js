@@ -3,7 +3,9 @@
 
     qrApp.factory('AuthInterceptor', AuthInterceptor);
 
-    function AuthInterceptor($rootScope, $q, AUTH_EVENTS, $state) {
+    AuthInterceptor.$inject = ['$rootScope', '$q', '$injector', 'AUTH_EVENTS'];
+    
+    function AuthInterceptor($rootScope, $q, AUTH_EVENTS) {
         return {
             responseError: responseError,
             redirectLogin: redirectLogin
@@ -19,7 +21,7 @@
         
         function redirectLogin() {
             $rootScope.$on(AUTH_EVENTS.notAuthenticated, function() {
-                $state.go("auth_teacher");
+                $injector.get('$state').go("auth_teacher");
             })
         }
     }
