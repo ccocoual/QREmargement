@@ -3,7 +3,9 @@
 
     qrApp.factory('AuthFactory', AuthFactory);
 
-    function AuthFactory($http, SERVURL, $cookies, localStorageService, AUTH_EVENTS) {
+    AuthFactory.$inject = ['$http', 'SERVURL', '$cookies', 'localStorageService', 'AUTH_EVENTS', '$rootScope'];
+    
+    function AuthFactory($http, SERVURL, $cookies, localStorageService, AUTH_EVENTS, $rootScope) {
         var factory = {
             isConnected: isConnected,
             authentication: authentication,
