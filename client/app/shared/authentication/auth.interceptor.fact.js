@@ -7,8 +7,7 @@
     
     function AuthInterceptor($rootScope, $q, AUTH_EVENTS) {
         return {
-            responseError: responseError,
-            redirectLogin: redirectLogin
+            responseError: responseError
         }; 
         
         function responseError(response) {
@@ -19,10 +18,10 @@
             return $q.reject(response);
         }
         
-        function redirectLogin() {
-            $rootScope.$on(AUTH_EVENTS.notAuthenticated, function() {
-                $injector.get('$state').go("auth_teacher");
-            })
-        }
+//        function redirectLogin() {
+//            $rootScope.$on(AUTH_EVENTS.notAuthenticated, function() {
+//                $injector.get('$state').go("auth_teacher");
+//            })
+//        }
     }
 })();
