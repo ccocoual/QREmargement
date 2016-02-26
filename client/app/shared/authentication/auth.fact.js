@@ -3,7 +3,7 @@
 
     qrApp.factory('AuthFactory', AuthFactory);
 
-    function AuthFactory($http, SERVURL, $cookies, localStorageService) {
+    function AuthFactory($http, SERVURL, $cookies, localStorageService, AUTH_EVENTS) {
         var factory = {
             isConnected: isConnected,
             authentication: authentication,
@@ -42,10 +42,11 @@
         
         function teacherAuth(credentials) {
             return $http
-                .post(SERVURL + '/authenticateProfesseur', credentials)
+                .post(SERVURL + 'authentication', credentials)
                 .then(function (res) {
                     // local storage
                     localStorageService.set("token", res.data.token);
+                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                     return res.data.professeur;
                 });
         }
