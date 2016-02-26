@@ -5,7 +5,7 @@
 
     AuthCtrl.$inject = ['AuthFactory', '$state', '$cookies', 'toastr', '$rootScope', 'AUTH_EVENTS', 'AuthSessionService'];
 
-    function AuthCtrl(AuthFactory, $state, $cookies, toastr, $rootScope, AUTH_EVENTS) {
+    function AuthCtrl(AuthFactory, $state, $cookies, toastr, $rootScope, AUTH_EVENTS, AuthSessionService) {
         var vm = this;
         vm.credentials = {};
         vm.student = {};
@@ -40,16 +40,21 @@
         vm.teacherAuth = function() {
             return AuthFactory.teacherAuth(vm.teacher_credentials)
                 .then(function(user) {
-                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-                    vm.setCurrentUser(user);
+                    console.log(user);
+                    AuthSessionService.create(user);
                     $state.go('home');
                 }, function() {
+                    // Not implemented
                     $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                 });
         }
         
         vm.setCurrentUser = function(user) {
             vm.currentUser = user;
+        }
+        
+        vm.teacherLogout = function() {
+            AuthSessionService.destroy();
         }
     }
 })();
