@@ -7,7 +7,9 @@ public class Classe {
     private String libelle;
     private ArrayList<Groupe> groupes;
 
-    public Classe() { }
+    public Classe() {
+        groupes = new ArrayList<Groupe>();
+    }
 
     public int getId() {
         return id;
@@ -34,7 +36,6 @@ public class Classe {
     }
 
     public void addGroupe(Groupe groupe){
-        if(groupes == null) groupes = new ArrayList<Groupe>();
         groupes.add(groupe);
     }
 

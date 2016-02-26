@@ -93,8 +93,8 @@ public class BDD_Groupe {
             etudiant.setPrenom(rs.getString("e.prenom"));
             etudiant.setEmail(rs.getString("e.email"));
             etudiant.setNum_etu(rs.getString("e.num_etu"));
-
-            groupe.addEtudiant(etudiant);
+            if (etudiant.getId() != 0)
+                groupe.addEtudiant(etudiant);
         }
 
         return groupe;
