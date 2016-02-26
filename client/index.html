@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="assets/style/main.css">
 </head>
 
-<body ng-controller="AppCtrl" class="hold-transition skin-red sidebar-mini fixed">
+<body ng-controller="AppCtrl as application" class="hold-transition skin-red sidebar-mini fixed">
     <div class="wrapper">
         <navbar></navbar>
         <sidebar></sidebar>
@@ -71,7 +71,6 @@
     <script src="app/shared/authentication/auth.fact.js"></script>
     <script src="app/shared/authentication/auth.interceptor.fact.js"></script>
     <script src="app/shared/authentication/auth.session.service.js"></script>
-    <script src="app/shared/authentication/auth.logout.dir.js"></script>
     
     <!-- Student Component -->
     <script src="app/components/student/student.ctrl.js"></script>
