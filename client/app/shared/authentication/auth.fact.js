@@ -10,7 +10,8 @@
             isConnected: isConnected,
             authentication: authentication,
             teacherAuth: teacherAuth,
-            isAuthenticated: isAuthenticated
+            isAuthenticated: isAuthenticated,
+            teacherLogout: teacherLogout
         };
         return factory;
 
@@ -46,15 +47,19 @@
             return $http
                 .post(SERVURL + 'authentication', credentials)
                 .then(function (res) {
-                    // local storage
-                    localStorageService.set("token", res.data.token);
-                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    // Store the token
+                    console.log(res.data[0]);
+                    localStorageService.set("teacher_token", res.data[0]);
                     return res.data.professeur;
                 });
         }
         
         function isAuthenticated() {
-            return !!localStorageService.get.token;
+            return !!localStorageService.get("teacher_token");
+        }
+        
+        function teacherLogout() {
+            localStorageService.remove("teacher_token");
         }
     }
 })();
