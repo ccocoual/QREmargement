@@ -14,6 +14,15 @@ var qrApp = angular.module("QRApp", [
     "ngTable"
 ]);
 
+qrApp.run(function ($rootScope, AUTH_EVENTS, AuthFactory) {
+    $rootScope.$on('$stateChangeStart', function (event, next) {
+        if (!AuthFactory.isAuthenticated()) {
+            event.preventDefault();
+            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+        }
+    });
+})
+
 qrApp.config(['ChartJsProvider', function (ChartJsProvider) {
     ChartJsProvider.setOptions({
         colours: ['#4abebc', '#f54b50'],
