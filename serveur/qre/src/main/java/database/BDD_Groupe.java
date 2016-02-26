@@ -3,6 +3,7 @@ package database;
 import model.Classe;
 import model.Etudiant;
 import model.Groupe;
+import utils.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,6 +67,8 @@ public class BDD_Groupe {
                 "JOIN "+classe_table+" c ON c.id = g.classe_id " +
                 "JOIN "+etudiant_table+" e ON e.groupe_id = g.id "+
                 "WHERE g.id = ?";
+
+        Logger.getInstance().info(query);
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
