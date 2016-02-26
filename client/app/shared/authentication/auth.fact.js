@@ -48,7 +48,6 @@
                 .post(SERVURL + 'authentication', credentials)
                 .then(function (res) {
                     // Store the token
-                    console.log(res.data[0]);
                     localStorageService.set("teacher_token", res.data[0]);
                     return res.data.professeur;
                 });
