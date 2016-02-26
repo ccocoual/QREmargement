@@ -47,7 +47,7 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             }
         });
     
-    //Routes pour les vues relatives aux cours
+    // Routes pour les vues relatives aux cours.
     $stateProvider
         .state('emargement', {
             name: "Emargement",
@@ -79,7 +79,7 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             }
         });
     
-     //Routes pour les vues relatives aux promotions
+     // Routes pour les vues relatives aux promotions.
     $stateProvider
         .state('class', {
             name: "Classes",
@@ -112,7 +112,7 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: "./app/components/group/group.create.tpl.html"
         });
 
-    //Routes pour les vues relatives aux étudiants
+    // Routes pour les vues relatives aux étudiants
     $stateProvider
         .state('student', {
             url: '/student',
@@ -130,7 +130,7 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: "./app/components/student/student.create.tpl.html"
         });
 
-    //Routes pour la gestion des scans de QRCode
+    // Routes pour la gestion des scans de QRCode
     $stateProvider
         .state('qrcode', {
             url: '/qrcode',
@@ -144,7 +144,7 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
 
         });
 
-    //Routes pour les vues relatives aux statistiques
+    // Routes pour les vues relatives aux statistiques
     $stateProvider
         .state('statistic', {
             url: '/statistic',

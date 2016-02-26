@@ -14,6 +14,7 @@ var qrApp = angular.module("QRApp", [
     "ngTable"
 ]);
 
+// Broadcast notAuthenticated event everytime the state changes and the teacher isn't connected.
 qrApp.run(function ($rootScope, AUTH_EVENTS, AuthFactory) {
     $rootScope.$on('$stateChangeStart', function (event, next) {
         if (!AuthFactory.isAuthenticated()) {
@@ -58,6 +59,7 @@ qrApp.config(function(toastrConfig) {
     });
 });
 
+// Add HTTP and Authentication interceptor.
 qrApp.config(function ($httpProvider) {
   $httpProvider.interceptors.push([
     '$injector',

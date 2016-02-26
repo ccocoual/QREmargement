@@ -58,19 +58,21 @@
             }
         }
         
-        function updateClass(class_) {
-            return $http.put(RESTURL + 'classes', class_)
-                .then(getComplete)
-                .catch(getFailed);
-            
-            function getComplete(response) {
-                console.log('PUT class succeed');
-            }
-            
-            function getFailed(error) {
-                console.log('PUT class failed' + error.data);
-            }
-        }
+// Not yet implemented
+        
+//        function updateClass(class_) {
+//            return $http.put(RESTURL + 'classes', class_)
+//                .then(getComplete)
+//                .catch(getFailed);
+//            
+//            function getComplete(response) {
+//                console.log('PUT class succeed');
+//            }
+//            
+//            function getFailed(error) {
+//                console.log('PUT class failed' + error.data);
+//            }
+//        }
         
         function removeClass(id) {
             return $http.delete(RESTURL + 'classes/' + id)
