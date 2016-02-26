@@ -55,6 +55,7 @@
         
         vm.teacherLogout = function() {
             AuthSessionService.destroy();
+            return AuthFactory.teacherLogout();
         }
     }
 })();
