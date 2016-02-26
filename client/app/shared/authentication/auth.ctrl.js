@@ -3,7 +3,7 @@
 
     qrApp.controller('AuthCtrl', AuthCtrl);
 
-    AuthCtrl.$inject = ['AuthFactory', '$state', '$cookies', 'toastr', '$rootScope', 'AUTH_EVENTS'];
+    AuthCtrl.$inject = ['AuthFactory', '$state', '$cookies', 'toastr', '$rootScope', 'AUTH_EVENTS', 'AuthSessionService'];
 
     function AuthCtrl(AuthFactory, $state, $cookies, toastr, $rootScope, AUTH_EVENTS) {
         var vm = this;
@@ -42,6 +42,7 @@
                 .then(function(user) {
                     $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                     vm.setCurrentUser(user);
+                    $state.go('home');
                 }, function() {
                     $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                 });
