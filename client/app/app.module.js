@@ -15,11 +15,13 @@ var qrApp = angular.module("QRApp", [
 ]);
 
 // Broadcast notAuthenticated event everytime the state changes and the teacher isn't connected.
-qrApp.run(function ($rootScope, AUTH_EVENTS, AuthFactory) {
-    $rootScope.$on('$stateChangeStart', function (event, next) {
+qrApp.run(function ($rootScope, AUTH_EVENTS, AuthFactory, $state) {
+    $rootScope.$on('$stateChangeStart', function (event, next, params, current) {
         if (!AuthFactory.isAuthenticated()) {
-            event.preventDefault();
-            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+            if (next.name != "auth_teacher") {
+                event.preventDefault();
+                $state.go("auth_teacher");
+            }
         }
     });
 })
