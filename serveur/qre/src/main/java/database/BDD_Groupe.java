@@ -3,6 +3,7 @@ package database;
 import model.Classe;
 import model.Etudiant;
 import model.Groupe;
+import utils.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +23,7 @@ public class BDD_Groupe {
 
         String query = "SELECT * FROM "+ groupe_table+ " g " +
                 "JOIN "+classe_table+" c ON c.id = g.classe_id " +
-                "JOIN "+etudiant_table+" e ON e.groupe_id = g.id";
+                "LEFT JOIN "+etudiant_table+" e ON e.groupe_id = g.id";
 
         ArrayList<Groupe> groupeList = new ArrayList<Groupe>();
         PreparedStatement stmt = connection.prepareStatement(query);
@@ -64,8 +65,10 @@ public class BDD_Groupe {
 
         String query = "SELECT * FROM "+ groupe_table+ " g " +
                 "JOIN "+classe_table+" c ON c.id = g.classe_id " +
-                "JOIN "+etudiant_table+" e ON e.groupe_id = g.id "+
+                "LEFT JOIN "+etudiant_table+" e ON e.groupe_id = g.id "+
                 "WHERE g.id = ?";
+
+        Logger.getInstance().info(query);
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
@@ -90,8 +93,8 @@ public class BDD_Groupe {
             etudiant.setPrenom(rs.getString("e.prenom"));
             etudiant.setEmail(rs.getString("e.email"));
             etudiant.setNum_etu(rs.getString("e.num_etu"));
-
-            groupe.addEtudiant(etudiant);
+            if (etudiant.getId() != 0)
+                groupe.addEtudiant(etudiant);
         }
 
         return groupe;

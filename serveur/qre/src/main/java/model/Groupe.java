@@ -9,6 +9,7 @@ public class Groupe {
     private ArrayList<Etudiant> etudiants;
 
     public Groupe(){
+        etudiants = new ArrayList<Etudiant>();
     }
 
     public int getId() {
@@ -44,7 +45,6 @@ public class Groupe {
     }
 
     public void addEtudiant(Etudiant etudiant){
-        if(etudiants == null) etudiants = new ArrayList<Etudiant>();
         etudiants.add(etudiant);
     }
 

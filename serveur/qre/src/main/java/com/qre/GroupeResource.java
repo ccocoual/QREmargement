@@ -55,7 +55,7 @@ public class GroupeResource {
 
             Groupe groupe = BDD_Groupe.getById(groupe_id);
             if (groupe == null){
-                String json = new ResponseObject("error", "NEXTURL", "Classe with id:"+groupe_id+" not found").toJSON();
+                String json = new ResponseObject("error", "NEXTURL", "Groupe with id:"+groupe_id+" not found").toJSON();
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
             }
             String json = new Gson().toJson(groupe);

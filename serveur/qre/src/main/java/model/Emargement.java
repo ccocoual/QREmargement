@@ -18,7 +18,10 @@ public class Emargement {
         CM, TD, TP
     }
 
-    public Emargement() { }
+    public Emargement() {
+        groupes = new ArrayList<Groupe>();
+        signatures = new ArrayList<Signature>();
+    }
 
     public int getId() {
         return id;
@@ -67,7 +70,6 @@ public class Emargement {
     }
 
     public void addGroupe(Groupe groupe){
-        if(groupes == null) groupes = new ArrayList<Groupe>();
         groupes.add(groupe);
     }
 
@@ -80,7 +82,6 @@ public class Emargement {
     }
 
     public void addSignature(Signature signature){
-        if(signatures == null) signatures = new ArrayList<Signature>();
         signatures.add(signature);
     }
 
