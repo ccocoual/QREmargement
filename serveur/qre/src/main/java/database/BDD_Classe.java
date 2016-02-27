@@ -13,14 +13,19 @@ public class BDD_Classe {
 
     private static String classe_table = "classe";
     private static String groupe_table = "groupe";
+    private static String professeur_classe_table = "professeur_has_classe";
 
-    public static ArrayList<Classe> getAll() throws Exception {
+    public static ArrayList<Classe> getAll(int professeur_id) throws Exception {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "SELECT * FROM "+ classe_table +" c JOIN "+ groupe_table +" g ON g.classe_id = c.id";
+        String query = "SELECT * FROM "+ classe_table +" c " +
+                "JOIN "+ groupe_table +" g ON g.classe_id = c.id " +
+                "JOIN "+ professeur_classe_table + " pg ON pg.classe_id = c.id " +
+                "WHERE pg.professeur_id = ?";
 
         ArrayList<Classe> classeList = new ArrayList<Classe>();
         PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setInt(1, professeur_id);
         ResultSet rs = stmt.executeQuery();
 
         Classe last_classe = null;
@@ -46,15 +51,18 @@ public class BDD_Classe {
         return classeList;
     }
 
-    public static Classe getById(int id) throws SQLException {
+    public static Classe getById(int id, int professeur_id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
         String query = "SELECT * FROM "+ classe_table +" c " +
                 "JOIN "+ groupe_table +" g ON g.classe_id = c.id " +
-                "WHERE c.id = ?";
+                "JOIN "+ professeur_classe_table + " pg ON pg.classe_id = c.id " +
+                "WHERE c.id = ? " +
+                "AND pg.professeur_id = ?";
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
+        stmt.setInt(2, professeur_id);
         ResultSet rs = stmt.executeQuery();
 
         Classe classe = null;
@@ -73,7 +81,7 @@ public class BDD_Classe {
         return classe;
     }
 
-    public static boolean insert(Classe classe) throws SQLException {
+    public static boolean insert(Classe classe, int professeur_id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
         String query = "INSERT INTO "+ classe_table +" (libelle) VALUES (?)";
@@ -87,6 +95,14 @@ public class BDD_Classe {
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()){
                 classe.setId(generatedKeys.getInt(1));
+
+                query = "INSERT INTO "+ professeur_classe_table +" (professeur_id, classe_id) VALUES (?, ?)";
+
+                stmt = connection.prepareStatement(query);
+                stmt.setInt(1, professeur_id);
+                stmt.setInt(2, classe.getId());
+                stmt.executeUpdate();
+
             } else {
                 throw new SQLException("Creating classe failed, no ID obtained.");
             }
@@ -117,15 +133,23 @@ public class BDD_Classe {
     public static boolean delete(int id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
-        String query = "DELETE FROM "+ classe_table +" WHERE id = ?";
+        String query = "DELETE FROM "+ professeur_classe_table +" WHERE classe_id = ?";
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
-
         int rowsUpdated = stmt.executeUpdate();
 
         if(rowsUpdated > 0){
-            return true;
+            query = "DELETE FROM "+ classe_table +" WHERE id = ?";
+
+            stmt = connection.prepareStatement(query);
+            stmt.setInt(1, id);
+
+            rowsUpdated = stmt.executeUpdate();
+
+            if(rowsUpdated > 0){
+                return true;
+            }
         }
 
         return false;

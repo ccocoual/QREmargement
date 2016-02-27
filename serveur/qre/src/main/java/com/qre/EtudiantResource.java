@@ -32,7 +32,7 @@ public class EtudiantResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            String json = new Gson().toJson(BDD_Etudiant.getAll());
+            String json = new Gson().toJson(BDD_Etudiant.getAll(professeur_id));
             return Response.status(Response.Status.OK).entity(json).build();
 
         } catch (SQLException e) {
@@ -56,7 +56,7 @@ public class EtudiantResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            Etudiant etudiant = BDD_Etudiant.getById(etudiant_id);
+            Etudiant etudiant = BDD_Etudiant.getById(etudiant_id, professeur_id);
             if (etudiant == null){
                 String json = new ResponseObject("error", "NEXTURL", "Etudiant with id:"+etudiant_id+" not found").toJSON();
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
@@ -84,7 +84,7 @@ public class EtudiantResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            Etudiant etudiant = BDD_Etudiant.getByNumEtu(num_etu);
+            Etudiant etudiant = BDD_Etudiant.getByNumEtu(num_etu, professeur_id);
             if (etudiant == null){
                 String json = new ResponseObject("error", "NEXTURL", "Etudiant with num_etu:"+num_etu+" not found").toJSON();
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
