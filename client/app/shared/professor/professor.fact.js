@@ -3,7 +3,7 @@
 
     qrApp.factory('ProfessorFactory', ProfessorFactory);
 
-    function ProfessorFactory($http, RESTURL) {
+    function ProfessorFactory($http, AuthSessionService) {
 
         var factory = {
             getProfessor: getProfessor
@@ -14,7 +14,7 @@
          * Retourne les informations du professeur actuellement connecté
          */
         function getProfessor() {
-            return $http.get(RESTURL + 'professeur')
+            return $http.get(AuthSessionService.getTeacherURL() + 'professeur')
                 .then(getComplete)
                 .catch(getFailed);
 

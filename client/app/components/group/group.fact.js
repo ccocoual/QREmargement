@@ -3,7 +3,7 @@
 
     qrApp.factory('GroupFactory', GroupFactory);
 
-    function GroupFactory($http, RESTURL) {
+    function GroupFactory($http, AuthSessionService) {
 
         var factory = {
             getGroups: getGroups,
@@ -16,7 +16,7 @@
         return factory;
         
         function getGroups(id) {
-            return $http.get(RESTURL + 'classes/' + id + '/groupes')
+            return $http.get(AuthSessionService.getTeacherURL() + 'classes/' + id + '/groupes')
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -31,7 +31,7 @@
         }
         
         function getGroup(id) {
-            return $http.get(RESTURL + 'groups/' + id)
+            return $http.get(AuthSessionService.getTeacherURL() + 'groups/' + id)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -46,7 +46,7 @@
         }  
 
         function createGroup(group) {
-            return $http.post(RESTURL + 'groups', group)
+            return $http.post(AuthSessionService.getTeacherURL() + 'groups', group)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -60,7 +60,7 @@
         }
         
         function updateGroup(group) {
-            return $http.put(RESTURL + 'groups', group)
+            return $http.put(AuthSessionService.getTeacherURL() + 'groups', group)
                 .then(getComplete)
                 .catch(getFailed);
             
@@ -74,7 +74,7 @@
         }
         
         function removeGroup(id) {
-            return $http.delete(RESTURL + 'groups/' + id)
+            return $http.delete(AuthSessionService.getTeacherURL() + 'groups/' + id)
                 .then(getComplete)
                 .catch(getFailed);
             
@@ -88,7 +88,7 @@
         }
 
         function getStudentsByGroup(id) {
-            return $http.get(RESTURL + 'groupes/' + id + '/etudiants')
+            return $http.get(AuthSessionService.getTeacherURL() + 'groupes/' + id + '/etudiants')
                 .then(getComplete)
                 .catch(getFailed);
 

@@ -3,7 +3,7 @@
 
     qrApp.factory('SubjectFactory', SubjectFactory);
 
-    function SubjectFactory($http, RESTURL) {
+    function SubjectFactory($http, AuthSessionService) {
 
         var factory = {
             getSubjects: getSubjects,
@@ -31,7 +31,7 @@
         }
         
         function getSubject(id) {
-            return $http.get(RESTURL + 'matieres/' + id)
+            return $http.get(AuthSessionService.getTeacherURL() + 'matieres/' + id)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -46,7 +46,7 @@
         }  
 
         function createSubject(subject) {
-            return $http.post(RESTURL + 'matieres', subject)
+            return $http.post(AuthSessionService.getTeacherURL() + 'matieres', subject)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -60,7 +60,7 @@
         }
         
         function updateSubject(subject) {
-            return $http.put(RESTURL + 'matieres', subject)
+            return $http.put(AuthSessionService.getTeacherURL() + 'matieres', subject)
                 .then(getComplete)
                 .catch(getFailed);
             
@@ -74,7 +74,7 @@
         }
         
         function removeSubject(id) {
-            return $http.delete(RESTURL + 'matieres/' + id)
+            return $http.delete(AuthSessionService.getTeacherURL() + 'matieres/' + id)
                 .then(getComplete)
                 .catch(getFailed);
             

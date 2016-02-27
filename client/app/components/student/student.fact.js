@@ -3,7 +3,7 @@
 
     qrApp.factory('StudentFactory', StudentFactory);
 
-    function StudentFactory($http, RESTURL) {
+    function StudentFactory($http, AuthSessionService) {
 
         var factory = {
             getStudents: getStudents,
@@ -15,7 +15,7 @@
         return factory;
 
         function getStudents() {
-            return $http.get(RESTURL + 'etudiants')
+            return $http.get(AuthSessionService.getTeacherURL() + 'etudiants')
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -30,7 +30,7 @@
         }  
         
         function getStudent(id) {
-            return $http.get(RESTURL + 'etudiants/' + id)
+            return $http.get(AuthSessionService.getTeacherURL() + 'etudiants/' + id)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -45,7 +45,7 @@
         }
 
         function createStudent(student) { console.log(student);
-            return $http.post(RESTURL + 'etudiants', student)
+            return $http.post(AuthSessionService.getTeacherURL() + 'etudiants', student)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -59,7 +59,7 @@
         }
         
         function updateStudent(student) {
-            return $http.put(RESTURL + 'etudiants', student)
+            return $http.put(AuthSessionService.getTeacherURL() + 'etudiants', student)
                 .then(getComplete)
                 .catch(getFailed);
             
@@ -73,7 +73,7 @@
         }
         
         function removeStudent(id) {
-            return $http.delete(RESTURL + 'etudiants/' + id)
+            return $http.delete(AuthSessionService.getTeacherURL() + 'etudiants/' + id)
                 .then(getComplete)
                 .catch(getFailed);
             

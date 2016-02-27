@@ -3,7 +3,7 @@
 
     qrApp.factory('ClassFactory', ClassFactory);
 
-    function ClassFactory($http, RESTURL) {
+    function ClassFactory($http, AuthSessionService) {
 
         var factory = {
             getClasses: getClasses,
@@ -14,7 +14,7 @@
         return factory;
         
         function getClasses() {
-            return $http.get(RESTURL + 'classes')
+            return $http.get(AuthSessionService.getTeacherURL() + 'classes')
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -29,7 +29,7 @@
         }
         
         function getClass(id) {
-            return $http.get(RESTURL + 'classes/' + id)
+            return $http.get(AuthSessionService.getTeacherURL() + 'classes/' + id)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -44,7 +44,7 @@
         }  
 
         function createClass(class_) {
-            return $http.post(RESTURL + 'classes', class_)
+            return $http.post(AuthSessionService.getTeacherURL() + 'classes', class_)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -58,7 +58,7 @@
         }
         
         function removeClass(id) {
-            return $http.delete(RESTURL + 'classes/' + id)
+            return $http.delete(AuthSessionService.getTeacherURL() + 'classes/' + id)
                 .then(getComplete)
                 .catch(getFailed);
             

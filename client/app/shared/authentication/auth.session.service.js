@@ -2,14 +2,15 @@
 
 qrApp.service('AuthSessionService', AuthSessionService);
     
-AuthSessionService.$inject = ['localStorageService'];
+AuthSessionService.$inject = ['localStorageService', 'SERVURL'];
     
-function AuthSessionService(localStorageService) {
+function AuthSessionService(localStorageService, SERVURL) {
     
     var service = {
             create: create,
             destroy: destroy,
-            isConnected: isConnected
+            isConnected: isConnected,
+            getTeacherURL: getTeacherURL
         };
     return service;
     
@@ -30,6 +31,10 @@ function AuthSessionService(localStorageService) {
         } else {
             return false;
         }
+    }
+    
+    function getTeacherURL() {
+        return SERVURL + localStorageService.get("teacher_token") + "/";
     }
     
 }

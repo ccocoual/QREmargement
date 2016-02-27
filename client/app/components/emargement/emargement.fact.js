@@ -3,7 +3,7 @@
 
     qrApp.factory('EmargementFactory', EmargementFactory);
 
-    function EmargementFactory($http, RESTURL) {
+    function EmargementFactory($http, AuthSessionService) {
 
         var factory = {
             getEmargements: getEmargements,
@@ -18,7 +18,7 @@
         return factory;
         
         function getEmargements() {
-            return $http.get(RESTURL + 'emargements')
+            return $http.get(AuthSessionService.getTeacherURL() + 'emargements')
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -33,7 +33,7 @@
         }
         
         function getEmargement(id) {
-            return $http.get(RESTURL + 'emargements/' + id)
+            return $http.get(AuthSessionService.getTeacherURL() + 'emargements/' + id)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -48,7 +48,7 @@
         }  
 
         function createEmargement(emargement) {
-            return $http.post(RESTURL + 'emargements', emargement)
+            return $http.post(AuthSessionService.getTeacherURL() + 'emargements', emargement)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -62,7 +62,7 @@
         }
         
         function updateEmargement(emargement) {
-            return $http.put(RESTURL + 'emargements', emargement)
+            return $http.put(AuthSessionService.getTeacherURL() + 'emargements', emargement)
                 .then(getComplete)
                 .catch(getFailed);
             
@@ -76,7 +76,7 @@
         }
         
         function removeEmargement(id) {
-            return $http.delete(RESTURL + 'emargements/' + id)
+            return $http.delete(AuthSessionService.getTeacherURL() + 'emargements/' + id)
                 .then(getComplete)
                 .catch(getFailed);
             
@@ -105,7 +105,7 @@
         }*/
 
         function getSignaturesByEmargementId(id){
-            return $http.get(RESTURL + 'emargements/' + id + "/signatures")
+            return $http.get(AuthSessionService.getTeacherURL() + 'emargements/' + id + "/signatures")
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -120,7 +120,7 @@
         }
 
         function signEmargement(emargementid, data){
-            return $http.put(RESTURL + 'emargements/' + emargementid + "/signatures", data)
+            return $http.put(AuthSessionService.getTeacherURL() + 'emargements/' + emargementid + "/signatures", data)
                 .then(getComplete)
                 .catch(getFailed);
 
