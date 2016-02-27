@@ -17,11 +17,5 @@
             }[response.status], response);
             return $q.reject(response);
         }
-        
-//        function redirectLogin() {
-//            $rootScope.$on(AUTH_EVENTS.notAuthenticated, function() {
-//                $injector.get('$state').go("auth_teacher");
-//            })
-//        }
     }
 })();

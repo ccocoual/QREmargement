@@ -2,7 +2,9 @@
 
 qrApp.service('AuthSessionService', AuthSessionService);
     
-function AuthSessionService() {
+AuthSessionService.$inject = ['localStorageService'];
+    
+function AuthSessionService(localStorageService) {
     
     var service = {
             create: create,
@@ -11,7 +13,7 @@ function AuthSessionService() {
         };
     return service;
     
-    var current = null;
+    
 
     function create(current) {
         this.current = current;
@@ -22,10 +24,11 @@ function AuthSessionService() {
     };
 
     function isConnected() {
-        if (this.current == null) {
-            return false;
-        } else {
+        
+        if(localStorageService.get("teacher_token") != null) { console.log(localStorageService.get("teacher_token"));
             return true;
+        } else {
+            return false;
         }
     }
     

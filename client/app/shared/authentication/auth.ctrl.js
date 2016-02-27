@@ -39,6 +39,7 @@
         vm.teacherAuth = function() {
             return AuthFactory.teacherAuth(vm.teacher_credentials)
                 .then(function(user) {
+                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                     AuthSessionService.create(user);
                     $state.go('home');
                 }, function() {
@@ -50,6 +51,7 @@
         vm.teacherLogout = function() {
             AuthSessionService.destroy();
             AuthFactory.teacherLogout();
+            $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
             $state.go("auth_teacher");
         }
     }

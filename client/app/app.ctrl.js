@@ -3,11 +3,17 @@
 
     qrApp.controller('AppCtrl', AppCtrl);
 
-    AppCtrl.$inject = ['AuthSessionService'];
+    AppCtrl.$inject = ['AuthSessionService', 'AUTH_EVENTS', '$rootScope'];
 
-    function AppCtrl(AuthSessionService) {
+    function AppCtrl(AuthSessionService, AUTH_EVENTS, $rootScope) {
         var vm = this;
         vm.connected = AuthSessionService.isConnected();
-        //vm.connected = true;
+        
+        $rootScope.$on(AUTH_EVENTS.loginSuccess, function(){
+            vm.connected = true;
+        });
+        $rootScope.$on(AUTH_EVENTS.logoutSuccess, function(){
+            vm.connected = false;
+        });
     }
 })();
