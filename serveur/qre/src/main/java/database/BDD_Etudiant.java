@@ -23,7 +23,7 @@ public class BDD_Etudiant {
 
         String query = "SELECT * FROM "+ etudiant_table+ " e " +
                 "JOIN "+classe_table+" c ON c.id = e.classe_id " +
-                "JOIN "+ professeur_classe_table + "pg ON pg.classe_id = c.id " +
+                "JOIN "+ professeur_classe_table + " pg ON pg.classe_id = c.id " +
                 "JOIN "+groupe_table+" g ON g.id = e.groupe_id " +
                 "WHERE pg.professeur_id = ?";
 
@@ -61,7 +61,7 @@ public class BDD_Etudiant {
 
         String query = "SELECT * FROM "+ etudiant_table+ " e " +
                 "JOIN "+classe_table+" c ON c.id = e.classe_id " +
-                "JOIN "+ professeur_classe_table + "pg ON pg.classe_id = c.id " +
+                "JOIN "+ professeur_classe_table + " pg ON pg.classe_id = c.id " +
                 "JOIN "+groupe_table+" g ON g.id = e.groupe_id " +
                 "WHERE e.id = ? " +
                 "AND pg.professeur_id = ?";
@@ -99,7 +99,7 @@ public class BDD_Etudiant {
 
         String query = "SELECT * FROM "+ etudiant_table+ " e " +
                 "JOIN "+classe_table+" c ON c.id = e.classe_id " +
-                "JOIN "+ professeur_classe_table + "pg ON pg.classe_id = c.id " +
+                "JOIN "+ professeur_classe_table + " pg ON pg.classe_id = c.id " +
                 "JOIN "+groupe_table+" g ON g.id = e.groupe_id " +
                 "WHERE e.num_etu = ? " +
                 "AND pg.professeur_id = ?";

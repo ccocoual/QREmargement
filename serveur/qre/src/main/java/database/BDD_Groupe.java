@@ -24,7 +24,7 @@ public class BDD_Groupe {
 
         String query = "SELECT * FROM "+ groupe_table+ " g " +
                 "JOIN "+classe_table+" c ON c.id = g.classe_id " +
-                "JOIN "+ professeur_classe_table + "pg ON pg.classe_id = c.id " +
+                "JOIN "+ professeur_classe_table + " pg ON pg.classe_id = c.id " +
                 "LEFT JOIN "+etudiant_table+" e ON e.groupe_id = g.id " +
                 "WHERE pg.professeur_id = ?";
 
@@ -69,7 +69,7 @@ public class BDD_Groupe {
 
         String query = "SELECT * FROM "+ groupe_table+ " g " +
                 "JOIN "+classe_table+" c ON c.id = g.classe_id " +
-                "JOIN "+ professeur_classe_table + "pg ON pg.classe_id = c.id " +
+                "JOIN "+ professeur_classe_table + " pg ON pg.classe_id = c.id " +
                 "LEFT JOIN "+etudiant_table+" e ON e.groupe_id = g.id "+
                 "WHERE g.id = ? " +
                 "AND pg.professeur_id = ?";

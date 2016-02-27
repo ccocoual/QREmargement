@@ -20,7 +20,7 @@ public class BDD_Classe {
 
         String query = "SELECT * FROM "+ classe_table +" c " +
                 "JOIN "+ groupe_table +" g ON g.classe_id = c.id " +
-                "JOIN "+ professeur_classe_table + "pg ON pg.classe_id = c.id " +
+                "JOIN "+ professeur_classe_table + " pg ON pg.classe_id = c.id " +
                 "WHERE pg.professeur_id = ?";
 
         ArrayList<Classe> classeList = new ArrayList<Classe>();
@@ -56,7 +56,7 @@ public class BDD_Classe {
 
         String query = "SELECT * FROM "+ classe_table +" c " +
                 "JOIN "+ groupe_table +" g ON g.classe_id = c.id " +
-                "JOIN "+ professeur_classe_table + "pg ON pg.classe_id = c.id " +
+                "JOIN "+ professeur_classe_table + " pg ON pg.classe_id = c.id " +
                 "WHERE c.id = ? " +
                 "AND pg.professeur_id = ?";
 
