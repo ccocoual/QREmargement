@@ -32,7 +32,9 @@ public class GroupeResource {
                 return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
             }
 
-            String json = new Gson().toJson(BDD_Groupe.getAll());
+            int professeur_id = authentication.getProfesseur_id();
+
+            String json = new Gson().toJson(BDD_Groupe.getAll(professeur_id));
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {
             Logger.getInstance().err(e.getMessage());
@@ -53,7 +55,9 @@ public class GroupeResource {
                 return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
             }
 
-            Groupe groupe = BDD_Groupe.getById(groupe_id);
+            int professeur_id = authentication.getProfesseur_id();
+
+            Groupe groupe = BDD_Groupe.getById(groupe_id, professeur_id);
             if (groupe == null){
                 String json = new ResponseObject("error", "NEXTURL", "Groupe with id:"+groupe_id+" not found").toJSON();
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
@@ -81,7 +85,7 @@ public class GroupeResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            ArrayList<Etudiant> etudiants = BDD_Groupe.getById(groupe_id).getEtudiants();
+            ArrayList<Etudiant> etudiants = BDD_Groupe.getById(groupe_id, professeur_id).getEtudiants();
             String json = new Gson().toJson(etudiants);
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (SQLException e) {

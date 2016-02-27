@@ -16,13 +16,16 @@ public class BDD_Etudiant {
     private static String etudiant_table = "etudiant";
     private static String classe_table = "classe";
     private static String groupe_table = "groupe";
+    private static String professeur_classe_table = "professeur_has_classe";
 
-    public static ArrayList<Etudiant> getAll() throws SQLException {
+    public static ArrayList<Etudiant> getAll(int professeur_id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
         String query = "SELECT * FROM "+ etudiant_table+ " e " +
                 "JOIN "+classe_table+" c ON c.id = e.classe_id " +
-                "JOIN "+groupe_table+" g ON g.id = e.groupe_id";
+                "JOIN "+ professeur_classe_table + "pg ON pg.classe_id = c.id " +
+                "JOIN "+groupe_table+" g ON g.id = e.groupe_id " +
+                "WHERE pg.professeur_id = ?";
 
         ArrayList<Etudiant> etudiantList = new ArrayList<Etudiant>();
         PreparedStatement stmt = connection.prepareStatement(query);
@@ -52,16 +55,19 @@ public class BDD_Etudiant {
         return etudiantList;
     }
 
-    public static Etudiant getById(int id) throws SQLException {
+    public static Etudiant getById(int id, int professeur_id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
         String query = "SELECT * FROM "+ etudiant_table+ " e " +
                 "JOIN "+classe_table+" c ON c.id = e.classe_id " +
+                "JOIN "+ professeur_classe_table + "pg ON pg.classe_id = c.id " +
                 "JOIN "+groupe_table+" g ON g.id = e.groupe_id " +
-                "WHERE e.id = ?";
+                "WHERE e.id = ? " +
+                "AND pg.professeur_id = ?";
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
+        stmt.setInt(2, professeur_id);
         ResultSet rs = stmt.executeQuery();
 
         Etudiant etudiant = null;
@@ -87,16 +93,19 @@ public class BDD_Etudiant {
         return etudiant;
     }
 
-    public static Etudiant getByNumEtu(String num_etu) throws SQLException {
+    public static Etudiant getByNumEtu(String num_etu, int professeur_id) throws SQLException {
         Connection connection = Database.getDbCon().conn;
 
         String query = "SELECT * FROM "+ etudiant_table+ " e " +
                 "JOIN "+classe_table+" c ON c.id = e.classe_id " +
+                "JOIN "+ professeur_classe_table + "pg ON pg.classe_id = c.id " +
                 "JOIN "+groupe_table+" g ON g.id = e.groupe_id " +
-                "WHERE e.num_etu = ?";
+                "WHERE e.num_etu = ? " +
+                "AND pg.professeur_id = ?";
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, num_etu);
+        stmt.setInt(2, professeur_id);
 
         ResultSet rs = stmt.executeQuery();
 

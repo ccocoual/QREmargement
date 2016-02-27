@@ -32,7 +32,7 @@ public class ClasseResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            String json = new Gson().toJson(BDD_Classe.getAll());
+            String json = new Gson().toJson(BDD_Classe.getAll(professeur_id));
             return Response.status(Response.Status.OK).entity(json).build();
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,7 +56,7 @@ public class ClasseResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            Classe classe = BDD_Classe.getById(classe_id);
+            Classe classe = BDD_Classe.getById(classe_id, professeur_id);
             if (classe == null){
                 String json = new ResponseObject("error", "NEXTURL", "Classe with id:"+classe_id+" not found").toJSON();
                 return Response.status(Response.Status.NOT_FOUND).entity(json).build();
@@ -85,7 +85,7 @@ public class ClasseResource {
 
             int professeur_id = authentication.getProfesseur_id();
 
-            ArrayList<Groupe> groupes = BDD_Classe.getById(classe_id).getGroupes();
+            ArrayList<Groupe> groupes = BDD_Classe.getById(classe_id, professeur_id).getGroupes();
             String json = new Gson().toJson(groupes);
 
             return Response.status(Response.Status.OK).entity(json).build();
@@ -111,7 +111,7 @@ public class ClasseResource {
 
             Classe classe = new Gson().fromJson(data, Classe.class);
 
-            if(BDD_Classe.insert(classe)){
+            if(BDD_Classe.insert(classe, professeur_id)){
                 String json = new Gson().toJson(classe);
                 return Response.status(Response.Status.OK).entity(json).build();
             } else {
