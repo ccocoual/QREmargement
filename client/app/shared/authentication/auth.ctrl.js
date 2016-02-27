@@ -47,8 +47,9 @@
                     $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                 });
         }
-        
+    
         vm.teacherLogout = function() {
+            // Destroy the user storage in the AuthSessionService
             AuthSessionService.destroy();
             AuthFactory.teacherLogout();
             $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
