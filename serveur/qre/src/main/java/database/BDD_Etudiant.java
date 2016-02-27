@@ -29,6 +29,7 @@ public class BDD_Etudiant {
 
         ArrayList<Etudiant> etudiantList = new ArrayList<Etudiant>();
         PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setInt(1, professeur_id);
         ResultSet rs = stmt.executeQuery();
 
         while(rs.next()) {

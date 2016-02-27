@@ -78,6 +78,7 @@ public class BDD_Groupe {
 
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
+        stmt.setInt(2, professeur_id);
         ResultSet rs = stmt.executeQuery();
 
         Groupe groupe = null;
