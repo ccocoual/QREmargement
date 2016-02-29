@@ -28,7 +28,7 @@ public final class Database {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        this.conn = DriverManager.getConnection(url+dbName,userName,password);
+        this.conn = DriverManager.getConnection(url+dbName+"?autoReconnect=true",userName,password);
     }
     /**
      *
