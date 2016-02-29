@@ -18,44 +18,41 @@ Le projet repose sur une architecture client / serveur classique.
 <tr>
     <td>Les ressources : </td> 
     <td>
-        <code>
-            $ cd QREmargement\serveur\qre\src\main\java\com\qre
-        </code>
+        <code>$ cd QREmargement\serveur\qre\src\main\java\com\qre</code>
     </td>
 </tr>
 <tr>
     <td>Les accès base de données : </td>
     <td>
-        <code>
-            $ cd QREmargement\serveur\qre\src\main\java\database
-        </code>
+        <code>$ cd QREmargement\serveur\qre\src\main\java\database</code>
     </td>
 </tr>
 <tr>
     <td>Les modèles métiers : </td>
     <td>
-        <code>
-          $ cd QREmargement\serveur\qre\src\main\java\model
-        </code>
+        <code>$ cd QREmargement\serveur\qre\src\main\java\model</code>
     </td>
 </tr>
 </table>
 
 <h4>Installation</h4>
   Installation du projet et de ses dépendances.
-    <pre><code> $ git clone https://github.com/ccocoual/QREmargement.git
+    <pre><code>
+    $ git clone https://github.com/ccocoual/QREmargement.git
     $ cd QREmargement/
     $ mvn clean install</code></pre>
     
   
   Configuration de la base de données.
-    <pre><code> $ cd QREmargement\serveur\qre\src\main\java\database/
+    <pre><code>
+    $ cd QREmargement\serveur\qre\src\main\java\database\
     $ nano Database.java</code></pre>
   
   <h4>Mise en ligne</h4>
   /!\ Avant la mise en ligne, assurer vous qu'aucun processus n'écoute déjà le port 8080.
   <pre>
-    <code>  $ cd QREmargement/
+    <code>
+    $ cd QREmargement/
     $ cd serveur/qre
     $ cd nohup mvn exec:java -Dexec.mainClass="com.qre.Main" &</code>
   </pre>
