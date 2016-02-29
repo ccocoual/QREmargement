@@ -8,11 +8,11 @@
 
 <h2>Projet</h2>
 Le projet repose sur une architecture client / serveur classique.
-
+<hr>
 <h2>Serveur</h2>
 <p>Le serveur est un serveur Java propulsé par Jersey (framework webservices REST) couplé avec Grizzly (framework HTTP REST). La gestion des dépendences du projet est assuré par le framework Maven. La sauvegarde des données ce fait grâce à une base relationnelle MySQL.</p>
 
-<h4>Structure</h4>
+<h4>Structure du serveur</h4>
 <p>Le serveur est découpé en trois parties</p>
 <table>
 <tr>
@@ -35,7 +35,7 @@ Le projet repose sur une architecture client / serveur classique.
 </tr>
 </table>
 
-<h4>Installation</h4>
+<h4>Installation du serveur</h4>
   Installation du projet et de ses dépendances.
     <pre><code>
     $ git clone https://github.com/ccocoual/QREmargement.git
@@ -48,7 +48,7 @@ Le projet repose sur une architecture client / serveur classique.
     $ cd QREmargement\serveur\qre\src\main\java\database\
     $ nano Database.java</code></pre>
   
-  <h4>Mise en ligne</h4>
+  <h4>Mise en ligne du serveur</h4>
   /!\ Avant la mise en ligne, assurer vous qu'aucun processus n'écoute déjà le port 8080.
   <pre>
     <code>
@@ -56,11 +56,11 @@ Le projet repose sur une architecture client / serveur classique.
     $ cd nohup mvn exec:java -Dexec.mainClass="com.qre.Main" &</code>
   </pre>
 
-  <h4>API</h4>
+  <h4>API serveur</h4>
   
   Une fois le serveur lancé, l'ensemble des requetes sont disponible à l'adresse <b>http://**ip_serveur**/application.wadl</b>
 
-  <h4>Tests</h4>
+  <h4>Tests serveur</h4>
   
   Les tests sont réalisés avec le framework Junit
   
@@ -72,6 +72,8 @@ Le projet repose sur une architecture client / serveur classique.
     $ cd QREmargement/serveur/qre
     $ mvn test
     </code></pre>
+
+<hr>
 
 <h2>Contributeurs</h2>
 <ul>
