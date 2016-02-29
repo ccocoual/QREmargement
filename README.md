@@ -16,8 +16,6 @@ Le projet repose sur une architecture client / serveur classique.
 <h2>Serveur</h2>
 <p>Le serveur est un serveur Java propulsé par <b>Jersey</b> (framework webservices REST) couplé avec <b>Grizzly</b> (framework HTTP REST). La gestion des dépendances du projet est assuré par le framework <b>Maven</b>. La sauvegarde des données se fait grâce à une base relationnelle <b>MySQL</b>.</p>
 
-![Alt text](/serveur/qre/src/main/resources/img/Fonctionnement.bmp?raw=true "Fonctionnement du serveur")
-
 <h4>Structure du serveur</h4>
 <p>Le serveur est découpé en trois parties</p>
 <table>
@@ -40,6 +38,7 @@ Le projet repose sur une architecture client / serveur classique.
     </td>
 </tr>
 </table>
+![Alt text](/serveur/qre/src/main/resources/img/Fonctionnement.bmp?raw=true "Fonctionnement du serveur")
 
 <h4>Installation du serveur</h4>
   Installation du projet et de ses dépendances.
