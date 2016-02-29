@@ -40,14 +40,13 @@
                     }, {
                         dataset : vm.emargements,
                         counts: [],
-                        total: data.length, // length of data
+                        total: vm.emargements.length, // length of data
                         getData: function($defer, params) {
-                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
+                            var orderedData = params.sorting() ? $filter('orderBy')(vm.emargements, params.orderBy()) : vm.emargements;
                             $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                             //$scope.reportBillingData = new Date();
                         }
                     });
-                    vm.emargementsTableParams.settings().$scope = $scope;
 
                 });
         };

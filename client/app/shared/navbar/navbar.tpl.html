@@ -12,8 +12,13 @@
         <a class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
-        <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
+        <div class="navbar-custom-menu" ng-controller="AuthCtrl as auth">
+            <ul class="nav navbar-nav" ng-if="application.connected">
+                <li>
+                    <a ng-click="auth.teacherLogout()">
+                        <i class="fa fa-sign-out"></i>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>

@@ -10,6 +10,7 @@
         vm.credentials = {};
         vm.student = {};
         vm.teacher_credentials = {};
+        vm.teacher_logged = {};
 
         vm.authentication = function() {
             return AuthFactory.authentication(vm.credentials)
@@ -37,8 +38,9 @@
         // Teacher authentication method
         // vm.teacher_credentials are filled in auth.teacher.form.tpl.html
         vm.teacherAuth = function() {
-            return AuthFactory.teacherAuth(vm.teacher_credentials)
+            AuthFactory.teacherAuth(vm.teacher_credentials)
                 .then(function(user) {
+
                     $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                     AuthSessionService.create(user);
                     $state.go('home');
@@ -46,6 +48,7 @@
                     // Not implemented
                     $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                 });
+
         }
     
         vm.teacherLogout = function() {
