@@ -1,4 +1,4 @@
-<h1>QREmargement</h1>
+<h1>Projet universitaire QREmargement</h1>
 
 <h2>Synopsis</h2>
 <p>QREmargement est un projet universitaire qui a pour vocation de remplacer les feuilles de contrôle d'assiduité des étudiants. Celles ci sont actuellement imprimées et collectées par les professeurs. Il est difficile de contrôler le taux d'absentéisme d'un étudiant et les absences non justifiées.</p>
