@@ -11,7 +11,7 @@ public final class Database {
     public static Database db;
 
     private Database() throws SQLException {
-        String url= "jdbc:mysql://localhost:3306/";
+        String url= "jdbc:mysql://localhost:3306/?autoReconnect=true";
         String dbName = "qre";
         String driver = "com.mysql.jdbc.Driver";
         String userName = "root";
