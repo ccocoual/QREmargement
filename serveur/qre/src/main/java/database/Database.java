@@ -11,7 +11,7 @@ public final class Database {
     public static Database db;
 
     private Database() throws SQLException {
-        String url= "jdbc:mysql://localhost:3306/?autoReconnect=true";
+        String url= "jdbc:mysql://localhost:3306/";
         String dbName = "qre";
         String driver = "com.mysql.jdbc.Driver";
         String userName = "root";
@@ -28,7 +28,7 @@ public final class Database {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        this.conn = DriverManager.getConnection(url+dbName,userName,password);
+        this.conn = DriverManager.getConnection(url+dbName+"?autoReconnect=true",userName,password);
     }
     /**
      *
