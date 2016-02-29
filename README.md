@@ -14,50 +14,53 @@ Le projet repose sur une architecture client / serveur classique.
 
 <h4>Structure</h4>
 <p>Le serveur est découpé en trois parties</p>
-<ul>
-<li> Les ressources : 
-    <code>
-      $ cd QREmargement\serveur\qre\src\main\java\com\qre
-    </code>
-  </li>
-<li> Les accès base de données : 
-    <code>
-      $ cd QREmargement\serveur\qre\src\main\java\database
-    </code>
-  </li>
-<li> Les modèles métiers : 
-    <code>
-      $ cd QREmargement\serveur\qre\src\main\java\model
-    </code>
-</li>
-</ul>
+<table>
+<tr>
+    <td>Les ressources : <td> 
+    <td>
+        <code>
+            $ cd QREmargement\serveur\qre\src\main\java\com\qre
+        </code>
+    </td>
+</tr>
+<tr>
+    <td>Les accès base de données : </td>
+    <td>
+        <code>
+            $ cd QREmargement\serveur\qre\src\main\java\database
+        </code>
+    </td>
+</tr>
+<tr>
+    <td>Les modèles métiers : </td>
+    <td>
+        <code>
+          $ cd QREmargement\serveur\qre\src\main\java\model
+        </code>
+    </td>
+</tr>
+</table>
 
 <h4>Installation</h4>
   Installation du projet et de ses dépendances.
-  <pre>
-    <code>
-      $ git clone https://github.com/ccocoual/QREmargement.git
-      $ cd QREmargement/
-      $ mvn clean install
-    </code>
-  </pre>
+    <pre><code>
+        $ git clone https://github.com/ccocoual/QREmargement.git
+        $ cd QREmargement/
+        $ mvn clean install</code></pre>
+    
   
   Configuration de la base de données.
-  <pre>
-    <code>
-      $ cd QREmargement\serveur\qre\src\main\java\database/
-      $ nano Database.java
-    </code>
-  </pre>
+    <pre><code>
+        $ cd QREmargement\serveur\qre\src\main\java\database/
+        $ nano Database.java</code></pre>
   
   <h4>Mise en ligne</h4>
   /!\ Avant la mise en ligne, assurer vous qu'aucun processus n'écoute déjà le port 8080.
   <pre>
     <code>
-      $ cd QREmargement/
-      $ cd serveur/qre
-      $ cd nohup mvn exec:java -Dexec.mainClass="com.qre.Main" &
-    </code>
+        $ cd QREmargement/
+        $ cd serveur/qre
+        $ cd nohup mvn exec:java -Dexec.mainClass="com.qre.Main" &</code>
   </pre>
 
   <h4>API</h4>
