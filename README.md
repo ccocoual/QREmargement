@@ -52,21 +52,28 @@ Le projet repose sur une architecture client / serveur classique.
   /!\ Avant la mise en ligne, assurer vous qu'aucun processus n'écoute déjà le port 8080.
   <pre>
     <code>
-    $ cd QREmargement/
-    $ cd serveur/qre
+    $ cd QREmargement/serveur/qre
     $ cd nohup mvn exec:java -Dexec.mainClass="com.qre.Main" &</code>
   </pre>
 
   <h4>API</h4>
-  Le détail de l'api est disponible à l'adresse <b>http://**ip_serveur**/api</b>
+  
+  Une fois le serveur lancé, l'ensemble des requetes sont disponible à l'adresse <b>http://**ip_serveur**/application.wadl</b>
 
-Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
+  <h4>Tests</h4>
+  
+  Les tests sont réalisés avec le framework Junit
+  
+  Dossier de test
+  <code>$ cd QREmargement\serveur\qre\src\test\java\com\qre</code>
 
-Tests
+  Exécuter les tests
+  <pre><code>
+    $ cd QREmargement/serveur/qre
+    $ mvn test
+    </code></pre>
 
-Describe and show how to run the tests with code examples.
-
-<h2>Team members</h2>
+<h2>Contributeurs</h2>
 <ul>
 <li>Mariane Kinfack Dongmo</li>
 <li>Julien Moulin</li>
@@ -74,8 +81,3 @@ Describe and show how to run the tests with code examples.
 <li>Maxime Meunier</li>
 <li>Alexandre Berteaux</li>
 </ul>
-
-
-License
-
-A short snippet describing the license (MIT, Apache, etc.)
