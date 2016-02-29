@@ -9,6 +9,8 @@
 <h2>Projet</h2>
 Le projet repose suit une architecture client / serveur classique.
 <hr>
+<h2>Client</h2>
+<hr>
 <h2>Serveur</h2>
 <p>Le serveur est un serveur Java propulsé par Jersey (framework webservices REST) couplé avec Grizzly (framework HTTP REST). La gestion des dépendences du projet est assuré par le framework Maven. La sauvegarde des données ce fait grâce à une base relationnelle MySQL.</p>
 
