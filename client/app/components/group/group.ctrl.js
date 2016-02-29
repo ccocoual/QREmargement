@@ -1,27 +1,29 @@
 (function () {
     'use strict';
 
-    qrApp.controller('ClassCtrl', ClassCtrl);
+    qrApp.controller('GroupCtrl', GroupCtrl);
 
     ClassCtrl.$inject = ['ClassFactory', 'GroupFactory', '$state', '$stateParams', 'toastr'];
 
     function ClassCtrl(ClassFactory, GroupFactory, $state, $stateParams, toastr) {
         var vm = this;
-        vm.classes = [];
         vm.groups = [];
-        vm.newClass = {};
+        vm.newGroup = {};
         
-        vm.getClasses = function() {
-            return ClassFactory.getClasses()
+        vm.getGroups = function() {
+            return GroupFactory.getGroups()
                 .then(function(data) {
-                    vm.classes = data;
-                    return vm.classes;
+                    vm.groups = data;
+                    return vm.groups;
                 });
         }
         
-        vm.createClass = function() {
-            return ClassFactory.createClass(vm.newClass);
-            $state.go('class.list');
+        vm.createGroup = function() {
+            return GroupFactory.createGroup(vm.newGroup)
+                .then(function(data){
+                    toastr.success("Le groupe a été créé !");
+                });
+            $state.go('group.list');
         }
         
         vm.getGroups = function(class_id) {

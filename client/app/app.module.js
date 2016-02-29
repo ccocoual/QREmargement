@@ -18,7 +18,7 @@ var qrApp = angular.module("QRApp", [
 qrApp.run(function ($rootScope, AUTH_EVENTS, AuthFactory, $state) {
     $rootScope.$on('$stateChangeStart', function (event, next, params, current) {
         if (!AuthFactory.isAuthenticated()) {
-            if ((next.name != "auth_teacher") && (next.name != "auth_student") && (next.name != "auth_success") && (next.name != "qrcode.flash")) {
+            if ((next.name != "auth_teacher") && (next.name != "auth_student") && (next.name != "auth_success") && (next.name != "qrcode")) {
                 event.preventDefault();
                 $state.go("auth_teacher");
             }

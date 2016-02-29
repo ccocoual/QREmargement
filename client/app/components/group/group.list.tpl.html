@@ -1,7 +1,12 @@
 <div class="row" ng-init="class.getGroups()">
     <div class="col-md-4 col-md-offset-4">
         <div class="box">
-            <div class="box-header"></div>
+            <div class="box-header with-border">
+                <h3 class="box-title">Liste des groupes</h3>
+                <div class="box-tools pull-right">
+                    <a type="button" class="btn btn-box-tool" ui-sref="class.groups.create"><i class="fa fa-plus-circle"></i></a>
+                </div>
+            </div>
             <div class="box-body table-responsive no-padding">
                 <table class="table">
                     <thead>
