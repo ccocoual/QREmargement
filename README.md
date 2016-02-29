@@ -55,10 +55,14 @@ Le projet repose sur une architecture client / serveur classique.
     $ cd QREmargement/serveur/qre
     $ cd nohup mvn exec:java -Dexec.mainClass="com.qre.Main" &</code>
   </pre>
+  
+  <h4>Authentification</h4>
+  <p>Le serveur est "stateless", c'est à dire "sans état", aucune session n'est gérée côté serveur. Pour limiter l'accès aux ressources, un système d'accès avec token a été mis en place.</p>
+  <p>L'authentification d'un professeur gènere un token d'accès valide pour une durée de deux heures. Le présent token est stocké en base de données et permet d'identifier le professeur qui émét la requete.</p> <p>Chaque requêtes sur le serveur avec un token valide repousse l'échéance d'invalidité de deux heures. Une fois la validité du token éxpirée, une authentification est nécéssaire pour obtenir un nouveau token valide.</p>
 
   <h4>API serveur</h4>
   
-  Une fois le serveur lancé, l'ensemble des requetes sont disponible à l'adresse <b>http://**ip_serveur**/application.wadl</b>
+  Une fois le serveur lancé, l'ensemble des URI et requetes HTTP sont disponible à l'adresse <b>http://**ip_serveur**/application.wadl</b>
 
   <h4>Tests serveur</h4>
   
