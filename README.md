@@ -16,7 +16,7 @@ Le projet repose sur une architecture client / serveur classique.
 <p>Le serveur est découpé en trois parties</p>
 <table>
 <tr>
-    <td>Les ressources : <td> 
+    <td>Les ressources : </td> 
     <td>
         <code>
             $ cd QREmargement\serveur\qre\src\main\java\com\qre
