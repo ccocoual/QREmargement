@@ -19,7 +19,7 @@ public class BDD_Classe {
         Connection connection = Database.getDbCon().conn;
 
         String query = "SELECT * FROM "+ classe_table +" c " +
-                "JOIN "+ groupe_table +" g ON g.classe_id = c.id " +
+                "LEFT JOIN "+ groupe_table +" g ON g.classe_id = c.id " +
                 "JOIN "+ professeur_classe_table + " pg ON pg.classe_id = c.id " +
                 "WHERE pg.professeur_id = ?";
 
@@ -40,8 +40,8 @@ public class BDD_Classe {
             Groupe groupe = new Groupe();
             groupe.setId(rs.getInt("g.id"));
             groupe.setLibelle(rs.getString("g.libelle"));
-
-            last_classe.addGroupe(groupe);
+            if(groupe.getId() != 0)
+                last_classe.addGroupe(groupe);
 
             if(rs.isLast()){
                 classeList.add(last_classe);
@@ -55,7 +55,7 @@ public class BDD_Classe {
         Connection connection = Database.getDbCon().conn;
 
         String query = "SELECT * FROM "+ classe_table +" c " +
-                "JOIN "+ groupe_table +" g ON g.classe_id = c.id " +
+                "LEFT JOIN "+ groupe_table +" g ON g.classe_id = c.id " +
                 "JOIN "+ professeur_classe_table + " pg ON pg.classe_id = c.id " +
                 "WHERE c.id = ? " +
                 "AND pg.professeur_id = ?";
@@ -75,7 +75,8 @@ public class BDD_Classe {
             Groupe groupe = new Groupe();
             groupe.setId(rs.getInt("g.id"));
             groupe.setLibelle(rs.getString("g.libelle"));
-            classe.addGroupe(groupe);
+            if(groupe.getId() != 0)
+                classe.addGroupe(groupe);
         }
 
         return classe;
