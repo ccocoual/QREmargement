@@ -15,7 +15,7 @@
         return factory;
         
         function getSubjects() {
-            return $http.get(RESTURL + 'matieres')
+            return $http.get(AuthSessionService.getTeacherURL() + 'matieres')
                 .then(getComplete)
                 .catch(getFailed);
 
