@@ -8,11 +8,15 @@
 
 <h2>Projet</h2>
 Le projet repose suit une architecture client / serveur classique.
+<h4>Workflow</h4>
+![Alt text](/serveur/qre/src/main/resources/img/workflow.bmp?raw=true "Workflow")
 <hr>
 <h2>Client</h2>
 <hr>
 <h2>Serveur</h2>
-<p>Le serveur est un serveur Java propulsé par Jersey (framework webservices REST) couplé avec Grizzly (framework HTTP REST). La gestion des dépendences du projet est assuré par le framework Maven. La sauvegarde des données ce fait grâce à une base relationnelle MySQL.</p>
+<p>Le serveur est un serveur Java propulsé par <b>Jersey</b> (framework webservices REST) couplé avec <b>Grizzly</b> (framework HTTP REST). La gestion des dépendences du projet est assuré par le framework <b>Maven</b>. La sauvegarde des données ce fait grâce à une base relationnelle <b>MySQL</b>.</p>
+
+![Alt text](/serveur/qre/src/main/resources/img/Fonctionnement.bmp?raw=true "Fonctionnement du serveur")
 
 <h4>Structure du serveur</h4>
 <p>Le serveur est découpé en trois parties</p>
@@ -61,6 +65,8 @@ Le projet repose suit une architecture client / serveur classique.
   <h4>Authentification</h4>
   <p>Le serveur est "stateless", c'est à dire "sans état", aucune session n'est gérée côté serveur. Pour limiter l'accès aux ressources, un système d'accès avec token a été mis en place.</p>
   <p>L'authentification d'un professeur gènere un token d'accès valide pour une durée de deux heures. Le présent token est stocké en base de données et permet d'identifier le professeur qui émét la requete.</p> <p>Chaque requêtes sur le serveur avec un token valide repousse l'échéance d'invalidité de deux heures. Une fois la validité du token éxpirée, une authentification est nécéssaire pour obtenir un nouveau token valide.</p>
+  
+  ![Alt text](/serveur/qre/src/main/resources/img/Authentification.bmp?raw=true "Fonctionnement du serveur")
 
   <h4>API serveur</h4>
   
