@@ -3,7 +3,7 @@
 
     qrApp.factory('EmargementFactory', EmargementFactory);
 
-    function EmargementFactory($http, AuthSessionService) {
+    function EmargementFactory($http, AuthSessionService, SERVURL) {
 
         var factory = {
             getEmargements: getEmargements,
@@ -119,8 +119,8 @@
             }
         }
 
-        function signEmargement(emargementid, data){
-            return $http.put(AuthSessionService.getTeacherURL() + 'emargements/' + emargementid + "/signatures", data)
+        function signEmargement(data){ console.log("sign");
+            return $http.post(SERVURL + 'qrcode', data)
                 .then(getComplete)
                 .catch(getFailed);
 

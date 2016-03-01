@@ -14,12 +14,14 @@
                 $state.go("auth_student", {"qrcodeid":$state.params.qrcodeid});
             }else{
                 var studentSign = {
+                    "emargement_id": $state.params.qrcodeid, 
                     "etudiant_id":$cookies.get('qre_cookie'),
-                    "signee":true
+                    "presence":true
                 }
-                EmargementFactory.signEmargement($state.params.qrcodeid, studentSign).
+                EmargementFactory.signEmargement(studentSign).
                     then(function(data){
-                        getEmargementInfo();
+                    
+                        vm.emargementInfo = studentSign;
                     });
             }
         }
