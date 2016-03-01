@@ -171,7 +171,13 @@
         vm.setStudentSign = function(oldStudList, newStudList){
             var tmpSignature = getStudentSign(oldStudList, newStudList);
             if(tmpSignature != null){
-                EmargementFactory.signEmargement($state.params.emargementid, tmpSignature).then(function(data){});
+                console.log(tmpSignature);
+                var studentSign = {
+                    "emargement_id": $state.params.emargementid,
+                    "etudiant_id":tmpSignature.etudiant_id,
+                    "presence":tmpSignature.signee
+                }
+                EmargementFactory.signEmargement(studentSign).then(function(data){});
             }
         }
 
