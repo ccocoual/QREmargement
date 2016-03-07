@@ -31,7 +31,7 @@
         }
         
         function getGroup(id) {
-            return $http.get(AuthSessionService.getTeacherURL() + 'groups/' + id)
+            return $http.get(AuthSessionService.getTeacherURL() + 'groupes/' + id)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -46,7 +46,7 @@
         }  
 
         function createGroup(group) {
-            return $http.post(AuthSessionService.getTeacherURL() + 'groups', group)
+            return $http.post(AuthSessionService.getTeacherURL() + 'groupes', group)
                 .then(getComplete)
                 .catch(getFailed);
 
@@ -60,7 +60,7 @@
         }
         
         function updateGroup(group) {
-            return $http.put(AuthSessionService.getTeacherURL() + 'groups', group)
+            return $http.put(AuthSessionService.getTeacherURL() + 'groupes', group)
                 .then(getComplete)
                 .catch(getFailed);
             
@@ -74,7 +74,7 @@
         }
         
         function removeGroup(id) {
-            return $http.delete(AuthSessionService.getTeacherURL() + 'groups/' + id)
+            return $http.delete(AuthSessionService.getTeacherURL() + 'groupes/' + id)
                 .then(getComplete)
                 .catch(getFailed);
             

@@ -3,13 +3,14 @@
 
     qrApp.controller('GroupCtrl', GroupCtrl);
 
-    ClassCtrl.$inject = ['ClassFactory', 'GroupFactory', '$state', '$stateParams', 'toastr'];
+    GroupCtrl.$inject = ['ClassFactory', 'GroupFactory', '$state', '$stateParams', 'toastr'];
 
-    function ClassCtrl(ClassFactory, GroupFactory, $state, $stateParams, toastr) {
+    function GroupCtrl(ClassFactory, GroupFactory, $state, $stateParams, toastr) {
         var vm = this;
         vm.groups = [];
         vm.newGroup = {};
-        
+        vm.actualClass = {};
+
         vm.getGroups = function() {
             return GroupFactory.getGroups()
                 .then(function(data) {
@@ -19,11 +20,13 @@
         }
         
         vm.createGroup = function() {
-            return GroupFactory.createGroup(vm.newGroup)
+            console.log(vm.newGroup);
+            GroupFactory.createGroup(vm.newGroup)
                 .then(function(data){
                     toastr.success("Le groupe a été créé !");
+                    $state.go('class.groups.list');
                 });
-            $state.go('group.list');
+
         }
         
         vm.getGroups = function(class_id) {
@@ -42,6 +45,15 @@
                 .then(function(data){
                    toastr.success("Vous avez bien supprimé la promotion");
                     vm.getClasses();
+                });
+        }
+
+        vm.getClassInfo = function(){
+            console.log($state.params);
+            ClassFactory.getClass($state.params.classid)
+                .then(function(dataclass){
+                    vm.actualClass = dataclass;
+                    vm.newGroup.classe_id = $state.params.classid;
                 });
         }
     }

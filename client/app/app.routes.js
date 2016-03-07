@@ -90,12 +90,14 @@ qrApp.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('class.groups', {
             url:'/:classid/groups',
-            controller: 'ClassCtrl',
-            controllerAs: 'class',
+            controller: 'GroupCtrl',
+            controllerAs: 'group',
             templateUrl: "./app/components/group/group.tpl.html"
         })
         .state('class.groups.list', {
             url:'/list',
+            controller: 'ClassCtrl',
+            controllerAs: 'class',
             templateUrl: "./app/components/group/group.list.tpl.html"
         })
         .state('class.groups.create', {
