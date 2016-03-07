@@ -53,7 +53,8 @@
             ClassFactory.getClass($state.params.classid)
                 .then(function(dataclass){
                     vm.actualClass = dataclass;
-                    vm.newGroup.classe_id = $state.params.classid;
+                    vm.newGroup.classe = {};
+                    vm.newGroup.classe.id = $state.params.classid;
                 });
         }
     }
