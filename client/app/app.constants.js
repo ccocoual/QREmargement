@@ -5,7 +5,7 @@ qrApp.constant('SERVURL', 'http://148.60.11.185:8080/');
 /*
     Url à utiliser pour la production
  */
-qrApp.constant('WEBAPPURL', 'http://148.60.11.185/client/index.html#/');
+qrApp.constant('WEBAPPURL', 'http://148.60.11.185/QREmargement/client/index.html#/');
 
 qrApp.constant('AUTH_EVENTS', {
     loginSuccess: 'auth-login-success',
